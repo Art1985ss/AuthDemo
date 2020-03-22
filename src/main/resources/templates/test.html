@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>This is a test!</h1>
+<div>
+    <p>
+        <span th:text="${user}"></span>
+    </p>
+    <div>
+        <form>
+        <ol type="a" th:each="d: ${data}">
+            <p th:text="${d.question}"></p>
+            <li th:text="${d.answerA}"/>
+            <li th:text="${d.answerB}"/>
+            <li th:text="${d.answerC}"/>
+            <li th:text="${d.answerD}"/>
+            <p>Your answer : <input type="text"/></p>
+            <hr>
+        </ol>
+            <p><input type="submit" value="Submit"/> </p>
+        </form>
+    </div>
+</div>
+</body>
+</html>
