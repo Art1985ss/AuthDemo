@@ -8,7 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.awt.*;
-
+//TestLine
 @SpringBootApplication
 public class AuthDemoApplication {
 	@Autowired
