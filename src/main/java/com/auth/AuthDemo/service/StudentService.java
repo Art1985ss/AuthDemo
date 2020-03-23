@@ -1,6 +1,6 @@
 package com.auth.AuthDemo.service;
 
-import com.auth.AuthDemo.entity.Student;
+import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public Student findByName(String name){
+    public User findByName(String name){
         return studentRepository.findByName(name).orElseThrow(() -> new NoSuchElementException("No user found with name : " + name));
     }
 }

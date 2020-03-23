@@ -1,7 +1,7 @@
 package com.auth.AuthDemo.service;
 
 import com.auth.AuthDemo.entity.Question;
-import com.auth.AuthDemo.entity.Student;
+import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class QuestionService {
     }
 
     public List<Question> getStudentQuestions(String name){
-        Student student = studentService.findByName(name);
-        return student.getQuestionList();
+        User user = studentService.findByName(name);
+        return user.getQuestionList();
     }
 }
