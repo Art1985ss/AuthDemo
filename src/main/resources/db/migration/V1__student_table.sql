@@ -1,40 +1,56 @@
+SET autocommit=0;
+START TRANSACTION;
 #Table for student entity
-CREATE TABLE IF NOT EXISTS student (
+CREATE TABLE IF NOT EXISTS user (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) UNIQUE,
     password VARCHAR(50),
     grade DOUBLE(10 , 3 ),
     enabled BOOLEAN
 );
-#Table for test data
-CREATE TABLE IF NOT EXISTS student_data (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT NOT NULL,
-    data_text VARCHAR(500) NOT NULL,
-    FOREIGN KEY (student_id)
-        REFERENCES student (id)
-        ON DELETE CASCADE
-);
 #Table for questions
 CREATE TABLE IF NOT EXISTS question (
     id INT PRIMARY KEY AUTO_INCREMENT,
     category varchar(100),
-    question VARCHAR(200) NOT NULL,
-    answer_a VARCHAR(100),
-    answer_b VARCHAR(100),
-    answer_c VARCHAR(100),
-    answer_d VARCHAR(100),
+    question VARCHAR(300) NOT NULL,
     correct_answer VARCHAR(100)
 );
 
-#Student questions and provided answers
-CREATE TABLE IF NOT EXISTS student_question (
+CREATE TABLE IF NOT EXISTS question_options (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT,
+    question_id INT NOT NULL,
+    answer VARCHAR(200),
+    FOREIGN KEY (question_id)
+        REFERENCES question(id)
+        ON DELETE CASCADE
+);
+
+#Student questions and provided answers
+CREATE TABLE IF NOT EXISTS user_question (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
     question_id INT,
     answer VARCHAR(50),
-    FOREIGN KEY (student_id)
-        REFERENCES student (id)
+    FOREIGN KEY (user_id)
+        REFERENCES user (id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (question_id)
+        REFERENCES question (id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS test (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    duration INT
+);
+
+CREATE TABLE IF NOT EXISTS test_questions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    test_id INT,
+    question_id INT,
+    FOREIGN KEY (test_id)
+        REFERENCES test (id)
         ON DELETE CASCADE,
     FOREIGN KEY (question_id)
         REFERENCES question (id)
@@ -43,10 +59,10 @@ CREATE TABLE IF NOT EXISTS student_question (
 
 CREATE TABLE IF NOT EXISTS authorities (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT NOT NULL,
+    user_id INT NOT NULL,
     authority VARCHAR(50),
-    FOREIGN KEY (student_id)
-        REFERENCES student (id)
+    FOREIGN KEY (user_id)
+        REFERENCES user (id)
         ON DELETE CASCADE
 );
 
@@ -73,16 +89,24 @@ CREATE TABLE SPRING_SESSION_ATTRIBUTES (
 	CONSTRAINT SPRING_SESSION_ATTRIBUTES_FK FOREIGN KEY (SESSION_PRIMARY_ID) REFERENCES SPRING_SESSION(PRIMARY_ID) ON DELETE CASCADE
 ) ENGINE=InnoDB ROW_FORMAT=DYNAMIC;
 
-insert into student (name, password, grade, enabled) values ("Test1", "test", 0, true);
-insert into student_data (student_id, data_text) values (1, "This is just test data for user 1");
-insert into student_data (student_id, data_text) values (1, "This is just second test data for user 1");
-insert into authorities (student_id, authority) values (1, "ROLE_STUDENT");
+insert into user (name, password, grade, enabled) values ("Test1", "test", 0, true);
+insert into authorities (user_id, authority) values (1, "ROLE_STUDENT");
 
-insert into student (name, password, grade, enabled) values ("Test2", "test", 0, true);
-insert into student_data (student_id, data_text) values (2, "This is test data for user 2");
-insert into student_data (student_id, data_text) values (2, "This is second test data for user 2");
-insert into authorities (student_id, authority) values (2, "ROLE_STUDENT");
+insert into user (name, password, grade, enabled) values ("Test2", "test", 0, true);
+insert into authorities (user_id, authority) values (2, "ROLE_STUDENT");
 
-insert into question(category, question, answer_a, answer_b, answer_c, answer_d, correct_answer) 
-values ("slq", "Just choose answer c", "This is not right answer", "This answer also is not right", "Choose tihs answer", "How many times I should tell you that you should choose answer c?", "c"),
-("data", "Here you need to chose answer d", "This is not correct answer", "Remind you to choose answer d", "Right answer is next answer", "Choose me!", "d");
+insert into question(category, question, correct_answer) 
+values ("slq", "Just choose answer c", "c"),
+("data", "Here you need to chose answer d", "d");
+
+insert into question_options (question_id, answer) values
+(1, "This is not right answer"),
+(1, "This answer also is not right"),
+(1, "Choose tihs answer"),
+(2, "This is not correct answer"),
+(2, "Remind you to choose answer d"),
+(2, "Right answer is next answer"),
+(2, "Choose me!");
+
+COMMIT;
+SET autocommit=1;

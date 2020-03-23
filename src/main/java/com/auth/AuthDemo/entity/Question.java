@@ -1,9 +1,11 @@
 package com.auth.AuthDemo.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "question")
-@SecondaryTable(name = "student_question", pkJoinColumns = @PrimaryKeyJoinColumn(name = "question_id"))
+@SecondaryTable(name = "user_question", pkJoinColumns = @PrimaryKeyJoinColumn(name = "question_id"))
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,21 +14,17 @@ public class Question {
     private String category;
     @Column(name = "question")
     private String question;
-    @Column(name = "answer_a")
-    private String answerA;
-    @Column(name = "answer_b")
-    private String answerB;
-    @Column(name = "answer_c")
-    private String answerC;
-    @Column(name = "answer_d")
-    private String answerD;
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    //@JoinTable(name = "question_options", inverseJoinColumns = {@JoinColumn(name = "question_id")})
+    private List<Answer> answers = new ArrayList<>();
     @Column(name = "correct_answer")
     private String correctAnswer;
-    @Column(table = "student_question", name = "answer")
+    @Column(table = "user_question", name = "answer")
     private String studentAnswer;
     @ManyToOne
-    @JoinColumn(table = "student_question", name = "student_id")
-    private Student student;
+    @JoinColumn(table = "user_question", name = "user_id")
+    private User user;
+
 
     public Long getId() {
         return id;
@@ -52,36 +50,12 @@ public class Question {
         this.question = question;
     }
 
-    public String getAnswerA() {
-        return answerA;
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
-    public void setAnswerA(String answerA) {
-        this.answerA = answerA;
-    }
-
-    public String getAnswerB() {
-        return answerB;
-    }
-
-    public void setAnswerB(String answerB) {
-        this.answerB = answerB;
-    }
-
-    public String getAnswerC() {
-        return answerC;
-    }
-
-    public void setAnswerC(String answerC) {
-        this.answerC = answerC;
-    }
-
-    public String getAnswerD() {
-        return answerD;
-    }
-
-    public void setAnswerD(String answerD) {
-        this.answerD = answerD;
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     public String getCorrectAnswer() {
@@ -102,6 +76,6 @@ public class Question {
 
     @Override
     public String toString() {
-        return String.format("%s\na) %s\nb) %s\nc) %s\nd) %s", question, answerA, answerB, answerC, answerD);
+        return String.format("%s\n", question);
     }
 }

@@ -12,16 +12,26 @@
     </p>
     <div>
         <form>
-        <ol type="a" th:each="d: ${data}">
-            <p th:text="${d.question}"></p>
-            <li th:text="${d.answerA}"/>
-            <li th:text="${d.answerB}"/>
-            <li th:text="${d.answerC}"/>
-            <li th:text="${d.answerD}"/>
-            <p>Your answer : <input type="text"/></p>
-            <hr>
-        </ol>
-            <p><input type="submit" value="Submit"/> </p>
+            <table>
+                <tr th:each="d: ${data}">
+                    <ol>
+                        <p th:text="${d.question}"></p>
+                            <li type="a" th:each="a: ${d.answers}" th:text="${a.text}"></li>
+                            <p>Your answer : <input type="text"/></p>
+                        <hr>
+                    </ol>
+                </tr>
+            </table>
+            <!--        <ol type="a" th:each="d: ${data}">-->
+            <!--            <p th:text="${d.question}"></p>-->
+            <!--            <li th:text="${d.answerA}"/>-->
+            <!--            <li th:text="${d.answerB}"/>-->
+            <!--            <li th:text="${d.answerC}"/>-->
+            <!--            <li th:text="${d.answerD}"/>-->
+            <!--            <p>Your answer : <input type="text"/></p>-->
+            <!--            <hr>-->
+            <!--        </ol>-->
+            <p><input type="submit" value="Submit"/></p>
         </form>
     </div>
 </div>

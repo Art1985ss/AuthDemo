@@ -1,7 +1,6 @@
 package com.auth.AuthDemo.web;
 
 import com.auth.AuthDemo.service.AuthService;
-import com.auth.AuthDemo.service.DataService;
 import com.auth.AuthDemo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,6 @@ import java.security.Principal;
 public class MainPage {
     @Autowired
     private AuthService authService;
-    @Autowired
-    private DataService dataService;
     @Autowired
     private QuestionService questionService;
 

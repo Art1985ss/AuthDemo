@@ -1,5 +1,6 @@
 package com.auth.AuthDemo.gui;
 
+import com.auth.AuthDemo.entity.Answer;
 import com.auth.AuthDemo.entity.Question;
 import com.auth.AuthDemo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class QuestionCreation extends JPanel {
@@ -22,7 +23,7 @@ public class QuestionCreation extends JPanel {
         this.setLayout(layout);
 
 
-        String fieldNames[] = {"Category", "Question", "Answer a", "Answer b", "Answer c", "Answer d", "Correct answer"};
+        String[] fieldNames = {"Category", "Question", "Answer a", "Answer b", "Answer c", "Answer d", "Correct answer"};
         textFields = new JTextField[fieldNames.length];
         for (int i = 0; i < fieldNames.length; i++) {
             JLabel label = new JLabel(fieldNames[i], JLabel.TRAILING);
@@ -33,25 +34,26 @@ public class QuestionCreation extends JPanel {
             System.out.println(i);
         }
         JButton button = new JButton("Add new question");
-        button = addListener(button);
+        addListener(button);
         this.add(button);
         this.setVisible(true);
     }
 
-    private JButton addListener(JButton button) {
+    private void addListener(JButton button) {
         button.addActionListener(e -> {
             Question question = new Question();
             question.setCategory(textFields[0].getText());
             question.setQuestion(textFields[1].getText());
-            question.setAnswerA(textFields[2].getText());
-            question.setAnswerB(textFields[3].getText());
-            question.setAnswerC(textFields[4].getText());
-            question.setAnswerD(textFields[5].getText());
+            List<Answer> answers = new ArrayList<>();
+            answers.add(new Answer(textFields[2].getText()));
+            answers.add(new Answer(textFields[3].getText()));
+            answers.add(new Answer(textFields[4].getText()));
+            answers.add(new Answer(textFields[5].getText()));
+            question.setAnswers(answers);
             question.setCorrectAnswer(textFields[6].getText());
             System.out.println(question);
             questionService.createQuestion(question);
             System.out.println("Button pressed");
         });
-        return button;
     }
 }
