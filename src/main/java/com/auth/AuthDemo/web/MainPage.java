@@ -1,7 +1,5 @@
 package com.auth.AuthDemo.web;
 
-import com.auth.AuthDemo.service.AuthService;
-import com.auth.AuthDemo.service.QuestionService;
 import com.auth.AuthDemo.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +13,6 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/")
 public class MainPage {
-    @Autowired
-    private AuthService authService;
     @Autowired
     private TestService testService;
 

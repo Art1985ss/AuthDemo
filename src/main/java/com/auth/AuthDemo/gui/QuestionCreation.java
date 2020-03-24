@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class QuestionCreation extends JPanel {
@@ -49,7 +47,7 @@ public class QuestionCreation extends JPanel {
             question.addAnswer(textFields[5].getText());
             question.setCorrectAnswer(textFields[6].getText());
             System.out.println(question);
-            questionService.createQuestion(question);
+            questionService.create(question);
             System.out.println("Button pressed");
         });
     }
