@@ -8,7 +8,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.awt.*;
-//TestLine
 @SpringBootApplication
 public class AuthDemoApplication {
 	@Autowired
@@ -17,8 +16,6 @@ public class AuthDemoApplication {
 	public static void main(String[] args) {
 		System.setProperty("java.awt.headless", "false");
 		SpringApplication.run(AuthDemoApplication.class, args);
-
-		SpringApplication.run(TeacherGUI.class);
 	}
 
 }

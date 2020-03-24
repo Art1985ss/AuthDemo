@@ -5,9 +5,29 @@ CREATE TABLE IF NOT EXISTS user (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) UNIQUE,
     password VARCHAR(50),
-    grade DOUBLE(10 , 3 ),
     enabled BOOLEAN
 );
+
+CREATE TABLE IF NOT EXISTS test (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    duration INT
+);
+
+CREATE TABLE IF NOT EXISTS user_tests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    test_id INT,
+    score DOUBLE(10 , 3 ),
+    completed boolean,
+    FOREIGN KEY (user_id)
+        REFERENCES user (id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (test_id)
+        REFERENCES test (id)
+        ON DELETE CASCADE
+);
+
 #Table for questions
 CREATE TABLE IF NOT EXISTS question (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -16,7 +36,7 @@ CREATE TABLE IF NOT EXISTS question (
     correct_answer VARCHAR(100)
 );
 
-CREATE TABLE IF NOT EXISTS question_options (
+CREATE TABLE IF NOT EXISTS question_answers (
     id INT PRIMARY KEY AUTO_INCREMENT,
     question_id INT NOT NULL,
     answer VARCHAR(200),
@@ -26,7 +46,7 @@ CREATE TABLE IF NOT EXISTS question_options (
 );
 
 #Student questions and provided answers
-CREATE TABLE IF NOT EXISTS user_question (
+CREATE TABLE IF NOT EXISTS user_answers (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     question_id INT,
@@ -39,11 +59,7 @@ CREATE TABLE IF NOT EXISTS user_question (
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS test (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100),
-    duration INT
-);
+
 
 CREATE TABLE IF NOT EXISTS test_questions (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -88,18 +104,18 @@ CREATE TABLE SPRING_SESSION_ATTRIBUTES (
 	CONSTRAINT SPRING_SESSION_ATTRIBUTES_PK PRIMARY KEY (SESSION_PRIMARY_ID, ATTRIBUTE_NAME),
 	CONSTRAINT SPRING_SESSION_ATTRIBUTES_FK FOREIGN KEY (SESSION_PRIMARY_ID) REFERENCES SPRING_SESSION(PRIMARY_ID) ON DELETE CASCADE
 ) ENGINE=InnoDB ROW_FORMAT=DYNAMIC;
-
-insert into user (name, password, grade, enabled) values ("Test1", "test", 0, true);
+-- use test;
+insert into user (name, password, enabled) values ("Test1" , "test", true);
 insert into authorities (user_id, authority) values (1, "ROLE_STUDENT");
 
-insert into user (name, password, grade, enabled) values ("Test2", "test", 0, true);
+insert into user (name, password, enabled) values ("Test2", "test", true);
 insert into authorities (user_id, authority) values (2, "ROLE_STUDENT");
 
 insert into question(category, question, correct_answer) 
 values ("slq", "Just choose answer c", "c"),
 ("data", "Here you need to chose answer d", "d");
 
-insert into question_options (question_id, answer) values
+insert into question_answers (question_id, answer) values
 (1, "This is not right answer"),
 (1, "This answer also is not right"),
 (1, "Choose tihs answer"),
@@ -107,6 +123,12 @@ insert into question_options (question_id, answer) values
 (2, "Remind you to choose answer d"),
 (2, "Right answer is next answer"),
 (2, "Choose me!");
+
+insert into test (name, duration) values
+("First test", 10);
+
+insert into test_questions (test_id, question_id) values
+(1, 1), (1, 2);
 
 COMMIT;
 SET autocommit=1;

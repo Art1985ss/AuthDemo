@@ -14,10 +14,11 @@ public class User {
     private String name;
     @Column(name = "password")
     private String password;
-    @Column(name = "grade")
-    private BigDecimal grade;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Question> questionList;
+    @ManyToMany
+    @JoinTable(name = "user_tests",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "test_id"))
+    private List<Test> testList;
 
     public Long getId() {
         return id;
@@ -43,30 +44,19 @@ public class User {
         this.password = password;
     }
 
-    public BigDecimal getGrade() {
-        return grade;
+    public List<Test> getTestList() {
+        return testList;
     }
 
-    public void setGrade(BigDecimal grade) {
-        this.grade = grade;
-    }
-
-
-    public List<Question> getQuestionList() {
-        return questionList;
-    }
-
-    public void setQuestionList(List<Question> questionList) {
-        this.questionList = questionList;
+    public void setTestList(List<Test> testList) {
+        this.testList = testList;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", grade=" + grade +
+                "name='" + name + '\'' +
+                ", testList=" + testList +
                 '}';
     }
 
@@ -77,12 +67,11 @@ public class User {
         User user = (User) o;
         return id.equals(user.id) &&
                 name.equals(user.name) &&
-                password.equals(user.password) &&
-                Objects.equals(grade, user.grade);
+                password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, password, grade);
+        return Objects.hash(id, name, password);
     }
 }

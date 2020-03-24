@@ -1,7 +1,6 @@
 package com.auth.AuthDemo.web;
 
-import com.auth.AuthDemo.service.AuthService;
-import com.auth.AuthDemo.service.QuestionService;
+import com.auth.AuthDemo.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +14,7 @@ import java.security.Principal;
 @RequestMapping("/")
 public class MainPage {
     @Autowired
-    private AuthService authService;
-    @Autowired
-    private QuestionService questionService;
+    private TestService testService;
 
     @GetMapping("")
     public ResponseEntity<String> getData(Principal principal){
@@ -30,7 +27,7 @@ public class MainPage {
         //String txt = String.format("%s", dataService.getData(principal.getName()));
         ModelAndView mav = new ModelAndView();
         mav.addObject("user", principal.getName());
-        mav.addObject("data", questionService.getAllQuestion());
+        mav.addObject("test", testService.findAll().get(0));
         mav.setViewName("test");
         return mav;
     }
