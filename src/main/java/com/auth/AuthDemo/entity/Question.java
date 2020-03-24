@@ -3,6 +3,7 @@ package com.auth.AuthDemo.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "question")
 public class Question {
@@ -73,5 +74,22 @@ public class Question {
 
     public void setTestList(List<Test> testList) {
         this.testList = testList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question1 = (Question) o;
+        return id.equals(question1.id) &&
+                category.equals(question1.category) &&
+                question.equals(question1.question) &&
+                answers.equals(question1.answers) &&
+                correctAnswer.equals(question1.correctAnswer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, category, question, answers, correctAnswer);
     }
 }
