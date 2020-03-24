@@ -8,29 +8,21 @@
 <h1>This is a test!</h1>
 <div>
     <p>
-        <span th:text="${user}"></span>
+        <span th:text="${user}"></span><br>
+        <span th:text="${test.name}"></span>
     </p>
     <div>
         <form>
             <table>
-                <tr th:each="d: ${data}">
+                <tr th:each="d: ${test.questionList}">
                     <ol>
                         <p th:text="${d.question}"></p>
-                            <li type="a" th:each="a: ${d.answers}" th:text="${a.text}"></li>
+                            <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>
                             <p>Your answer : <input type="text"/></p>
                         <hr>
                     </ol>
                 </tr>
             </table>
-            <!--        <ol type="a" th:each="d: ${data}">-->
-            <!--            <p th:text="${d.question}"></p>-->
-            <!--            <li th:text="${d.answerA}"/>-->
-            <!--            <li th:text="${d.answerB}"/>-->
-            <!--            <li th:text="${d.answerC}"/>-->
-            <!--            <li th:text="${d.answerD}"/>-->
-            <!--            <p>Your answer : <input type="text"/></p>-->
-            <!--            <hr>-->
-            <!--        </ol>-->
             <p><input type="submit" value="Submit"/></p>
         </form>
     </div>

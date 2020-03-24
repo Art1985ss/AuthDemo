@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "question")
-@SecondaryTable(name = "user_question", pkJoinColumns = @PrimaryKeyJoinColumn(name = "question_id"))
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,17 +13,15 @@ public class Question {
     private String category;
     @Column(name = "question")
     private String question;
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
-    //@JoinTable(name = "question_options", inverseJoinColumns = {@JoinColumn(name = "question_id")})
-    private List<Answer> answers = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "question_answers",
+            joinColumns = @JoinColumn(name = "question_id"))
+    @Column(name = "answer")
+    private List<String> answers = new ArrayList<>();
     @Column(name = "correct_answer")
     private String correctAnswer;
-    @Column(table = "user_question", name = "answer")
-    private String studentAnswer;
-    @ManyToOne
-    @JoinColumn(table = "user_question", name = "user_id")
-    private User user;
-
+    @ManyToMany(mappedBy = "questionList", fetch = FetchType.LAZY)
+    private List<Test> testList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -50,12 +47,16 @@ public class Question {
         this.question = question;
     }
 
-    public List<Answer> getAnswers() {
+    public List<String> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
+    public void setAnswers(List<String> answers) {
         this.answers = answers;
+    }
+
+    public void addAnswer(String answer) {
+        answers.add(answer);
     }
 
     public String getCorrectAnswer() {
@@ -66,16 +67,11 @@ public class Question {
         this.correctAnswer = correctAnswer;
     }
 
-    public String getStudentAnswer() {
-        return studentAnswer;
+    public List<Test> getTestList() {
+        return testList;
     }
 
-    public void setStudentAnswer(String studentAnswer) {
-        this.studentAnswer = studentAnswer;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s\n", question);
+    public void setTestList(List<Test> testList) {
+        this.testList = testList;
     }
 }

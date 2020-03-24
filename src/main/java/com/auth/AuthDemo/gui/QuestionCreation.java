@@ -1,6 +1,5 @@
 package com.auth.AuthDemo.gui;
 
-import com.auth.AuthDemo.entity.Answer;
 import com.auth.AuthDemo.entity.Question;
 import com.auth.AuthDemo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +43,10 @@ public class QuestionCreation extends JPanel {
             Question question = new Question();
             question.setCategory(textFields[0].getText());
             question.setQuestion(textFields[1].getText());
-            List<Answer> answers = new ArrayList<>();
-            answers.add(new Answer(textFields[2].getText()));
-            answers.add(new Answer(textFields[3].getText()));
-            answers.add(new Answer(textFields[4].getText()));
-            answers.add(new Answer(textFields[5].getText()));
-            question.setAnswers(answers);
+            question.addAnswer(textFields[2].getText());
+            question.addAnswer(textFields[3].getText());
+            question.addAnswer(textFields[4].getText());
+            question.addAnswer(textFields[5].getText());
             question.setCorrectAnswer(textFields[6].getText());
             System.out.println(question);
             questionService.createQuestion(question);

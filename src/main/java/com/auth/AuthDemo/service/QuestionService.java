@@ -6,6 +6,7 @@ import com.auth.AuthDemo.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +27,6 @@ public class QuestionService {
 
     public List<Question> getStudentQuestions(String name){
         User user = studentService.findByName(name);
-        return user.getQuestionList();
+        return new ArrayList<>();
     }
 }
