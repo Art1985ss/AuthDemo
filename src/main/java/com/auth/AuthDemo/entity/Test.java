@@ -1,11 +1,14 @@
 package com.auth.AuthDemo.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "test")
+@SecondaryTable(name = "user_tests", pkJoinColumns = @PrimaryKeyJoinColumn(name = "test_id"))
 public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +22,8 @@ public class Test {
             joinColumns = @JoinColumn(name = "test_id"),
             inverseJoinColumns = @JoinColumn(name = "question_id"))
     private List<Question> questionList = new ArrayList<>();
-    @ManyToMany(mappedBy = "testList", fetch = FetchType.LAZY)
-    private List<User> userList = new ArrayList<>();
+    @OneToMany(mappedBy = "test")
+    private List<UserTests> userTests;
 
     public Long getId() {
         return id;
@@ -54,6 +57,42 @@ public class Test {
         this.questionList = questionList;
     }
 
+    public boolean addQuestion(Question question) {
+        return this.questionList.add(question);
+    }
+
+    public boolean removeQuestion(Question question) {
+        return questionList.remove(question);
+    }
+
+    public List<UserTests> getUserTests() {
+        return userTests;
+    }
+
+    public void setUserTests(List<UserTests> userTests) {
+        this.userTests = userTests;
+    }
+
+    public void updateUserScores() {
+        this.userTests.forEach(ut -> {
+            if (ut.isCompleted()) return;
+            BigDecimal score = this.getScore(ut.getUser());
+            if (score.compareTo(BigDecimal.ZERO) > 0){
+                ut.setCompleted(true);
+            }
+            ut.setScore(score);
+        });
+    }
+
+    public BigDecimal getScore(User user){
+        return questionList.stream().map(q -> {
+            if (q.getScore(user)) {
+                return BigDecimal.ONE;
+            } else {
+                return BigDecimal.ZERO;
+            }
+        }).reduce(BigDecimal.ZERO, BigDecimal::add).divide(new BigDecimal(questionList.size()), new MathContext(2));
+    }
 
     @Override
     public String toString() {

@@ -1,9 +1,11 @@
 package com.auth.AuthDemo.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity(name = "question")
 public class Question {
@@ -21,6 +23,8 @@ public class Question {
     private List<String> answers = new ArrayList<>();
     @Column(name = "correct_answer")
     private String correctAnswer;
+    @OneToMany(mappedBy = "question")
+    private List<UserAnswers> userAnswers;
     @ManyToMany(mappedBy = "questionList", fetch = FetchType.LAZY)
     private List<Test> testList = new ArrayList<>();
 
@@ -74,6 +78,31 @@ public class Question {
 
     public void setTestList(List<Test> testList) {
         this.testList = testList;
+    }
+
+    public boolean getResult(String providedAnswer) {
+        return correctAnswer.equalsIgnoreCase(providedAnswer);
+    }
+
+    public boolean getScore(User user) {
+        List<UserAnswers> correctAnswers = userAnswers.stream().filter(a -> {
+            LocalDate timeNow = LocalDate.now();
+            LocalDate timeAnswerProvided = a.getAnswerProvided();
+            return a.getUser().equals(user)
+                    && a.getAnswerProvided().getYear() == timeNow.getYear()
+                    && timeAnswerProvided.getDayOfYear() == timeNow.getDayOfYear()
+                    && a.getUserAnswer().equalsIgnoreCase(correctAnswer);
+
+        }).collect(Collectors.toList());
+        return !correctAnswers.isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                '}';
     }
 
     @Override

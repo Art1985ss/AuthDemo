@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-public class StudentService implements Service_<User> {
+public class UserService implements Service_<User> {
     private UserRepository userRepository;
 
     @Autowired
-    public StudentService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

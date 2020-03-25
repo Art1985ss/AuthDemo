@@ -31,6 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user").hasAnyRole("STUDENT", "ADMIN")
                 .antMatchers("/").permitAll()
                 .and().formLogin();
+//        http.formLogin().defaultSuccessUrl("/user").failureUrl("/test");
     }
 
     @Bean

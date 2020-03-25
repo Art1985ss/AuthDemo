@@ -14,11 +14,17 @@ public class User {
     private String name;
     @Column(name = "password")
     private String password;
+    @Column(name = "score")
+    private BigDecimal score;
     @ManyToMany
     @JoinTable(name = "user_tests",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "test_id"))
     private List<Test> testList;
+    @OneToMany(mappedBy = "user")
+    private List<UserTests> userTests;
+    @OneToMany(mappedBy = "user")
+    private List<UserAnswers> answers;
 
     public Long getId() {
         return id;
@@ -44,19 +50,20 @@ public class User {
         this.password = password;
     }
 
-    public List<Test> getTestList() {
-        return testList;
+    public List<UserTests> getUserTests() {
+        return userTests;
     }
 
-    public void setTestList(List<Test> testList) {
-        this.testList = testList;
+    public void setUserTests(List<UserTests> userTests) {
+        this.userTests = userTests;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", testList=" + testList +
+                ", userTests=" + userTests +
+//                ", answers=" + answers +
                 '}';
     }
 
