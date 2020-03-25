@@ -24,7 +24,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserTests> userTests;
     @OneToMany(mappedBy = "user")
-    private List<UserAnswers> answers;
+    private List<UserAnswer> answers;
 
     public Long getId() {
         return id;

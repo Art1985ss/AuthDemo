@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class Question {
     @Column(name = "correct_answer")
     private String correctAnswer;
     @OneToMany(mappedBy = "question")
-    private List<UserAnswers> userAnswers;
+    private List<UserAnswer> userAnswers;
     @ManyToMany(mappedBy = "questionList", fetch = FetchType.LAZY)
     private List<Test> testList = new ArrayList<>();
 
@@ -85,7 +86,7 @@ public class Question {
     }
 
     public boolean getScore(User user) {
-        List<UserAnswers> correctAnswers = userAnswers.stream().filter(a -> {
+        List<UserAnswer> correctAnswers = userAnswers.stream().filter(a -> {
             LocalDate timeNow = LocalDate.now();
             LocalDate timeAnswerProvided = a.getAnswerProvided();
             return a.getUser().equals(user)
@@ -95,6 +96,20 @@ public class Question {
 
         }).collect(Collectors.toList());
         return !correctAnswers.isEmpty();
+    }
+
+    public void setUserAnswer(User user, String answer) {
+        UserAnswer userAnswer = new UserAnswer();
+        userAnswer.setQuestion(this);
+        userAnswer.setUser(user);
+        userAnswer.setUserAnswer(answer);
+        userAnswer.setAnswerProvided(LocalDate.now());
+        userAnswers.add(userAnswer);
+    }
+
+    public String getUserAnswer(User user) throws NoSuchElementException {
+        return userAnswers.stream().filter(userAnswer -> userAnswer.getUser().equals(user)).findFirst()
+                .orElseThrow(() -> new NoSuchElementException(String.format("No answers were provided for question %s from user %s", this.getQuestion(), user.getName()))).getUserAnswer();
     }
 
     @Override

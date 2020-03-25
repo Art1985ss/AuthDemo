@@ -133,7 +133,7 @@ insert into test_questions (test_id, question_id) values
 (1, 1), (1, 2);
 
 insert into user_tests (user_id, test_id, score, completed) values 
-(2, 1, 10, true);
+(2, 1, 10, false);
 
 insert into user_answers (user_id, question_id, answer) values
 (1, 2, "d"),

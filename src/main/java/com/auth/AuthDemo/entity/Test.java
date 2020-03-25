@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Entity(name = "test")
@@ -76,22 +77,36 @@ public class Test {
     public void updateUserScores() {
         this.userTests.forEach(ut -> {
             if (ut.isCompleted()) return;
-            BigDecimal score = this.getScore(ut.getUser());
-            if (score.compareTo(BigDecimal.ZERO) > 0){
+            BigDecimal score = this.updateUserScore(ut.getUser());
+            if (score.compareTo(BigDecimal.ZERO) > 0) {
                 ut.setCompleted(true);
             }
             ut.setScore(score);
         });
     }
 
-    public BigDecimal getScore(User user){
-        return questionList.stream().map(q -> {
+    public BigDecimal updateUserScore(User user) {
+        BigDecimal score = questionList.stream().map(q -> {
             if (q.getScore(user)) {
                 return BigDecimal.ONE;
             } else {
                 return BigDecimal.ZERO;
             }
         }).reduce(BigDecimal.ZERO, BigDecimal::add).divide(new BigDecimal(questionList.size()), new MathContext(2));
+        this.setScore(user, score);
+        return score;
+    }
+
+    public BigDecimal getScore(User user) {
+        return userTests.stream().filter(ut -> ut.getUser().equals(user)).findFirst()
+                .orElseThrow(() -> new NoSuchElementException(String.format("No score for test %s from user %s", this.name, user.getName())))
+                .getScore();
+    }
+
+    public void setScore(User user, BigDecimal score){
+        userTests.stream().filter(ut-> ut.getUser().equals(user)).findFirst()
+                .orElseThrow(()-> new NoSuchElementException(String.format("User %s doesn't have test %s", user.getName(), this.name)))
+                .setScore(score);
     }
 
     @Override

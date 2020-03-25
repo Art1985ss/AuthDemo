@@ -1,5 +1,7 @@
 package com.auth.AuthDemo.web;
 
+import com.auth.AuthDemo.dto.DtoConverter;
+import com.auth.AuthDemo.dto.DtoTest;
 import com.auth.AuthDemo.entity.Test;
 import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.service.QuestionService;
@@ -36,9 +38,11 @@ public class MainPage {
         User user = userService.findById(2L);
         Test test = testService.findAll().get(0);
         test.updateUserScores();
+        DtoTest dtoTest = DtoConverter.toDto(user, test);
+        System.out.println(dtoTest);
         mav.addObject("question", questionService.findAll());
         mav.addObject("user", user.getUserTests().get(0).toString());
-        mav.addObject("test", testService.findAll().get(0));
+        mav.addObject("test", DtoConverter.toDto(user, test));
         mav.addObject("correct", questionService.findById(2L).getScore(user));
         mav.addObject("score", user.getUserTests());
         mav.setViewName("test");

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "user_answers")
-public class UserAnswers {
+public class UserAnswer {
     @Id
     private Long id;
     @ManyToOne
@@ -60,7 +60,7 @@ public class UserAnswers {
 
     @Override
     public String toString() {
-        return "UserAnswers{" +
+        return "UserAnswer{" +
                 "question=" + question.getId() +
                 ", userAnswer='" + userAnswer + '\'' +
                 '}';
