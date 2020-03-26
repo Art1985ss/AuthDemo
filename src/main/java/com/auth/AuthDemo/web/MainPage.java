@@ -10,11 +10,11 @@ import com.auth.AuthDemo.service.TestService;
 import com.auth.AuthDemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 
 @RestController
@@ -60,8 +60,20 @@ public class MainPage {
         TestKC testKC1 = DtoConverter.fromDto(user, dtoTestKC);
         System.out.println(testKC1);
         testService.update(testKC1);
+        //TODO button on this test view should send whole dtoTestKC to the /result view
         return mav;
     }
 
-    //TODO Add other methods
+    @GetMapping("/result")
+    @ResponseBody
+    public ModelAndView getResults(@RequestBody DtoTestKC dtoTestKC, Principal principal){
+        ModelAndView mav = new ModelAndView("result");
+        User user = userService.findByName(principal.getName());
+        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
+        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
+        mav.addObject("score", score);
+        mav.addObject("test", dtoTestKC);
+        //TODO this view needs to be created and this method should be called from localhost:8081/result
+        return mav;
+    }
 }
