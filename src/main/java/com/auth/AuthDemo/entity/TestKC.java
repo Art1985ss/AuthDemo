@@ -23,7 +23,7 @@ public class TestKC {
             joinColumns = @JoinColumn(name = "test_id"),
             inverseJoinColumns = @JoinColumn(name = "question_id"))
     private List<Question> questionList = new ArrayList<>();
-    @OneToMany(mappedBy = "test")
+    @OneToMany(mappedBy = "testKC")
     private List<UserTests> userTests;
 
     public Long getId() {
