@@ -1,7 +1,7 @@
 package com.auth.AuthDemo.web;
 
 import com.auth.AuthDemo.dto.DtoConverter;
-import com.auth.AuthDemo.dto.DtoTest;
+import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.service.QuestionService;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.math.BigDecimal;
 import java.security.Principal;
 
 @RestController
@@ -52,8 +51,8 @@ public class MainPage {
         User user = userService.findById(2L);
         TestKC testKC = testService.findAll().get(0);
         testKC.updateUserScores();
-        DtoTest dtoTest = DtoConverter.toDto(user, testKC);
-        System.out.println(dtoTest);
+        DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
+        System.out.println(dtoTestKC);
         mav.addObject("question", questionService.findAll());
         mav.addObject("user", user.getUserTests().get(0).toString());
         mav.addObject("testKC", DtoConverter.toDto(user, testKC));

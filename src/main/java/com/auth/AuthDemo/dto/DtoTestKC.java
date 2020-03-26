@@ -1,15 +1,14 @@
 package com.auth.AuthDemo.dto;
 
-import com.auth.AuthDemo.entity.Question;
-
-import java.math.BigDecimal;
+import com.auth.AuthDemo.entity.UserTests;
 import java.util.List;
 
-public class DtoTest {
+public class DtoTestKC {
     private Long id;
     private String name;
     private List<DtoQuestion> questionList;
-    private BigDecimal score;
+    private int duration;
+    private List<UserTests> userTests;
 
     public Long getId() {
         return id;
@@ -35,21 +34,19 @@ public class DtoTest {
         this.questionList = questionList;
     }
 
-    public BigDecimal getScore() {
-        return score;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setScore(BigDecimal score) {
-        this.score = score;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
-    @Override
-    public String toString() {
-        return "DtoTest{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", questionList=" + questionList +
-                ", score=" + score +
-                '}';
+    public List<UserTests> getUserTests() {
+        return userTests;
+    }
+
+    public void setUserTests(List<UserTests> userTests) {
+        this.userTests = userTests;
     }
 }

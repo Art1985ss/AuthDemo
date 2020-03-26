@@ -19,8 +19,6 @@ public class ScoreCalculationService {
     }
 
     public void updateUserScore(User user, TestKC testKC){
-        BigDecimal score = testKC.updateUserScore(user);
-        System.out.println(score);
     }
 
 }

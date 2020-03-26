@@ -16,11 +16,11 @@ public class User {
     private String password;
     @Column(name = "score")
     private BigDecimal score;
-    @ManyToMany
-    @JoinTable(name = "user_tests",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "test_id"))
-    private List<TestKC> testKCList;
+//    @ManyToMany
+//    @JoinTable(name = "user_tests",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "test_id"))
+//    private List<TestKC> testKCList;
     @OneToMany(mappedBy = "user")
     private List<UserTests> userTests;
     @OneToMany(mappedBy = "user")
@@ -44,6 +44,14 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public BigDecimal getScore() {
+        return score;
+    }
+
+    public void setScore(BigDecimal score) {
+        this.score = score;
     }
 
     public void setPassword(String password) {

@@ -74,6 +74,18 @@ public class TestKC {
         this.userTests = userTests;
     }
 
+    public boolean isCompleted(User user){
+        return userTests.stream().filter(ut-> ut.getUser().equals(user)).findFirst()
+                .orElseThrow(()-> new NoSuchElementException(String.format("No test %s found for user %s", this.getName(), user.getName())))
+                .isCompleted();
+    }
+
+    public void setCompleted(User user, boolean completed){
+        userTests.stream().filter(ut-> ut.getUser().equals(user)).findFirst()
+                .orElseThrow(()-> new NoSuchElementException(String.format("No test %s found for user %s", this.getName(), user.getName())))
+                .setCompleted(completed);
+    }
+
     public void updateUserScores() {
         this.userTests.forEach(ut -> {
             if (ut.isCompleted()) return;
