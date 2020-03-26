@@ -1,7 +1,7 @@
 package com.auth.AuthDemo.dto;
 
 import com.auth.AuthDemo.entity.Question;
-import com.auth.AuthDemo.entity.Test;
+import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
 
 import java.util.NoSuchElementException;
@@ -24,12 +24,12 @@ public class DtoConverter {
         return dtoQuestion;
     }
 
-    public static DtoTest toDto(User user, Test test) {
+    public static DtoTest toDto(User user, TestKC testKC) {
         DtoTest dtoTest = new DtoTest();
-        dtoTest.setId(test.getId());
-        dtoTest.setName(test.getName());
-        dtoTest.setQuestionList(test.getQuestionList().stream().map(q->toDto(user, q)).collect(Collectors.toList()));
-        dtoTest.setScore(test.getScore(user));
+        dtoTest.setId(testKC.getId());
+        dtoTest.setName(testKC.getName());
+        dtoTest.setQuestionList(testKC.getQuestionList().stream().map(q->toDto(user, q)).collect(Collectors.toList()));
+        dtoTest.setScore(testKC.getScore(user));
         return dtoTest;
     }
 

@@ -27,7 +27,7 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<UserAnswer> userAnswers;
     @ManyToMany(mappedBy = "questionList", fetch = FetchType.LAZY)
-    private List<Test> testList = new ArrayList<>();
+    private List<TestKC> testKCList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -73,12 +73,12 @@ public class Question {
         this.correctAnswer = correctAnswer;
     }
 
-    public List<Test> getTestList() {
-        return testList;
+    public List<TestKC> getTestKCList() {
+        return testKCList;
     }
 
-    public void setTestList(List<Test> testList) {
-        this.testList = testList;
+    public void setTestKCList(List<TestKC> testKCList) {
+        this.testKCList = testKCList;
     }
 
     public boolean getResult(String providedAnswer) {

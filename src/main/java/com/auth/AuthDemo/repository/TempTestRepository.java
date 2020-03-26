@@ -1,17 +1,17 @@
 package com.auth.AuthDemo.repository;
 
-import com.auth.AuthDemo.entity.Test;
+import com.auth.AuthDemo.entity.TestKC;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class TempTestRepository {
-    private Test test;
+    private TestKC testKC;
 
-    public Test getTest() {
-        return test;
+    public TestKC getTestKC() {
+        return testKC;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTestKC(TestKC testKC) {
+        this.testKC = testKC;
     }
 }

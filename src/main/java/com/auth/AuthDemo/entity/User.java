@@ -20,7 +20,7 @@ public class User {
     @JoinTable(name = "user_tests",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "test_id"))
-    private List<Test> testList;
+    private List<TestKC> testKCList;
     @OneToMany(mappedBy = "user")
     private List<UserTests> userTests;
     @OneToMany(mappedBy = "user")

@@ -12,7 +12,7 @@ public class UserTests {
     private User user;
     @ManyToOne
     @JoinColumn(name = "test_id")
-    private Test test;
+    private TestKC testKC;
     @Column(name = "score")
     private BigDecimal score;
     @Column(name = "completed")
@@ -34,12 +34,12 @@ public class UserTests {
         this.user = user;
     }
 
-    public Test getTest() {
-        return test;
+    public TestKC getTestKC() {
+        return testKC;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTestKC(TestKC testKC) {
+        this.testKC = testKC;
     }
 
     public BigDecimal getScore() {
@@ -61,7 +61,7 @@ public class UserTests {
     @Override
     public String toString() {
         return "UserTests{" +
-                "test=" + test +
+                "testKC=" + testKC +
                 ", score=" + score +
                 '}';
     }

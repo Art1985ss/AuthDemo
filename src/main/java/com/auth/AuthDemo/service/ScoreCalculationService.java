@@ -1,6 +1,6 @@
 package com.auth.AuthDemo.service;
 
-import com.auth.AuthDemo.entity.Test;
+import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,9 @@ public class ScoreCalculationService {
         this.testService = testService;
     }
 
-    public void updateUserScore(User user, Test test){
-        BigDecimal score = test.updateUserScore(user);
+    public void updateUserScore(User user, TestKC testKC){
+        BigDecimal score = testKC.updateUserScore(user);
         System.out.println(score);
     }
+
 }

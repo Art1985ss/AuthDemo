@@ -2,9 +2,10 @@ package com.auth.AuthDemo.web;
 
 import com.auth.AuthDemo.dto.DtoConverter;
 import com.auth.AuthDemo.dto.DtoTest;
-import com.auth.AuthDemo.entity.Test;
+import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.service.QuestionService;
+import com.auth.AuthDemo.service.ScoreCalculationService;
 import com.auth.AuthDemo.service.TestService;
 import com.auth.AuthDemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 
 @RestController
@@ -25,6 +27,8 @@ public class MainPage {
     private UserService userService;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    ScoreCalculationService scoreCalculationService;
 
     @GetMapping("")
     public ResponseEntity<String> getData(Principal principal){
@@ -32,20 +36,30 @@ public class MainPage {
         return ResponseEntity.ok("This is just test " + principal.getName());
     }
 
+    @GetMapping("result")
+    public ModelAndView showResults(Principal principal){
+        ModelAndView mav = new ModelAndView();
+        User user = userService.findById(2L);
+        TestKC testKC = testService.findAll().get(0);
+        //BigDecimal score = scoreCalculationService.updateUserScore(user, testKC);
+        mav.setViewName("resultTest");
+        return mav;
+    }
+
     @GetMapping("/user")
     public ModelAndView getUserData(Principal principal){
         ModelAndView mav = new ModelAndView();
         User user = userService.findById(2L);
-        Test test = testService.findAll().get(0);
-        test.updateUserScores();
-        DtoTest dtoTest = DtoConverter.toDto(user, test);
+        TestKC testKC = testService.findAll().get(0);
+        testKC.updateUserScores();
+        DtoTest dtoTest = DtoConverter.toDto(user, testKC);
         System.out.println(dtoTest);
         mav.addObject("question", questionService.findAll());
         mav.addObject("user", user.getUserTests().get(0).toString());
-        mav.addObject("test", DtoConverter.toDto(user, test));
+        mav.addObject("testKC", DtoConverter.toDto(user, testKC));
         mav.addObject("correct", questionService.findById(2L).getScore(user));
         mav.addObject("score", user.getUserTests());
-        mav.setViewName("test");
+        mav.setViewName("testKC");
         return mav;
     }
 

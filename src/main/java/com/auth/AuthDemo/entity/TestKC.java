@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity(name = "test")
 @SecondaryTable(name = "user_tests", pkJoinColumns = @PrimaryKeyJoinColumn(name = "test_id"))
-public class Test {
+public class TestKC {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -111,7 +111,7 @@ public class Test {
 
     @Override
     public String toString() {
-        return "Test{" +
+        return "TestKC{" +
                 "name='" + name + '\'' +
                 ", durationMinutes=" + durationMinutes +
                 ", questionList=" + questionList +
@@ -122,11 +122,11 @@ public class Test {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Test test = (Test) o;
-        return durationMinutes == test.durationMinutes &&
-                id.equals(test.id) &&
-                name.equals(test.name) &&
-                questionList.equals(test.questionList);
+        TestKC testKC = (TestKC) o;
+        return durationMinutes == testKC.durationMinutes &&
+                id.equals(testKC.id) &&
+                name.equals(testKC.name) &&
+                questionList.equals(testKC.questionList);
     }
 
     @Override
