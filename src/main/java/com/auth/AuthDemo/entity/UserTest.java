@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity(name = "user_tests")
-public class UserTests {
+public class UserTest {
     @Id
     private Long id;
     @ManyToOne
@@ -60,7 +60,7 @@ public class UserTests {
 
     @Override
     public String toString() {
-        return "UserTests{" +
+        return "UserTest{" +
                 "testKC=" + testKC +
                 ", score=" + score +
                 '}';

@@ -11,7 +11,6 @@
         <span th:text="${user}"></span><br>
         <span th:text="${question}"></span><br>
         <span th:text="${testKC.name}"></span><br>
-        <span th:text="${correct}"></span><br>
         <span th:text="${score}"></span><br>
     </p>
     <div>
@@ -22,6 +21,8 @@
                         <p th:text="${d.question}"></p>
                             <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>
                             <p>Your answer : <input type="text"/></p>
+                            <span th:text="${d.correctAnswer}"></span><br>
+                            <span th:text="${d.userAnswer}"></span><br>
                         <hr>
                     </ol>
                 </tr>

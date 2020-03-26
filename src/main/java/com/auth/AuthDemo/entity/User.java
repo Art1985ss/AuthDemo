@@ -1,7 +1,10 @@
 package com.auth.AuthDemo.entity;
 
+import org.graalvm.compiler.lir.LIRInstruction;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,15 +19,8 @@ public class User {
     private String password;
     @Column(name = "score")
     private BigDecimal score;
-//    @ManyToMany
-//    @JoinTable(name = "user_tests",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "test_id"))
-//    private List<TestKC> testKCList;
     @OneToMany(mappedBy = "user")
-    private List<UserTests> userTests;
-    @OneToMany(mappedBy = "user")
-    private List<UserAnswer> answers;
+    private List<UserTest> userTests = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -58,12 +54,20 @@ public class User {
         this.password = password;
     }
 
-    public List<UserTests> getUserTests() {
+    public List<UserTest> getUserTests() {
         return userTests;
     }
 
-    public void setUserTests(List<UserTests> userTests) {
+    public void setUserTests(List<UserTest> userTests) {
         this.userTests = userTests;
+    }
+
+    public void addTestKC(TestKC testKC){
+        UserTest userTest = new UserTest();
+        userTest.setCompleted(false);
+        userTest.setScore(BigDecimal.ZERO);
+        userTest.setTestKC(testKC);
+        userTests.add(userTest);
     }
 
     @Override

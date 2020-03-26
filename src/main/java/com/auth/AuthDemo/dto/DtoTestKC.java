@@ -1,6 +1,6 @@
 package com.auth.AuthDemo.dto;
 
-import com.auth.AuthDemo.entity.UserTests;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class DtoTestKC {
@@ -8,7 +8,8 @@ public class DtoTestKC {
     private String name;
     private List<DtoQuestion> questionList;
     private int duration;
-    private List<UserTests> userTests;
+    private BigDecimal score;
+    private boolean completed;
 
     public Long getId() {
         return id;
@@ -42,11 +43,31 @@ public class DtoTestKC {
         this.duration = duration;
     }
 
-    public List<UserTests> getUserTests() {
-        return userTests;
+    public BigDecimal getScore() {
+        return score;
     }
 
-    public void setUserTests(List<UserTests> userTests) {
-        this.userTests = userTests;
+    public void setScore(BigDecimal score) {
+        this.score = score;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    @Override
+    public String toString() {
+        return "DtoTestKC{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", duration=" + duration +
+                ", score=" + score +
+                ", completed=" + completed +
+                '}';
     }
 }
+

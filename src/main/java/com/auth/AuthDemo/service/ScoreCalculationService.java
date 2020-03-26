@@ -1,11 +1,11 @@
 package com.auth.AuthDemo.service;
 
-import com.auth.AuthDemo.entity.TestKC;
-import com.auth.AuthDemo.entity.User;
+import com.auth.AuthDemo.dto.DtoTestKC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 @Service
 public class ScoreCalculationService {
@@ -18,7 +18,17 @@ public class ScoreCalculationService {
         this.testService = testService;
     }
 
-    public void updateUserScore(User user, TestKC testKC){
+    public BigDecimal getTestScore(DtoTestKC dtoTestKC){
+        BigDecimal score = dtoTestKC.getQuestionList().stream().map(dtoQuestion -> {
+            if (dtoQuestion.getUserAnswer().equalsIgnoreCase(dtoQuestion.getCorrectAnswer()))
+                return BigDecimal.ONE;
+            else
+                return BigDecimal.ZERO;
+        }).reduce(BigDecimal.ZERO, BigDecimal::add).divide(new BigDecimal(dtoTestKC.getQuestionList().size()), new MathContext(2));
+        System.out.println(score);
+        dtoTestKC.setScore(score);
+        dtoTestKC.setCompleted(true);
+        return score;
     }
 
 }

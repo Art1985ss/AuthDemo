@@ -58,16 +58,4 @@ public class DtoQuestion {
     public void setUserAnswer(String userAnswer) {
         this.userAnswer = userAnswer;
     }
-
-    @Override
-    public String toString() {
-        return "DtoQuestion{" +
-                "id=" + id +
-                ", category='" + category + '\'' +
-                ", question='" + question + '\'' +
-                ", answers=" + answers +
-                ", correctAnswer='" + correctAnswer + '\'' +
-                ", userAnswer='" + userAnswer + '\'' +
-                '}';
-    }
 }

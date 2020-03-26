@@ -24,8 +24,6 @@ public class Question {
     private List<String> answers = new ArrayList<>();
     @Column(name = "correct_answer")
     private String correctAnswer;
-    @OneToMany(mappedBy = "question")
-    private List<UserAnswer> userAnswers;
     @ManyToMany(mappedBy = "questionList", fetch = FetchType.LAZY)
     private List<TestKC> testKCList = new ArrayList<>();
 
@@ -83,33 +81,6 @@ public class Question {
 
     public boolean getResult(String providedAnswer) {
         return correctAnswer.equalsIgnoreCase(providedAnswer);
-    }
-
-    public boolean getScore(User user) {
-        List<UserAnswer> correctAnswers = userAnswers.stream().filter(a -> {
-            LocalDate timeNow = LocalDate.now();
-            LocalDate timeAnswerProvided = a.getAnswerProvided();
-            return a.getUser().equals(user)
-                    && a.getAnswerProvided().getYear() == timeNow.getYear()
-                    && timeAnswerProvided.getDayOfYear() == timeNow.getDayOfYear()
-                    && a.getUserAnswer().equalsIgnoreCase(correctAnswer);
-
-        }).collect(Collectors.toList());
-        return !correctAnswers.isEmpty();
-    }
-
-    public void setUserAnswer(User user, String answer) {
-        UserAnswer userAnswer = new UserAnswer();
-        userAnswer.setQuestion(this);
-        userAnswer.setUser(user);
-        userAnswer.setUserAnswer(answer);
-        userAnswer.setAnswerProvided(LocalDate.now());
-        userAnswers.add(userAnswer);
-    }
-
-    public String getUserAnswer(User user) throws NoSuchElementException {
-        return userAnswers.stream().filter(userAnswer -> userAnswer.getUser().equals(user)).findFirst()
-                .orElseThrow(() -> new NoSuchElementException(String.format("No answers were provided for question %s from user %s", this.getQuestion(), user.getName()))).getUserAnswer();
     }
 
     @Override

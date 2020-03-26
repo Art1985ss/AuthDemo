@@ -50,15 +50,16 @@ public class MainPage {
         ModelAndView mav = new ModelAndView();
         User user = userService.findById(2L);
         TestKC testKC = testService.findAll().get(0);
-        testKC.updateUserScores();
         DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
         System.out.println(dtoTestKC);
         mav.addObject("question", questionService.findAll());
-        mav.addObject("user", user.getUserTests().get(0).toString());
-        mav.addObject("testKC", DtoConverter.toDto(user, testKC));
-        mav.addObject("correct", questionService.findById(2L).getScore(user));
-        mav.addObject("score", user.getUserTests());
-        mav.setViewName("testKC");
+        mav.addObject("user", user.getName());
+        mav.addObject("testKC", dtoTestKC);
+        mav.addObject("score", scoreCalculationService.getTestScore(dtoTestKC));
+        mav.setViewName("test");
+        TestKC testKC1 = DtoConverter.fromDto(user, dtoTestKC);
+        System.out.println(testKC1);
+        testService.update(testKC1);
         return mav;
     }
 

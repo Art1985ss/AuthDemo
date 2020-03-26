@@ -3,10 +3,7 @@ package com.auth.AuthDemo.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 @Entity(name = "test")
 @SecondaryTable(name = "user_tests", pkJoinColumns = @PrimaryKeyJoinColumn(name = "test_id"))
@@ -24,7 +21,7 @@ public class TestKC {
             inverseJoinColumns = @JoinColumn(name = "question_id"))
     private List<Question> questionList = new ArrayList<>();
     @OneToMany(mappedBy = "testKC")
-    private List<UserTests> userTests;
+    private Set<UserTest> userTests = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -66,11 +63,11 @@ public class TestKC {
         return questionList.remove(question);
     }
 
-    public List<UserTests> getUserTests() {
+    public Set<UserTest> getUserTests() {
         return userTests;
     }
 
-    public void setUserTests(List<UserTests> userTests) {
+    public void setUserTests(Set<UserTest> userTests) {
         this.userTests = userTests;
     }
 
@@ -86,39 +83,19 @@ public class TestKC {
                 .setCompleted(completed);
     }
 
-    public void updateUserScores() {
-        this.userTests.forEach(ut -> {
-            if (ut.isCompleted()) return;
-            BigDecimal score = this.updateUserScore(ut.getUser());
-            if (score.compareTo(BigDecimal.ZERO) > 0) {
-                ut.setCompleted(true);
-            }
-            ut.setScore(score);
-        });
-    }
-
-    public BigDecimal updateUserScore(User user) {
-        BigDecimal score = questionList.stream().map(q -> {
-            if (q.getScore(user)) {
-                return BigDecimal.ONE;
-            } else {
-                return BigDecimal.ZERO;
-            }
-        }).reduce(BigDecimal.ZERO, BigDecimal::add).divide(new BigDecimal(questionList.size()), new MathContext(2));
-        this.setScore(user, score);
-        return score;
-    }
-
-    public BigDecimal getScore(User user) {
-        return userTests.stream().filter(ut -> ut.getUser().equals(user)).findFirst()
-                .orElseThrow(() -> new NoSuchElementException(String.format("No score for test %s from user %s", this.name, user.getName())))
-                .getScore();
-    }
-
     public void setScore(User user, BigDecimal score){
-        userTests.stream().filter(ut-> ut.getUser().equals(user)).findFirst()
-                .orElseThrow(()-> new NoSuchElementException(String.format("User %s doesn't have test %s", user.getName(), this.name)))
-                .setScore(score);
+        UserTest userTest = userTests.stream().filter(ut-> ut.getUser().equals(user)).findFirst().orElse(createUserTest(user));
+        userTest.setScore(score);
+        userTests.add(userTest);
+    }
+
+    private UserTest createUserTest(User user){
+        UserTest userTest = new UserTest();
+        userTest.setUser(user);
+        userTest.setTestKC(this);
+        userTest.setCompleted(true);
+        userTest.setScore(BigDecimal.ZERO);
+        return userTest;
     }
 
     @Override

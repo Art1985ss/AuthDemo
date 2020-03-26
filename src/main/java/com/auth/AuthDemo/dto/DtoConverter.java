@@ -4,7 +4,6 @@ import com.auth.AuthDemo.entity.Question;
 import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
 
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class DtoConverter {
@@ -15,12 +14,8 @@ public class DtoConverter {
         dtoQuestion.setCategory(question.getCategory());
         dtoQuestion.setQuestion(question.getQuestion());
         dtoQuestion.setAnswers(question.getAnswers());
+        dtoQuestion.setUserAnswer("");
         dtoQuestion.setCorrectAnswer(question.getCorrectAnswer());
-        try{
-            dtoQuestion.setUserAnswer(question.getUserAnswer(user));
-        }catch (NoSuchElementException e){
-            dtoQuestion.setUserAnswer("");
-        }
         return dtoQuestion;
     }
 
@@ -30,7 +25,7 @@ public class DtoConverter {
         dtoTestKC.setName(testKC.getName());
         dtoTestKC.setDuration(testKC.getDurationMinutes());
         dtoTestKC.setQuestionList(testKC.getQuestionList().stream().map(q->toDto(user, q)).collect(Collectors.toList()));
-        dtoTestKC.setUserTests(testKC.getUserTests());
+        dtoTestKC.setCompleted(testKC.isCompleted(user));
         return dtoTestKC;
     }
 
@@ -47,9 +42,9 @@ public class DtoConverter {
     public static Question fromDto(User user, DtoQuestion dtoQuestion){
         Question question = new Question();
         question.setId(dtoQuestion.getId());
+        question.setCategory(dtoQuestion.getCategory());
         question.setQuestion(dtoQuestion.getQuestion());
         question.setAnswers(dtoQuestion.getAnswers());
-        question.setUserAnswer(user, dtoQuestion.getUserAnswer());
         question.setCorrectAnswer(dtoQuestion.getCorrectAnswer());
         return question;
     }
@@ -60,7 +55,8 @@ public class DtoConverter {
         testKC.setName(dtoTestKC.getName());
         testKC.setDurationMinutes(dtoTestKC.getDuration());
         testKC.setQuestionList(dtoTestKC.getQuestionList().stream().map(q-> fromDto(user, q)).collect(Collectors.toList()));
-        testKC.setUserTests(dtoTestKC.getUserTests());
+        testKC.setScore(user, dtoTestKC.getScore());
+        testKC.setCompleted(user, dtoTestKC.isCompleted());
         return testKC;
     }
 
