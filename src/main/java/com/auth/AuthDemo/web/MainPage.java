@@ -71,6 +71,7 @@ public class MainPage {
         User user = userService.findByName(principal.getName());
         BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
         TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
+        testService.update(testKC);
         mav.addObject("score", score);
         mav.addObject("test", dtoTestKC);
         //TODO this view needs to be created and this method should be called from localhost:8081/result
