@@ -25,7 +25,6 @@ public class ScoreCalculationService {
             else
                 return BigDecimal.ZERO;
         }).reduce(BigDecimal.ZERO, BigDecimal::add).divide(new BigDecimal(dtoTestKC.getQuestionList().size()), new MathContext(2));
-        System.out.println(score);
         dtoTestKC.setScore(score);
         dtoTestKC.setCompleted(true);
         return score;

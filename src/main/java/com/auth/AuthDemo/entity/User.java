@@ -62,12 +62,8 @@ public class User {
         this.userTests = userTests;
     }
 
-    public void addTestKC(TestKC testKC){
-        UserTest userTest = new UserTest();
-        userTest.setCompleted(false);
-        userTest.setScore(BigDecimal.ZERO);
-        userTest.setTestKC(testKC);
-        userTests.add(userTest);
+    public boolean addTest(UserTest userTest){
+        return userTests.add(userTest);
     }
 
     @Override

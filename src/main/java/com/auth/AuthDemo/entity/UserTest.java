@@ -2,6 +2,7 @@ package com.auth.AuthDemo.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity(name = "user_tests")
 public class UserTest {
@@ -64,5 +65,20 @@ public class UserTest {
                 "testKC=" + testKC +
                 ", score=" + score +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserTest userTest = (UserTest) o;
+        return id.equals(userTest.id) &&
+                user.equals(userTest.user) &&
+                testKC.equals(userTest.testKC);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, testKC);
     }
 }

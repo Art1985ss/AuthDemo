@@ -71,6 +71,15 @@ public class TestKC {
         this.userTests = userTests;
     }
 
+    public boolean addUserTest(UserTest userTest){
+        return this.userTests.add(userTest);
+    }
+
+    public UserTest getUserTest(User user){
+        return this.userTests.stream().filter(userTest -> userTest.getUser().equals(user)).findFirst()
+                .orElseThrow(()-> new NoSuchElementException(String.format("No test %s were registered for user %s", this.name, user.getName())));
+    }
+
     public boolean isCompleted(User user){
         return userTests.stream().filter(ut-> ut.getUser().equals(user)).findFirst()
                 .orElseThrow(()-> new NoSuchElementException(String.format("No test %s found for user %s", this.getName(), user.getName())))
@@ -81,12 +90,6 @@ public class TestKC {
         userTests.stream().filter(ut-> ut.getUser().equals(user)).findFirst()
                 .orElseThrow(()-> new NoSuchElementException(String.format("No test %s found for user %s", this.getName(), user.getName())))
                 .setCompleted(completed);
-    }
-
-    public void setScore(User user, BigDecimal score){
-        UserTest userTest = userTests.stream().filter(ut-> ut.getUser().equals(user)).findFirst().orElse(createUserTest(user));
-        userTest.setScore(score);
-        userTests.add(userTest);
     }
 
     private UserTest createUserTest(User user){
