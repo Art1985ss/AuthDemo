@@ -35,7 +35,7 @@ public class HomeController {
         return ResponseEntity.ok("This is just test " + principal.getName());
     }
 
-    @GetMapping("/home")
+    @GetMapping("/test")
     public ModelAndView getUserData(Principal principal){
         //String txt = String.format("%s", dataService.getData(principal.getName()));
         ModelAndView mav = new ModelAndView();
@@ -49,20 +49,9 @@ public class HomeController {
         mav.addObject("score", scoreCalculationService.getTestScore(dtoTestKC));
         mav.addObject("dtoQuestion", dtoTestKC.getQuestionList().get(0));
 
-
-
-
-
-        // public String currentSettings(Model model) {
         DtoPropertiesForm form = new DtoPropertiesForm();
         form.setProperties(dtoTestKC.getQuestionList());
         mav.addObject("form", form);
-
-
-
-
-
-
         mav.setViewName("test");
         TestKC testKC1 = DtoConverter.fromDto(user, dtoTestKC);
         System.out.println(testKC1);
