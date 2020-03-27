@@ -36,15 +36,15 @@ public class MainPage {
         return ResponseEntity.ok("This is just test " + principal.getName());
     }
 
-    @GetMapping("result")
-    public ModelAndView showResults(Principal principal){
-        ModelAndView mav = new ModelAndView();
-        User user = userService.findById(2L);
-        TestKC testKC = testService.findAll().get(0);
-        //BigDecimal score = scoreCalculationService.updateUserScore(user, testKC);
-        mav.setViewName("resultTest");
-        return mav;
-    }
+//    @GetMapping("result")
+//    public ModelAndView showResults(Principal principal){
+//        ModelAndView mav = new ModelAndView();
+//        User user = userService.findById(2L);
+//        TestKC testKC = testService.findAll().get(0);
+//        //BigDecimal score = scoreCalculationService.updateUserScore(user, testKC);
+//        mav.setViewName("resultTest");
+//        return mav;
+//    }
 
     @GetMapping("/user")
     public ModelAndView getUserData(Principal principal){
@@ -57,6 +57,22 @@ public class MainPage {
         mav.addObject("user", user.getName());
         mav.addObject("testKC", dtoTestKC);
         mav.addObject("score", scoreCalculationService.getTestScore(dtoTestKC));
+        mav.addObject("dtoQuestion", dtoTestKC.getQuestionList().get(0));
+
+
+
+
+
+        // public String currentSettings(Model model) {
+        PropertiesForm form = new PropertiesForm();
+        form.setProperties(dtoTestKC.getQuestionList());
+        mav.addObject("form", form);
+
+
+
+
+
+
         mav.setViewName("test");
         TestKC testKC1 = DtoConverter.fromDto(user, dtoTestKC);
         System.out.println(testKC1);
@@ -65,28 +81,31 @@ public class MainPage {
         return mav;
     }
 
-    @GetMapping("/result")
+    @PostMapping("/result")
     @ResponseBody
-    public ModelAndView getResults(@RequestBody DtoTestKC dtoTestKC, Principal principal){
-        ModelAndView mav = new ModelAndView("result");
+    public ModelAndView getResults(@ModelAttribute("form") PropertiesForm form, Principal principal){
+        ModelAndView mav = new ModelAndView("resulttest");
         User user = userService.findByName(principal.getName());
-        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
-        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
-        testService.update(testKC);
-        mav.addObject("score", score);
-        mav.addObject("test", dtoTestKC);
+//        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
+//        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
+//        testService.update(testKC);
+//        mav.addObject("score", score);
+//        mav.addObject("test", dtoTestKC);
         //TODO this view needs to be created and this method should be called from localhost:8081/result
         return mav;
     }
 
-    @GetMapping("/test/{testId}/question/{questionNum}")
-    public ModelAndView showQuestion(@PathVariable("testId") Long testId, @PathVariable int questionNum, Principal principal){
-        TestKC testKC = testService.findById(testId);
-        User user = userService.findByName(principal.getName());
-        DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
-        DtoQuestion dtoQuestion =  dtoTestKC.getQuestionList().get(questionNum);
-        ModelAndView mav = new ModelAndView("question");
-        mav.addObject("question", dtoQuestion);
-        return mav;
-    }
+//    @PostMapping("/result")
+//    @ResponseBody
+//    public ModelAndView getResults(@ModelAttribute("dtoQuestion") DtoQuestion dtoQuestion, Principal principal){
+//        ModelAndView mav = new ModelAndView("resulttest");
+//        User user = userService.findByName(principal.getName());
+////        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
+////        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
+////        testService.update(testKC);
+////        mav.addObject("score", score);
+////        mav.addObject("test", dtoTestKC);
+//        //TODO this view needs to be created and this method should be called from localhost:8081/result
+//        return mav;
+//    }
 }
