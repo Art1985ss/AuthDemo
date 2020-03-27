@@ -8,28 +8,29 @@
 <h1>This is a testKC!</h1>
 <div>
     <p>
-        <span th:text="${'Question was:' + dtoQuestion.question}"></span><br>
-        <span th:text="${'User has answered: ' + dtoQuestion.userAnswer}"></span><br>
+        <span th:text="${'Question was:' + form.getProperties().entrySet()}"></span><br>
+<!--        <span th:text="${'User has answered: ' + dtoQuestion.userAnswer}"></span><br>-->
 <!--        <span th:text="${question}"></span><br>-->
 <!--        <span th:text="${testKC.name}"></span><br>-->
 <!--        <span th:text="${correct}"></span><br>-->
 <!--        <span th:text="${score}"></span><br>-->
     </p>
-<!--    <div>-->
-<!--        <form>-->
-<!--            <table>-->
-<!--                <tr th:each="d: ${testKC.questionList}">-->
-<!--                    <ol>-->
-<!--                        <p th:text="${d.question}"></p>-->
+
+    <div>
+        <form>
+            <table>
+                <tr th:each="member: ${form.getProperties().entrySet()}">
+                    <ol>
+                        <p th:text="${member.getKey() + '  ' + member.getValue()}"></p>
 <!--                            <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>-->
 <!--                            <p>Your answer : <input type="text"/></p>-->
-<!--                        <hr>-->
-<!--                    </ol>-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--            <p><input type="submit" value="Submit"/></p>-->
-<!--        </form>-->
-<!--    </div>-->
+                        <hr>
+                    </ol>
+                </tr>
+            </table>
+            <p><input type="submit" value="Submit"/></p>
+        </form>
+    </div>
 </div>
 </body>
 </html>
