@@ -20,7 +20,7 @@ class StudentServiceTest {
     private UserRepository userRepository;
 
     private User user;
-    private StudentService studentService;
+    private UserService studentService;
     private final long expectedId = 12L;
 
     @BeforeEach
@@ -29,7 +29,7 @@ class StudentServiceTest {
 
         user = new User();
         user.setId(expectedId);
-        studentService = new StudentService(userRepository);
+        studentService = new UserService(userRepository);
     }
 
     @AfterEach
