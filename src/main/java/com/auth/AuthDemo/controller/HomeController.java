@@ -35,6 +35,14 @@ public class HomeController {
         return ResponseEntity.ok("This is just test " + principal.getName());
     }
 
+    @GetMapping("/login")
+    public ModelAndView getLoginData(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("login");
+        return mav;
+    }
+
+
     @GetMapping("/test/{testId}")
     public ModelAndView getUserData(@PathVariable("testId") Long testId, Principal principal){
         //String txt = String.format("%s", dataService.getData(principal.getName()));

@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -15,6 +16,9 @@ import javax.sql.DataSource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
+
+    @Autowired
+    private SimpleAuthenticationSuccessHandler successHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -27,10 +31,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/user").hasAnyRole("STUDENT", "ADMIN")
-                .antMatchers("/").permitAll()
-                .and().formLogin();
+        http.csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("**/login"))
+                .and().authorizeRequests()
+                .antMatchers("/user").hasRole("STUDENT")
+                .antMatchers("/admin").hasRole("ADMIN")
+//                .antMatchers("/").permitAll()
+                .and().formLogin().successHandler(successHandler)
+                .loginPage("/login").and().logout().permitAll();
 //        http.formLogin().defaultSuccessUrl("/user").failureUrl("/test");
     }
 
