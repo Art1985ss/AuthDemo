@@ -1,6 +1,6 @@
 package com.auth.AuthDemo.entity;
 
-import org.graalvm.compiler.lir.LIRInstruction;
+//import org.graalvm.compiler.lir.LIRInstruction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

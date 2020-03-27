@@ -14,13 +14,13 @@
         <span th:text="${score}"></span><br>
     </p>
     <div>
-        <form>
+        <form th:action="@{/result}" method="post">
             <table>
                 <tr th:each="d: ${testKC.questionList}">
                     <ol>
                         <p th:text="${d.question}"></p>
                             <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>
-                            <p>Your answer : <input type="text"/></p>
+                            <p>Your answer : <input type="text" th:field="*{dtoQuestion.userAnswer}" placeholder="answer"/></p>
                             <span th:text="${d.correctAnswer}"></span><br>
                             <span th:text="${d.userAnswer}"></span><br>
                         <hr>
