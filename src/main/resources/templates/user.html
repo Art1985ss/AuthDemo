@@ -55,13 +55,13 @@
                 <tr>
                     <th>Test Name</th>
                     <th>Test Id</th>
-                    <th>Test Score</th>
+                    <th>Test Duration</th>
                 </tr>
                 <tr th:each="testkc: ${user.userTests}">>
                     <td th:text="${testkc.testKC.id}"></td>
 
-                    <td ><a th:href="@{/test}" th:text="${testkc.testKC.name}"></a></td>
-                    <td th:text="${testkc.score}"></td>
+                    <td ><a th:href="@{'/test/' + ${testkc.getId()}}" th:text="${testkc.testKC.name}"></a></td>
+                    <td th:text="${testkc.testKC.durationMinutes}"></td>
                 </tr>
             </table>
 
