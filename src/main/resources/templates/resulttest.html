@@ -5,31 +5,26 @@
     <title>Title</title>
 </head>
 <body>
-<h1>This is a testKC!</h1>
+<h1>These are results</h1>
 <div>
     <p>
-        <span th:text="${'Question was:' + form.getProperties().entrySet()}"></span><br>
-<!--        <span th:text="${'User has answered: ' + dtoQuestion.userAnswer}"></span><br>-->
-<!--        <span th:text="${question}"></span><br>-->
-<!--        <span th:text="${testKC.name}"></span><br>-->
-<!--        <span th:text="${correct}"></span><br>-->
-<!--        <span th:text="${score}"></span><br>-->
+        <span th:text="${'These are results for test #' + dtoTestKC.name }"></span><br>
+        <span th:text="${'Congrats you scored:'  + dtoTestKC.score + ' points!'}"></span><br>
     </p>
 
     <div>
-        <form>
-            <table>
-                <tr th:each="member: ${form.getProperties().entrySet()}">
-                    <ol>
-                        <p th:text="${member.getKey() + '  ' + member.getValue()}"></p>
-<!--                            <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>-->
-<!--                            <p>Your answer : <input type="text"/></p>-->
-                        <hr>
-                    </ol>
-                </tr>
-            </table>
-            <p><input type="submit" value="Submit"/></p>
-        </form>
+        <table>
+            <tr th:each="d: ${dtoTestKC.questionList}">
+                <ol>
+                    <p th:text="${ d.id + '. ' + d.question}"></p>
+                    <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>
+                    <hr>
+                    <span th:text="${'The correct answer to question #' + d.id + ' is - ' + d.correctAnswer}"></span><br>
+                    <span th:text="${'Your answer is - ' + d.userAnswer}"></span><br>
+                    <hr>
+                </ol>
+            </tr>
+        </table>
     </div>
 </div>
 </body>

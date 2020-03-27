@@ -60,8 +60,8 @@
                 <tr th:each="testkc: ${user.userTests}">>
                     <td th:text="${testkc.testKC.id}"></td>
 
-                    <td ><a th:href="@{/home}" th:text="${testkc.testKC.name}"></a></td>
-                    <td th:text="${testkc.testKC.durationMinutes}"></td>
+                    <td ><a th:href="@{/test}" th:text="${testkc.testKC.name}"></a></td>
+                    <td th:text="${testkc.score}"></td>
                 </tr>
             </table>
 
