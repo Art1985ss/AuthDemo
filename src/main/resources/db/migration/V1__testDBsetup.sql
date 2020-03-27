@@ -113,6 +113,9 @@ insert into authorities (user_id, authority) values (1, "ROLE_STUDENT");
 insert into user (name, password, enabled) values ("Test2", "test", true);
 insert into authorities (user_id, authority) values (2, "ROLE_STUDENT");
 
+insert into user (name, password, enabled) values ("admin", "admin", true);
+insert into authorities (user_id, authority) values (3, "ROLE_ADMIN");
+
 insert into question(category, question, correct_answer) 
 values ("slq", "Just choose answer c", "c"),
 ("data", "Here you need to chose answer d", "d");
