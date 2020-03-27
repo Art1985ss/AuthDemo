@@ -24,17 +24,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/admin")
-    public ModelAndView getAdminData(){
-
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("admin");
-
-        //TODO button on this test view should send whole dtoTestKC to the /result view
-        return mav;
-    }
-
     @GetMapping("/user")
     public ModelAndView getTestDate (Principal principal){
         ModelAndView modelAndView = new ModelAndView();
