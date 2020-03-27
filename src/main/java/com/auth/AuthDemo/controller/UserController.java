@@ -1,5 +1,7 @@
 package com.auth.AuthDemo.controller;
 
+import com.auth.AuthDemo.dto.DtoConverter;
+import com.auth.AuthDemo.dto.DtoUser;
 import com.auth.AuthDemo.service.UserService;
 import com.auth.AuthDemo.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,9 @@ public class UserController {
     @GetMapping("/user")
     public ModelAndView getTestDate (Principal principal){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", principal.getName());
+
+        DtoUser dtoUser = DtoConverter.toDto(userService.findByName(principal.getName()));
+        modelAndView.addObject("user", dtoUser);
         modelAndView.addObject("test", testService.findAll());
         modelAndView.setViewName("user");
         return modelAndView;

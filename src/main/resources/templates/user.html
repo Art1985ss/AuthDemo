@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -11,7 +11,7 @@
     <title>Accenture Java Bootcamp</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
 </head>
 
@@ -47,12 +47,25 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12 text-center">
-            <h1 class="mt-5">This is user dashboard</h1>
-            <p class="lead">here is supposed to be everything user can see about himself.</p>
-            <ul class="list-unstyled">
-                <li>user score ?</li>
-                <li>list of tests?</li>
-            </ul>
+            <h1 class="mt-5" th:text="${'This is user''s ' + user.name + ' dashboard!'}"/>
+            <p class="lead" th:text="${'And your current test score is: ' + user.score}"/>
+
+
+            <table>
+                <tr>
+                    <th>Test Name</th>
+                    <th>Test Id</th>
+                    <th>Test Score</th>
+                </tr>
+                <tr th:each="testkc: ${user.userTests}">>
+                    <td th:text="${testkc.testKC.id}"></td>
+
+                    <td ><a th:href="@{/home}" th:text="${testkc.testKC.name}"></a></td>
+                    <td th:text="${testkc.testKC.durationMinutes}"></td>
+                </tr>
+            </table>
+
+
         </div>
     </div>
 </div>

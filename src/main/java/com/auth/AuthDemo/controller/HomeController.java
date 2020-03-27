@@ -49,20 +49,9 @@ public class HomeController {
         mav.addObject("score", scoreCalculationService.getTestScore(dtoTestKC));
         mav.addObject("dtoQuestion", dtoTestKC.getQuestionList().get(0));
 
-
-
-
-
-        // public String currentSettings(Model model) {
         DtoPropertiesForm form = new DtoPropertiesForm();
         form.setProperties(dtoTestKC.getQuestionList());
         mav.addObject("form", form);
-
-
-
-
-
-
         mav.setViewName("test");
         TestKC testKC1 = DtoConverter.fromDto(user, dtoTestKC);
         System.out.println(testKC1);
