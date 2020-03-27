@@ -59,11 +59,13 @@ public class DtoTestKC {
         this.completed = completed;
     }
 
+
     @Override
     public String toString() {
         return "DtoTestKC{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", questionList=" + questionList +
                 ", duration=" + duration +
                 ", score=" + score +
                 ", completed=" + completed +

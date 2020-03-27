@@ -58,4 +58,13 @@ public class DtoQuestion {
     public void setUserAnswer(String userAnswer) {
         this.userAnswer = userAnswer;
     }
+
+    @Override
+    public String toString() {
+        return "DtoQuestion{" +
+                "question='" + question + '\'' +
+                ", correctAnswer='" + correctAnswer + '\'' +
+                ", userAnswer='" + userAnswer + '\'' +
+                '}';
+    }
 }

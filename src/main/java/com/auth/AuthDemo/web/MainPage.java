@@ -1,6 +1,7 @@
 package com.auth.AuthDemo.web;
 
 import com.auth.AuthDemo.dto.DtoConverter;
+import com.auth.AuthDemo.dto.DtoPropertiesForm;
 import com.auth.AuthDemo.dto.DtoQuestion;
 import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.entity.TestKC;
@@ -11,11 +12,9 @@ import com.auth.AuthDemo.service.TestService;
 import com.auth.AuthDemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.math.BigDecimal;
 import java.security.Principal;
 
 @RestController
@@ -64,7 +63,7 @@ public class MainPage {
 
 
         // public String currentSettings(Model model) {
-        PropertiesForm form = new PropertiesForm();
+        DtoPropertiesForm form = new DtoPropertiesForm();
         form.setProperties(dtoTestKC.getQuestionList());
         mav.addObject("form", form);
 
@@ -83,9 +82,15 @@ public class MainPage {
 
     @PostMapping("/result")
     @ResponseBody
-    public ModelAndView getResults(@ModelAttribute("form") PropertiesForm form, Principal principal){
+    public ModelAndView getResults(@ModelAttribute("form") DtoPropertiesForm form, Principal principal){
         ModelAndView mav = new ModelAndView("resulttest");
+        TestKC testKC = testService.findById(1L);
         User user = userService.findByName(principal.getName());
+        DtoTestKC dtoTestKC = DtoConverter.toDto(user ,testKC);
+        System.out.println(dtoTestKC);
+        DtoConverter.setAnswers(dtoTestKC, form);
+        scoreCalculationService.getTestScore(dtoTestKC);
+        System.out.println(DtoConverter.setAnswers(dtoTestKC, form));
 //        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
 //        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
 //        testService.update(testKC);
@@ -108,4 +113,16 @@ public class MainPage {
 //        //TODO this view needs to be created and this method should be called from localhost:8081/result
 //        return mav;
 //    }
+
+
+    @GetMapping("/test/{testId}/question/{questionNum}")
+    public ModelAndView showQuestion(@PathVariable("testId") Long testId, @PathVariable int questionNum, Principal principal){
+        TestKC testKC = testService.findById(testId);
+        User user = userService.findByName(principal.getName());
+        DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
+        DtoQuestion dtoQuestion =  dtoTestKC.getQuestionList().get(questionNum);
+        ModelAndView mav = new ModelAndView("question");
+        mav.addObject("question", dtoQuestion);
+        return mav;
+    }
 }

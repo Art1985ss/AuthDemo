@@ -70,4 +70,12 @@ public class DtoConverter {
         return user;
     }
 
+
+    public static DtoTestKC setAnswers(DtoTestKC dtoTestKC, DtoPropertiesForm form){
+        dtoTestKC.getQuestionList().forEach(dtoQuestion -> form.getProperties().forEach((key, value) -> {
+            if (key.equals(dtoQuestion.getId()))
+                dtoQuestion.setUserAnswer(value);
+        }));
+        return dtoTestKC;
+    }
 }
