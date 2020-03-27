@@ -35,12 +35,12 @@ public class HomeController {
         return ResponseEntity.ok("This is just test " + principal.getName());
     }
 
-    @GetMapping("/test")
-    public ModelAndView getUserData(Principal principal){
+    @GetMapping("/test/{testId}")
+    public ModelAndView getUserData(@PathVariable("testId") Long testId, Principal principal){
         //String txt = String.format("%s", dataService.getData(principal.getName()));
         ModelAndView mav = new ModelAndView();
         User user = userService.findById(2L);
-        TestKC testKC = testService.findAll().get(0);
+        TestKC testKC = testService.findById(testId);
         DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
         System.out.println(dtoTestKC);
         mav.addObject("question", questionService.findAll());
@@ -82,14 +82,14 @@ public class HomeController {
     }
 
 
-    @GetMapping("/test/{testId}/question/{questionNum}")
-    public ModelAndView showQuestion(@PathVariable("testId") Long testId, @PathVariable int questionNum, Principal principal){
-        TestKC testKC = testService.findById(testId);
-        User user = userService.findByName(principal.getName());
-        DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
-        DtoQuestion dtoQuestion =  dtoTestKC.getQuestionList().get(questionNum);
-        ModelAndView mav = new ModelAndView("question");
-        mav.addObject("question", dtoQuestion);
-        return mav;
-    }
+//    @GetMapping("/test/{testId}/question/{questionNum}")
+//    public ModelAndView showQuestion(@PathVariable("testId") Long testId, @PathVariable int questionNum, Principal principal){
+//        TestKC testKC = testService.findById(testId);
+//        User user = userService.findByName(principal.getName());
+//        DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
+//        DtoQuestion dtoQuestion =  dtoTestKC.getQuestionList().get(questionNum);
+//        ModelAndView mav = new ModelAndView("question");
+//        mav.addObject("question", dtoQuestion);
+//        return mav;
+//    }
 }
