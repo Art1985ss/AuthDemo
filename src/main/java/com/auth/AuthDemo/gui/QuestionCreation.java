@@ -28,7 +28,6 @@ public class QuestionCreation extends JPanel {
             label.setLabelFor(textFields[i]);
             this.add(label);
             this.add(textFields[i]);
-            System.out.println(i);
         }
         JButton button = new JButton("Add new question");
         addListener(button);

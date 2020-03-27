@@ -1,6 +1,6 @@
 package com.auth.AuthDemo.service;
 
-import com.auth.AuthDemo.entity.Test;
+import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 
 
 @Service
-public class TestService implements Service_<Test> {
+public class TestService implements Service_<TestKC> {
     private TestRepository testRepository;
 
     @Autowired
@@ -19,17 +19,17 @@ public class TestService implements Service_<Test> {
     }
 
     @Override
-    public Long create(Test test) {
-        return testRepository.save(test).getId();
+    public Long create(TestKC testKC) {
+        return testRepository.save(testKC).getId();
     }
 
     @Override
-    public Long update(Test test) {
-        return testRepository.save(test).getId();
+    public Long update(TestKC testKC) {
+        return testRepository.save(testKC).getId();
     }
 
     @Override
-    public Test findById(Long id) {
+    public TestKC findById(Long id) {
         return testRepository.findById(id).orElseThrow(()-> new NoSuchElementException("No test with id " + id + " found"));
     }
 
@@ -39,11 +39,11 @@ public class TestService implements Service_<Test> {
     }
 
     @Override
-    public List<Test> findAll() {
+    public List<TestKC> findAll() {
         return testRepository.findAll();
     }
 
-    public Test findByName(String name){
+    public TestKC findByName(String name){
         return testRepository.findByName(name).orElseThrow(()-> new NoSuchElementException("No test with name " + name + "found"));
     }
 }

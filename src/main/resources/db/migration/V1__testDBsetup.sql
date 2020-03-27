@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS user (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) UNIQUE,
     password VARCHAR(50),
+    score DOUBLE(10 , 3 ) DEFAULT 0,
     enabled BOOLEAN
 );
 
@@ -18,8 +19,8 @@ CREATE TABLE IF NOT EXISTS user_tests (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     test_id INT,
-    score DOUBLE(10 , 3 ),
-    completed boolean,
+    score DOUBLE(10 , 3 ) DEFAULT 0,
+    completed BOOLEAN,
     FOREIGN KEY (user_id)
         REFERENCES user (id)
         ON DELETE CASCADE,
@@ -51,6 +52,7 @@ CREATE TABLE IF NOT EXISTS user_answers (
     user_id INT,
     question_id INT,
     answer VARCHAR(50),
+    answer_provided TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id)
         REFERENCES user (id)
         ON DELETE CASCADE,
@@ -129,6 +131,13 @@ insert into test (name, duration) values
 
 insert into test_questions (test_id, question_id) values
 (1, 1), (1, 2);
+
+insert into user_tests (user_id, test_id, score, completed) values 
+(2, 1, 10, false);
+
+insert into user_answers (user_id, question_id, answer) values
+(1, 2, "d"),
+(2, 2, 'd');
 
 COMMIT;
 SET autocommit=1;

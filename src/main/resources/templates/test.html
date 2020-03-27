@@ -5,26 +5,39 @@
     <title>Title</title>
 </head>
 <body>
-<h1>This is a test!</h1>
+<h1>This is a testKC!</h1>
 <div>
     <p>
         <span th:text="${user}"></span><br>
-        <span th:text="${test.name}"></span>
+        <span th:text="${question}"></span><br>
+        <span th:text="${testKC.name}"></span><br>
+        <span th:text="${score}"></span><br>
     </p>
     <div>
-        <form>
-            <table>
-                <tr th:each="d: ${test.questionList}">
-                    <ol>
-                        <p th:text="${d.question}"></p>
-                            <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>
-                            <p>Your answer : <input type="text"/></p>
-                        <hr>
-                    </ol>
-                </tr>
-            </table>
+        <form th:action="@{/result}" th:object="${form}" method="post">
+            <div th:each="property : ${form.properties.entrySet()}">
+                <div class="form-group">
+                    <label th:for="*{properties['__${property.key}__']}" th:text="${property.key}">Property</label>
+                    <input type="text" class="form-control" th:field="*{properties['__${property.key}__']}" />
+                </div>
+            </div>
             <p><input type="submit" value="Submit"/></p>
         </form>
+<!--        <form th:action="@{/result}" method="post">-->
+<!--            <table>-->
+<!--                <tr th:each="d: ${testKC.questionList}">-->
+<!--                    <ol>-->
+<!--                        <p th:text="${d.question}"></p>-->
+<!--                            <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>-->
+<!--                            <p>Your answer : <input type="text" th:field="*{dtoQuestion.userAnswer}" placeholder="answer"/></p>-->
+<!--                            <span th:text="${d.correctAnswer}"></span><br>-->
+<!--                            <span th:text="${d.userAnswer}"></span><br>-->
+<!--                        <hr>-->
+<!--                    </ol>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--            <p><input type="submit" value="Submit"/></p>-->
+<!--        </form>-->
     </div>
 </div>
 </body>
