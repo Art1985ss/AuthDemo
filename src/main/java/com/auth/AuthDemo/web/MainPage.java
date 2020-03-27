@@ -1,6 +1,7 @@
 package com.auth.AuthDemo.web;
 
 import com.auth.AuthDemo.dto.DtoConverter;
+import com.auth.AuthDemo.dto.DtoQuestion;
 import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
@@ -75,6 +76,17 @@ public class MainPage {
         mav.addObject("score", score);
         mav.addObject("test", dtoTestKC);
         //TODO this view needs to be created and this method should be called from localhost:8081/result
+        return mav;
+    }
+
+    @GetMapping("/test/{testId}/question/{questionNum}")
+    public ModelAndView showQuestion(@PathVariable("testId") Long testId, @PathVariable int questionNum, Principal principal){
+        TestKC testKC = testService.findById(testId);
+        User user = userService.findByName(principal.getName());
+        DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
+        DtoQuestion dtoQuestion =  dtoTestKC.getQuestionList().get(questionNum);
+        ModelAndView mav = new ModelAndView("question");
+        mav.addObject("question", dtoQuestion);
         return mav;
     }
 }
