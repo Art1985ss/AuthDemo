@@ -71,28 +71,15 @@ public class HomeController {
         DtoConverter.setAnswers(dtoTestKC, form);
         scoreCalculationService.getTestScore(dtoTestKC);
         System.out.println(DtoConverter.setAnswers(dtoTestKC, form));
+
+        mav.addObject("dtoTestKC", dtoTestKC);
 //        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
 //        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
 //        testService.update(testKC);
 //        mav.addObject("score", score);
 //        mav.addObject("test", dtoTestKC);
-        //TODO this view needs to be created and this method should be called from localhost:8081/result
         return mav;
     }
-
-//    @PostMapping("/result")
-//    @ResponseBody
-//    public ModelAndView getResults(@ModelAttribute("dtoQuestion") DtoQuestion dtoQuestion, Principal principal){
-//        ModelAndView mav = new ModelAndView("resulttest");
-//        User user = userService.findByName(principal.getName());
-////        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
-////        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
-////        testService.update(testKC);
-////        mav.addObject("score", score);
-////        mav.addObject("test", dtoTestKC);
-//        //TODO this view needs to be created and this method should be called from localhost:8081/result
-//        return mav;
-//    }
 
 
     @GetMapping("/test/{testId}/question/{questionNum}")

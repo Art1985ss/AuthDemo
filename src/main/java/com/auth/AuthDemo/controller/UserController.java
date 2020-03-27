@@ -29,7 +29,6 @@ public class UserController {
         modelAndView.addObject("test", testService.findAll());
         modelAndView.setViewName("user");
         return modelAndView;
-        //test
     }
 
 }
