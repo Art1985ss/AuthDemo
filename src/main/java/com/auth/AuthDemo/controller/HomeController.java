@@ -1,4 +1,4 @@
-package com.auth.AuthDemo.web;
+package com.auth.AuthDemo.controller;
 
 import com.auth.AuthDemo.dto.DtoConverter;
 import com.auth.AuthDemo.dto.DtoPropertiesForm;
