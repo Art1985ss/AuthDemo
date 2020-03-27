@@ -1,6 +1,6 @@
 package com.auth.AuthDemo.controller;
 
-import com.auth.AuthDemo.service.StudentService;
+import com.auth.AuthDemo.service.UserService;
 import com.auth.AuthDemo.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class UserController {
     private TestService testService;
 
     @Autowired
-    private StudentService studentService;
+    private UserService userService;
 
     @GetMapping("/user")
     public ModelAndView getTestDate (Principal principal){

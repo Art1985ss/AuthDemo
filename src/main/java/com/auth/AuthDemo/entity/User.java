@@ -1,7 +1,10 @@
 package com.auth.AuthDemo.entity;
 
+//import org.graalvm.compiler.lir.LIRInstruction;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,11 +17,10 @@ public class User {
     private String name;
     @Column(name = "password")
     private String password;
-    @ManyToMany
-    @JoinTable(name = "user_tests",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "test_id"))
-    private List<Test> testList;
+    @Column(name = "score")
+    private BigDecimal score;
+    @OneToMany(mappedBy = "user")
+    private List<UserTest> userTests = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -40,23 +42,40 @@ public class User {
         return password;
     }
 
+    public BigDecimal getScore() {
+        return score;
+    }
+
+    public void setScore(BigDecimal score) {
+        this.score = score;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public List<Test> getTestList() {
-        return testList;
+    public List<UserTest> getUserTests() {
+        return userTests;
     }
 
-    public void setTestList(List<Test> testList) {
-        this.testList = testList;
+    public void setUserTests(List<UserTest> userTests) {
+        this.userTests = userTests;
+    }
+
+    public void addTestKC(TestKC testKC){
+        UserTest userTest = new UserTest();
+        userTest.setCompleted(false);
+        userTest.setScore(BigDecimal.ZERO);
+        userTest.setTestKC(testKC);
+        userTests.add(userTest);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", testList=" + testList +
+                ", userTests=" + userTests +
+//                ", answers=" + answers +
                 '}';
     }
 
