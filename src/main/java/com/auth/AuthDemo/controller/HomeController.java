@@ -46,5 +46,12 @@ public class HomeController {
         return mav;
     }
 
+    @GetMapping("/register")
+    public ModelAndView getRegisterData(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("userRegistration");
+        return mav;
+    }
+
 
 }
