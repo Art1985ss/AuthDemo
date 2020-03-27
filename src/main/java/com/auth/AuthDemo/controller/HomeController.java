@@ -35,7 +35,7 @@ public class HomeController {
         return ResponseEntity.ok("This is just test " + principal.getName());
     }
 
-    @GetMapping("/home")
+    @GetMapping("/test")
     public ModelAndView getUserData(Principal principal){
         //String txt = String.format("%s", dataService.getData(principal.getName()));
         ModelAndView mav = new ModelAndView();
