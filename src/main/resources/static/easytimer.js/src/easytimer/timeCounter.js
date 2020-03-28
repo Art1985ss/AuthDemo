@@ -1,4 +1,4 @@
-import leftPadding from './leftPadding';
+import leftPadding from 'static/easytimer.js/src/easytimer/leftPadding';
 
 function TimeCounter () {
   this.secondTenths = 0;

@@ -2,8 +2,8 @@
  * @class Timer
  */
 
-import TimeCounter from './timeCounter';
-import './customEventPolyfill';
+import TimeCounter from 'static/easytimer.js/src/easytimer/timeCounter';
+import 'static/easytimer.js/src/easytimer/customEventPolyfill';
 
 /*
  * General functions, variables and constants

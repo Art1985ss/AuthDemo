@@ -31,10 +31,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("**/login"))
+        http.csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("**/home"))
                 .and().authorizeRequests()
-                .antMatchers("/user").hasRole("STUDENT")
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("STUDENT")
+                .antMatchers("/admin/**").hasRole("ADMIN")
 //                .antMatchers("/").permitAll()
                 .and().formLogin().successHandler(successHandler)
                 .loginPage("/home").and().logout().permitAll();

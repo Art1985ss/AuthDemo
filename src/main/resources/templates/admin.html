@@ -57,7 +57,7 @@
                 <tr th:each="testkc: ${testsKC}">
                     <td th:text="${testkc.id}"></td>
 
-                    <td><a th:href="@{'/test/' + ${testkc.getId()}}" th:text="${testkc.name}"></a></td>
+                    <td><a th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="${testkc.name}"></a></td>
                     <td th:text="${testkc.durationMinutes}"></td>
                 </tr>
                 </tbody>

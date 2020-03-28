@@ -27,7 +27,7 @@ public class TestController {
     @Autowired
     ScoreCalculationService scoreCalculationService;
 
-    @GetMapping("/test/{testId}")
+    @GetMapping("/user/test{testId}")
     public ModelAndView getUserData(@PathVariable("testId") Long testId, Principal principal){
         //String txt = String.format("%s", dataService.getData(principal.getName()));
         ModelAndView mav = new ModelAndView();
@@ -54,11 +54,10 @@ public class TestController {
         return mav;
     }
 
-    @PostMapping("/result/test{testId}/user{userId}")
+    @PostMapping("/user/result/test{testId}")
     @ResponseBody
     public ModelAndView getResults(@ModelAttribute("form") DtoPropertiesForm form,
                                    @PathVariable("testId") Long testId,
-                                   @PathVariable("userId") Long userId,
                                    Principal principal){
         ModelAndView mav = new ModelAndView("resulttest");
         TestKC testKC = testService.findById(testId);
