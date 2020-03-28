@@ -4,7 +4,7 @@ package com.auth.AuthDemo.dto;
 import com.auth.AuthDemo.entity.UserTest;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 public class DtoUser {
 
@@ -12,7 +12,7 @@ public class DtoUser {
     private String name;
     private String password;
     private BigDecimal score;
-    private List<UserTest> userTests;
+    private Set<UserTest> userTests;
 
     public Long getId() {
         return id;
@@ -46,11 +46,11 @@ public class DtoUser {
         this.score = score;
     }
 
-    public List<UserTest> getUserTests() {
+    public Set<UserTest> getUserTests() {
         return userTests;
     }
 
-    public void setUserTests(List<UserTest> userTests) {
+    public void setUserTests(Set<UserTest> userTests) {
         this.userTests = userTests;
     }
 }
