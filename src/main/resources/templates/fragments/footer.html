@@ -5,30 +5,30 @@
 <body>
 <div th:fragment="footer">
 
-    <hr/>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 text-center">
+    <!--    <div class="fixed-bottom" id="footer">-->
+    <div>
+        <hr/>
+        <div class="col-sm-12 text-center">
                 <span sec:authorize="isAuthenticated()">
                 | Logged user: <span sec:authentication="name"></span> |
                 Roles: <span sec:authentication="principal.authorities"></span> |
                 <a th:href="@{/logout}">Sign Out</a>
             </span>
 
-                <div>
-                    <p class="text-center">&copy; 2020 Team2</p>
-                </div>
-
+            <div>
+                <p class="text-center">&copy; 2020 Team2</p>
             </div>
+
         </div>
     </div>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="../static/jquery/jquery.slim.min.js"></script>
-    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <script src="../static/jquery/jquery.slim.min.js" th:src="@{/jquery/jquery.slim.min.js}"></script>
+    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"
+            th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 </div>
+
 </body>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 
 @RestController
@@ -30,12 +31,14 @@ public class TestController {
     public ModelAndView getUserData(@PathVariable("testId") Long testId, Principal principal){
         //String txt = String.format("%s", dataService.getData(principal.getName()));
         ModelAndView mav = new ModelAndView();
-        User user = userService.findById(2L);
+        User user = userService.findByName(principal.getName());
         TestKC testKC = testService.findById(testId);
         DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
+
+
 //        System.out.println(dtoTestKC);
         mav.addObject("question", questionService.findAll());
-        mav.addObject("user", user.getName());
+        mav.addObject("user", user);
         mav.addObject("testKC", dtoTestKC);
         mav.addObject("score", scoreCalculationService.getTestScore(dtoTestKC));
         mav.addObject("dtoQuestion", dtoTestKC.getQuestionList().get(0));
@@ -51,21 +54,19 @@ public class TestController {
         return mav;
     }
 
-    @PostMapping("/result")
+    @PostMapping("/result/test{testId}/user{userId}")
     @ResponseBody
-    public ModelAndView getResults(@ModelAttribute("form") DtoPropertiesForm form, Principal principal){
-//        System.out.println("results");
+    public ModelAndView getResults(@ModelAttribute("form") DtoPropertiesForm form,
+                                   @PathVariable("testId") Long testId,
+                                   @PathVariable("userId") Long userId,
+                                   Principal principal){
         ModelAndView mav = new ModelAndView("resulttest");
-        TestKC testKC = testService.findById(1L);
-//        System.out.println(principal.getName());
+        TestKC testKC = testService.findById(testId);
         User user = userService.findByName(principal.getName());
         DtoTestKC dtoTestKC = DtoConverter.toDto(user ,testKC);
-//        System.out.println(dtoTestKC);
         DtoConverter.setAnswers(dtoTestKC, form);
         scoreCalculationService.getTestScore(dtoTestKC);
-//        System.out.println(DtoConverter.setAnswers(dtoTestKC, form));
         testService.update(testKC);
-//        System.out.println(testKC);
         mav.addObject("dtoTestKC", dtoTestKC);
 //        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
 //        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
