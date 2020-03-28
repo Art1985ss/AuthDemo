@@ -19,6 +19,8 @@ public class AdminController {
     @GetMapping("/admin")
     public ModelAndView getAdminData(){
         ModelAndView mav = new ModelAndView();
+        mav.addObject("users", userService.findAll());
+        mav.addObject("testsKC",testService.findAll());
         mav.setViewName("admin");
         return mav;
     }

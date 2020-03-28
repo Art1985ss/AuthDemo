@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <div th:replace="/fragments/header :: header-css"/>
+
 </head>
+
 <body>
-<h1>This is a testKC!</h1>
-<div>
+
+<div th:replace="/fragments/header :: header"/>
+
+
+<div class="container">
+    <h1>This is a testKC!</h1>
     <p>
         <span th:text="${'Welcome user - ' + user + '!'}"></span><br>
         <span th:text="${'This is test #' + testKC.name}"></span><br>
     </p>
-    <div>
+    <div class="row">
 
-        <form th:action="@{/result}" th:object="${form}" method="post">
+        <form th:action="@{'/result/test' + ${testKC.getId()} + '/user' + ${user.getId()}}" th:object="${form}" method="post">
             <table>
                 <tr th:each="d: ${testKC.questionList}">
                     <ol>
@@ -30,5 +37,7 @@
         </form>
     </div>
 </div>
+
+<div th:replace="/fragments/footer :: footer"/>
 </body>
 </html>

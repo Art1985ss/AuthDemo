@@ -39,10 +39,24 @@ public class HomeController {
         return ResponseEntity.ok("This is just test " + principal.getName());
     }
 
-    @GetMapping("/login")
+    @GetMapping("/home")
     public ModelAndView getLoginData(){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("login");
+        mav.setViewName("home");
+        return mav;
+    }
+
+    @GetMapping("/register")
+    public ModelAndView getRegisterData(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("userRegistration");
+        return mav;
+    }
+
+    @GetMapping("/contacts")
+    public ModelAndView getContactData(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("contacts");
         return mav;
     }
 

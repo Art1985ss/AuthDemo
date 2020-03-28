@@ -1,10 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <div th:replace="/fragments/header :: header-css"/>
+
 </head>
+
 <body>
 
+<div th:replace="/fragments/header :: header"/>
+
+
+<!-- Page Content -->
+<main role="main" class="container">
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 text-center">
+
+            <table class="table table-bordered table-hover table-sm">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">User Id</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">User Score</th>
+                </tr>
+                </thead>
+                <tbody >
+                <tr th:each="user: ${users}">
+                    <th scope="row" th:unless="${user.name == 'admin'}" th:text="${user.id}"></th>
+                    <td th:unless="${user.name == 'admin'}"  th:text="${user.name}"></td>
+                    <td th:unless="${user.name == 'admin'}"  th:text="${user.score}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 text-center">
+
+            <table class="table table-bordered table-hover table-sm">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Test Id</th>
+                    <th scope="col">Test Name</th>
+                    <th scope="col">Test Duration</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="testkc: ${testsKC}">
+                    <td th:text="${testkc.id}"></td>
+
+                    <td><a th:href="@{'/test/' + ${testkc.getId()}}" th:text="${testkc.name}"></a></td>
+                    <td th:text="${testkc.durationMinutes}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+
+</main>
+<footer class="footer">
+    <div th:replace="/fragments/footer :: footer"/>
+</footer>
 </body>
+
 </html>
