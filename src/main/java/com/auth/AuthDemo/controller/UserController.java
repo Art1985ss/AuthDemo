@@ -8,6 +8,7 @@ import com.auth.AuthDemo.service.UserService;
 import com.auth.AuthDemo.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -24,7 +26,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/user")
+    @GetMapping("")
     public ModelAndView getTestDate (Principal principal){
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.findByName(principal.getName());

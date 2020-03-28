@@ -6,7 +6,7 @@ The way of importing the library has changed in this v3 in order to make it comp
 
 Before:
 ```html
-<script src="lib/easytimer/dist/easytimer.min.js"></script>
+<script src="../lib/easytimer/dist/easytimer.min.js"></script>
 <script>
     var timerInstance = new Timer();
 </script>

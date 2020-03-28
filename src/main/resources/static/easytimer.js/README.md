@@ -23,7 +23,7 @@ bower install easytimer.js
 ### Script
 
 ```html
-<script src="lib/easytimer/dist/easytimer.min.js"></script>
+<script src="../lib/easytimer/dist/easytimer.min.js"></script>
 <script>
     var timerInstance = new easytimer.Timer();
 </script>

@@ -18,9 +18,17 @@
         <span th:text="${'Welcome user - ' + user + '!'}"></span><br>
         <span th:text="${'This is test #' + testKC.name}"></span><br>
     </p>
+
+    <h5>Result</h5>
+    <div class="card mb-5">
+        <div class="text-center card-body" id="countdownExample">
+            <div class="values"></div>
+        </div>
+    </div>
+
     <div class="row">
 
-        <form th:action="@{'/result/test' + ${testKC.getId()} + '/user' + ${user.getId()}}" th:object="${form}" method="post">
+        <form th:action="@{'/user/result/test' + ${testKC.getId()}}" th:object="${form}" method="post">
             <table>
                 <tr th:each="d: ${testKC.questionList}">
                     <ol>
@@ -39,5 +47,6 @@
 </div>
 
 <div th:replace="/fragments/footer :: footer"/>
+<script src="../static/dist/examples.min.js" th:src="@{/dist/examples.min.js}"> </script>
 </body>
 </html>

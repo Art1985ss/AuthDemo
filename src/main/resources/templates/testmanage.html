@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <div th:replace="/fragments/header :: header-css"/>
+
 </head>
+
 <body>
 
+<div th:replace="/fragments/header :: header"/>
+
+
+<div class="container">
+
+        <table>
+            <tr th:each="question: ${testKC.questionList}">
+                <p th:text="${question.question}"></p>
+
+                <ol>
+                    <li type="a" th:each="answer: ${question.answers}" th:text="${answer}"></li>
+                    <span th:text="${question.correctAnswer}"></span><br>
+
+                    <hr>
+                </ol>
+
+            </tr>
+        </table>
+</div>
+
+<div th:replace="/fragments/footer :: footer"/>
+<script src="../static/dist/examples.min.js" th:src="@{/dist/examples.min.js}"> </script>
 </body>
 </html>
