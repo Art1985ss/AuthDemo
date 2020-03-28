@@ -38,7 +38,7 @@ public class DtoConverter {
         dtoTestKC.setName(testKC.getName());
         dtoTestKC.setDuration(testKC.getDurationMinutes());
         dtoTestKC.setQuestionList(testKC.getQuestionList().stream().map(DtoConverter::toDto).collect(Collectors.toList()));
-        UserTest userTest = testKC.getUserTest(user);
+        UserTest userTest = user.findUserTest(testKC);
         dtoTestKC.setCompleted(userTest.isCompleted());
         dtoTestKC.setScore(userTest.getScore());
         return dtoTestKC;
@@ -75,7 +75,7 @@ public class DtoConverter {
         userTest.setTestKC(testKC);
         userTest.setCompleted(dtoTestKC.isCompleted());
         userTest.setScore(dtoTestKC.getScore());
-        testKC.addUserTest(userTest);
+        //testKC.addUserTest(userTest);
         user.addTest(userTest);
         return testKC;
     }

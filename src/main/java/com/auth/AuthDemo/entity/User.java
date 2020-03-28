@@ -2,11 +2,13 @@ package com.auth.AuthDemo.entity;
 
 //import org.graalvm.compiler.lir.LIRInstruction;
 
+import org.springframework.jdbc.support.CustomSQLErrorCodesTranslation;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.math.MathContext;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity(name = "user")
 public class User {
@@ -19,8 +21,8 @@ public class User {
     private String password;
     @Column(name = "score")
     private BigDecimal score;
-    @OneToMany(mappedBy = "user")
-    private List<UserTest> userTests = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserTest> userTests = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -54,16 +56,27 @@ public class User {
         this.password = password;
     }
 
-    public List<UserTest> getUserTests() {
+    public Set<UserTest> getUserTests() {
         return userTests;
     }
 
-    public void setUserTests(List<UserTest> userTests) {
+    public void setUserTests(Set<UserTest> userTests) {
         this.userTests = userTests;
     }
 
     public boolean addTest(UserTest userTest){
-        return userTests.add(userTest);
+        this.userTests.remove(userTest);
+        return this.userTests.add(userTest);
+    }
+
+    public UserTest findUserTest(TestKC testKC){
+        return this.userTests.stream().filter(userTest -> userTest.getTestKC().equals(testKC)).findFirst()
+                .orElseThrow(()-> new NoSuchElementException(String.format("No test %s were registered for user %s", testKC.getName(), this.name)));
+    }
+
+    public BigDecimal updateScore(){
+        score =  userTests.stream().map(UserTest::getScore).reduce(BigDecimal.ZERO, BigDecimal::add).divide(new BigDecimal(userTests.size()), new MathContext(2));
+        return score;
     }
 
     @Override

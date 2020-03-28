@@ -48,8 +48,7 @@ public class TestController {
         mav.addObject("form", form);
         mav.setViewName("test");
         TestKC testKC1 = DtoConverter.fromDto(user, dtoTestKC);
-//        System.out.println(testKC1);
-        testService.update(testKC1);
+        userService.update(user);
         //TODO button on this test view should send whole dtoTestKC to the /result view
         return mav;
     }
@@ -65,7 +64,7 @@ public class TestController {
         DtoTestKC dtoTestKC = DtoConverter.toDto(user ,testKC);
         DtoConverter.setAnswers(dtoTestKC, form);
         scoreCalculationService.getTestScore(dtoTestKC);
-        testService.update(testKC);
+        user.updateScore();
         mav.addObject("dtoTestKC", dtoTestKC);
 //        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
 //        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
@@ -74,15 +73,5 @@ public class TestController {
 //        mav.addObject("test", dtoTestKC);
         return mav;
     }
-
-    //    @GetMapping("/test/{testId}/question/{questionNum}")
-//    public ModelAndView showQuestion(@PathVariable("testId") Long testId, @PathVariable int questionNum, Principal principal){
-//        TestKC testKC = testService.findById(testId);
-//        User user = userService.findByName(principal.getName());
-//        DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
-//        DtoQuestion dtoQuestion =  dtoTestKC.getQuestionList().get(questionNum);
-//        ModelAndView mav = new ModelAndView("question");
-//        mav.addObject("question", dtoQuestion);
-//        return mav;
 //    }
 }

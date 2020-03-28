@@ -30,6 +30,8 @@ public class UserController {
     public ModelAndView getTestDate (Principal principal){
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.findByName(principal.getName());
+        System.out.println("user controller");
+        System.out.println(user);
         DtoUser dtoUser = DtoConverter.toDto(user);
         List<DtoTestKC> dtoTestKCList =  user.getUserTests().stream().map(u-> DtoConverter.toDto(user, u.getTestKC())).collect(Collectors.toList());//testService.findAll().stream().map(DtoConverter::toDto).collect(Collectors.toList());
         modelAndView.addObject("user", dtoUser);
