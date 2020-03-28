@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <div th:replace="/fragments/header :: header-css"/>
+
 </head>
+
 <body>
+
+<div th:replace="/fragments/header :: header"/>
+
+
 <h1>This is a testKC!</h1>
 <div>
     <p>
@@ -30,5 +37,8 @@
         </form>
     </div>
 </div>
+
+<div th:replace="/fragments/footer :: footer"/>
+
 </body>
 </html>

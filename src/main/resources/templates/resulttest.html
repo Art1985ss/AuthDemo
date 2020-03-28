@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <div th:replace="/fragments/header :: header-css"/>
+
 </head>
+
 <body>
+
+<div th:replace="/fragments/header :: header"/>
+
+
 <h1>These are results</h1>
 <div>
     <p>
@@ -27,5 +34,8 @@
         </table>
     </div>
 </div>
+
+<div th:replace="/fragments/footer :: footer"/>
+
 </body>
 </html>

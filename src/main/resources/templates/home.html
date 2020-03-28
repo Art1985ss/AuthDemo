@@ -1,38 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Accenture Java Bootcamp</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <div th:replace="/fragments/header :: header-css"/>
 
 </head>
 
 <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <div class="container">
-        <a class="navbar-brand" href="home.html">ACCENTURE Java Bootcamp</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="contacts.html">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div th:replace="/fragments/header :: header"/>
 
 <!-- Page Content -->
 <div class="container">
@@ -42,40 +19,39 @@
                 <h1>Sign In</h1>
             </div>
             <div class="card-body">
-                <form>
+                <form class="form-signin" method="post" action="/home">
                     <div class="input-group form-group">
                         <label>
-                            <input type="text" class="form-control" placeholder="username" required maxlength="50">
+                            <input type="text" id="username" name="username" class="form-control" placeholder="Username"
+                                   required autofocus>
                         </label>
                     </div>
 
                     <div class="input-group form-group">
                         <label>
-                            <input type="password" class="form-control" placeholder="password" required maxlength="50">
+                            <input type="password" id="password" name="password" class="form-control"
+                                   placeholder="Password"
+                                   required>
                         </label>
                     </div>
 
                     <div class="form-group">
-                        <label>
-                            <input type="checkbox">
-                        </label>Remember Me
-                        <input type="submit" value="Login" class="btn-light">
+                        <input name="_csrf" type="hidden" value="df6c9e4f-a80a-4a05-9854-6ff79a645207"/>
+                        <button class="btn btn-lg btn-dark btn-block" type="submit">Sign in</button>
                     </div>
                 </form>
             </div>
+
             <div class="card-footer">
                 <div class="d-flex justify-content-center links">
-                    Don't have an account?<a href="userRegistration.html">Sign Up</a>
+                    Don't have an account?<a th:href="@{'/register'}" th:text="'Sign Up'"></a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript -->
-<script src="../static/jquery/jquery.slim.min.js"></script>
-<script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+<div th:replace="/fragments/footer :: footer"/>
 
 </body>
 
