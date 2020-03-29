@@ -1,19 +1,18 @@
 package com.auth.AuthDemo.entity;
 
-//import org.graalvm.compiler.lir.LIRInstruction;
 
-import org.springframework.jdbc.support.CustomSQLErrorCodesTranslation;
+import org.hibernate.annotations.SelectBeforeUpdate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Entity(name = "user")
+@SelectBeforeUpdate(false)
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
     private String name;
@@ -21,7 +20,7 @@ public class User {
     private String password;
     @Column(name = "score")
     private BigDecimal score;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL ,orphanRemoval = true)
     private Set<UserTest> userTests = new HashSet<>();
 
     public Long getId() {
@@ -49,6 +48,7 @@ public class User {
     }
 
     public void setScore(BigDecimal score) {
+        this.updateScore();
         this.score = score;
     }
 
@@ -64,7 +64,16 @@ public class User {
         this.userTests = userTests;
     }
 
-    public boolean addTest(UserTest userTest){
+    public void addTest(TestKC testKC){
+        UserTest userTest = new UserTest();
+        userTest.setTestKC(testKC);
+        userTest.setUser(this);
+        userTest.setCompleted(false);
+        userTest.setScore(BigDecimal.ZERO);
+        this.addUserTest(userTest);
+    }
+
+    public boolean addUserTest(UserTest userTest){
         this.userTests.remove(userTest);
         return this.userTests.add(userTest);
     }
@@ -75,13 +84,20 @@ public class User {
     }
 
     public BigDecimal updateScore(){
+        if (userTests.isEmpty()){
+            score = BigDecimal.ZERO;
+            System.out.println("Empty user tests list");
+            return score;
+        }
         score =  userTests.stream().map(UserTest::getScore).reduce(BigDecimal.ZERO, BigDecimal::add).divide(new BigDecimal(userTests.size()), new MathContext(2));
+        System.out.println("Calculated user score");
         return score;
     }
 
     @Override
     public String toString() {
         return "User{" +
+                "id=" + id +
                 "name='" + name + '\'' +
                 ", userTests=" + userTests +
 //                ", answers=" + answers +
