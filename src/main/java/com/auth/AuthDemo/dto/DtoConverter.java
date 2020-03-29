@@ -1,9 +1,6 @@
 package com.auth.AuthDemo.dto;
 
-import com.auth.AuthDemo.entity.Question;
-import com.auth.AuthDemo.entity.TestKC;
-import com.auth.AuthDemo.entity.User;
-import com.auth.AuthDemo.entity.UserTest;
+import com.auth.AuthDemo.entity.*;
 
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
@@ -71,12 +68,13 @@ public class DtoConverter {
         testKC.setDurationMinutes(dtoTestKC.getDuration());
         testKC.setQuestionList(dtoTestKC.getQuestionList().stream().map(DtoConverter::fromDto).collect(Collectors.toList()));
         UserTest userTest = new UserTest();
+        userTest.setId(new UserTestKey(user.getId(), testKC.getId()));
         userTest.setUser(user);
         userTest.setTestKC(testKC);
         userTest.setCompleted(dtoTestKC.isCompleted());
         userTest.setScore(dtoTestKC.getScore());
-        //testKC.addUserTest(userTest);
-        user.addTest(userTest);
+        testKC.addUserTest(userTest);
+        //user.addUserTest(userTest);
         return testKC;
     }
 

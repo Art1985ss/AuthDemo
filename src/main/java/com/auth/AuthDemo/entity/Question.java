@@ -17,7 +17,7 @@ public class Question {
     private String category;
     @Column(name = "question")
     private String question;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "question_answers",
             joinColumns = @JoinColumn(name = "question_id"))
     @Column(name = "answer")

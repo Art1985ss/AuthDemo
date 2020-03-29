@@ -1,20 +1,24 @@
 package com.auth.AuthDemo.entity;
 
+import org.hibernate.annotations.SelectBeforeUpdate;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@Entity(name = "user_tests")
+@Entity
+@Table(name = "user_tests")
+@SelectBeforeUpdate(false)
 public class UserTest implements Serializable {
-    //    @Id
-//    private Long id;
-    @Id
+    @EmbeddedId
+    private UserTestKey id;
     @ManyToOne
+    @MapsId("user_id")
     @JoinColumn(name = "user_id")
     private User user;
-    @Id
     @ManyToOne
+    @MapsId("test_id")
     @JoinColumn(name = "test_id")
     private TestKC testKC;
     @Column(name = "score")
@@ -22,13 +26,13 @@ public class UserTest implements Serializable {
     @Column(name = "completed")
     private boolean completed;
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    public UserTestKey getId() {
+        return id;
+    }
+
+    public void setId(UserTestKey id) {
+        this.id = id;
+    }
 
     public User getUser() {
         return user;
@@ -76,12 +80,13 @@ public class UserTest implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserTest userTest = (UserTest) o;
-        return user.equals(userTest.user) &&
+        return id.equals(userTest.id) &&
+                user.equals(userTest.user) &&
                 testKC.equals(userTest.testKC);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user.getId(), testKC.getId());
+        return Objects.hash(id, user, testKC);
     }
 }
