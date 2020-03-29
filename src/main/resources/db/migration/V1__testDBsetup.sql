@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS user (
     name VARCHAR(50) UNIQUE,
     password VARCHAR(50),
     score DOUBLE(10 , 3 ) DEFAULT 0,
-    enabled BOOLEAN
+    enabled BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE IF NOT EXISTS test (
@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS test (
 
 CREATE TABLE IF NOT EXISTS user_tests (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT,
-    test_id INT,
+    user_id INT NOT NULL,
+    test_id INT NOT NULL,
     score DOUBLE(10 , 3 ) DEFAULT 0,
     completed BOOLEAN,
     FOREIGN KEY (user_id)
@@ -136,7 +136,7 @@ insert into test_questions (test_id, question_id) values
 (1, 1), (1, 2);
 
 insert into user_tests (user_id, test_id, score, completed) values 
-(2, 1, 10, false);
+(2, 1, 0, false);
 
 insert into user_answers (user_id, question_id, answer) values
 (1, 2, "d"),

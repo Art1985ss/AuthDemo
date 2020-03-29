@@ -6,7 +6,6 @@ import java.math.MathContext;
 import java.util.*;
 
 @Entity(name = "test")
-@SecondaryTable(name = "user_tests", pkJoinColumns = @PrimaryKeyJoinColumn(name = "test_id"))
 public class TestKC {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,12 +14,12 @@ public class TestKC {
     private String name;
     @Column(name = "duration")
     private int durationMinutes;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "test_questions",
             joinColumns = @JoinColumn(name = "test_id"),
             inverseJoinColumns = @JoinColumn(name = "question_id"))
     private List<Question> questionList = new ArrayList<>();
-    @OneToMany(mappedBy = "testKC")
+    @OneToMany(mappedBy = "testKC", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<UserTest> userTests = new HashSet<>();
 
     public Long getId() {
@@ -72,6 +71,7 @@ public class TestKC {
     }
 
     public boolean addUserTest(UserTest userTest){
+        this.userTests.remove(userTest);
         return this.userTests.add(userTest);
     }
 

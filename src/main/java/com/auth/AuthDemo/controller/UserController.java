@@ -30,6 +30,7 @@ public class UserController {
     public ModelAndView getTestDate (Principal principal){
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.findByName(principal.getName());
+        user.updateScore();
         System.out.println("user controller");
         System.out.println(user);
         DtoUser dtoUser = DtoConverter.toDto(user);

@@ -5,11 +5,14 @@ import com.auth.AuthDemo.dto.DtoPropertiesForm;
 import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
+import com.auth.AuthDemo.entity.UserTest;
+import com.auth.AuthDemo.entity.UserTestKey;
 import com.auth.AuthDemo.service.QuestionService;
 import com.auth.AuthDemo.service.ScoreCalculationService;
 import com.auth.AuthDemo.service.TestService;
 import com.auth.AuthDemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,14 +32,22 @@ public class TestController {
 
     @GetMapping("/user/test{testId}")
     public ModelAndView getUserData(@PathVariable("testId") Long testId, Principal principal){
-        //String txt = String.format("%s", dataService.getData(principal.getName()));
         ModelAndView mav = new ModelAndView();
         User user = userService.findByName(principal.getName());
         TestKC testKC = testService.findById(testId);
-        DtoTestKC dtoTestKC = DtoConverter.toDto(user, testKC);
+        UserTest userTest = new UserTest();
+        userTest.setId(new UserTestKey(user.getId(), testKC.getId()));
+        userTest.setUser(user);
+        userTest.setTestKC(testKC);
+        userTest.setScore(BigDecimal.ZERO);
+        userTest.setCompleted(false);
+        user.addUserTest(userTest);
+        System.out.println(user);
+        System.out.println("Updating user : ");
+        userService.update(user);
+        System.out.println(user);
+        DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
 
-
-//        System.out.println(dtoTestKC);
         mav.addObject("question", questionService.findAll());
         mav.addObject("user", user);
         mav.addObject("testKC", dtoTestKC);
@@ -47,8 +58,6 @@ public class TestController {
         form.setProperties(dtoTestKC.getQuestionList());
         mav.addObject("form", form);
         mav.setViewName("test");
-        TestKC testKC1 = DtoConverter.fromDto(user, dtoTestKC);
-        userService.update(user);
         //TODO button on this test view should send whole dtoTestKC to the /result view
         return mav;
     }
@@ -59,20 +68,14 @@ public class TestController {
                                    @PathVariable("testId") Long testId,
                                    Principal principal){
         ModelAndView mav = new ModelAndView("resulttest");
-        TestKC testKC = testService.findById(testId);
         User user = userService.findByName(principal.getName());
-        DtoTestKC dtoTestKC = DtoConverter.toDto(user ,testKC);
+        TestKC testKC = testService.findById(testId);
+        DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
         DtoConverter.setAnswers(dtoTestKC, form);
         scoreCalculationService.getTestScore(dtoTestKC);
-        user.setScore(scoreCalculationService.getTestScore(dtoTestKC));
-        user.updateScore();
+        testKC = DtoConverter.fromDto(user, dtoTestKC);
+        testService.update(testKC);
         mav.addObject("dtoTestKC", dtoTestKC);
-//        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);
-//        TestKC testKC = DtoConverter.fromDto(user, dtoTestKC);
-//        testService.update(testKC);
-//        mav.addObject("score", score);
-//        mav.addObject("test", dtoTestKC);
         return mav;
     }
-//    }
 }
