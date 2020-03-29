@@ -64,6 +64,7 @@ public class TestController {
         DtoTestKC dtoTestKC = DtoConverter.toDto(user ,testKC);
         DtoConverter.setAnswers(dtoTestKC, form);
         scoreCalculationService.getTestScore(dtoTestKC);
+        user.setScore(scoreCalculationService.getTestScore(dtoTestKC));
         user.updateScore();
         mav.addObject("dtoTestKC", dtoTestKC);
 //        BigDecimal score = scoreCalculationService.getTestScore(dtoTestKC);

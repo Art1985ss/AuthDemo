@@ -27,15 +27,21 @@
             <table class="table table-bordered table-hover table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="col">User Id</th>
-                    <th scope="col">User Name</th>
-                    <th scope="col">User Score</th>
+                    <th style="width: 7%" scope="col">Id</th>
+                    <th style="width: 20%" scope="col">User Name</th>
+                    <th th:each="test: ${testsKC}">
+                    <span th:text="${test.getId()}" scope="col"></span>
+                    </th>
+                    <th style="width: 10%" scope="col">Total</th>
                 </tr>
                 </thead>
                 <tbody >
                 <tr th:each="user: ${users}">
-                    <th scope="row" th:unless="${user.name == 'admin'}" th:text="${user.id}"></th>
+                    <th class="text-left" scope="row" th:unless="${user.name == 'admin'}" th:text="${user.id}"></th>
                     <td th:unless="${user.name == 'admin'}"  th:text="${user.name}"></td>
+                    <td th:each="test: ${testsKC}">
+                        <span th:unless="${user.name == 'admin'}" th:if="${user.getUserTests().contains(test) !=null }" th:text="${test.name +' '+ user.name}" ></span>
+                    </td>
                     <td th:unless="${user.name == 'admin'}"  th:text="${user.score}"></td>
                 </tr>
                 </tbody>
@@ -54,19 +60,20 @@
             <table class="table table-bordered table-hover table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="col">Test Id</th>
-                    <th scope="col">Test Name</th>
-                    <th scope="col">Test Duration</th>
-                    <th scope="col"></th>
+                    <th style="width: 7%" scope="col">Nr.</th>
+                    <th style="width: 50%" scope="col">Test Name</th>
+                    <th style="width: 13%" scope="col">Duration</th>
+                    <th style="width: 15%" scope="col"></th>
+                    <th style="width: 15%" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="testkc: ${testsKC}">
-                    <td th:text="${testkc.id}"></td>
-
-                    <td><a th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="${testkc.name}"></a></td>
-                    <td th:text="${testkc.durationMinutes}"></td>
-                    <td><a class="btn btn-primary" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Edit" role="button"></a></td>
+                    <td class="align-middle" th:text="${testkc.id}"></td>
+                    <td class="text-left align-middle"><a th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="${testkc.name}"></a></td>
+                    <td class="align-middle" th:text="${testkc.durationMinutes}"></td>
+                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Edit" role="button"></a></td>
+                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Remove" role="button"></a></td>
                 </tr>
                 </tbody>
             </table>

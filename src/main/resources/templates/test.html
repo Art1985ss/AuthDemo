@@ -56,5 +56,19 @@
 
 <div th:replace="fragments/footer.html :: footer"/>
 <script src="../static/dist/examples.min.js" th:src="@{/dist/examples.min.js}"> </script>
+
+<script>
+    var timer = new Timer();
+    timer.start({countdown: true, startValues: {seconds: 30}});
+    $('#countdownExample .values').html(timer.getTimeValues().toString());
+    timer.addEventListener('secondsUpdated', function (e) {
+        $('#countdownExample .values').html(timer.getTimeValues().toString());
+    });
+    timer.addEventListener('targetAchieved', function (e) {
+        $('#countdownExample .values') .html('KABOOM!!');
+    });
+</script>
+
+
 </body>
 </html>
