@@ -13,7 +13,8 @@
 
 
 <div class="container">
-
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 text-left">
         <table>
             <tr th:each="question: ${testKC.questionList}">
                 <p th:text="${question.question}"></p>
@@ -27,6 +28,8 @@
 
             </tr>
         </table>
+        </div>
+    </div>
 </div>
 
 <div th:replace="fragments/footer.html :: footer"/>
