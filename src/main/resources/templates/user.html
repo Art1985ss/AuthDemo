@@ -3,13 +3,13 @@
 
 <head>
 
-    <div th:replace="/fragments/header :: header-css"/>
+    <div th:replace="fragments/header.html :: header-css"/>
 
 </head>
 
 <body>
 
-<div th:replace="/fragments/header :: header"/>
+<div th:replace="fragments/header.html :: header"/>
 
 <!-- Page Content -->
 <div class="container">
@@ -18,6 +18,10 @@
             <h1 class="mt-5" th:text="${'This is user''s ' + user.name + ' dashboard!'}"/>
             <p class="lead" th:text="${'And your current test score is: ' + user.score}"/>
 
+
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }">
+                This will only be displayed if authenticated user has role ROLE_ADMIN.
+            </div>
 
             <table>
                 <tr>
@@ -38,7 +42,7 @@
     </div>
 </div>
 
-<div th:replace="/fragments/footer :: footer"/>
+<div th:replace="fragments/footer.html :: footer"/>
 
 </body>
 

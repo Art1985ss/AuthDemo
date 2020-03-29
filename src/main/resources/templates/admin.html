@@ -3,13 +3,13 @@
 
 <head>
 
-    <div th:replace="/fragments/header :: header-css"/>
+    <div th:replace="fragments/header.html :: header-css"/>
 
 </head>
 
 <body>
 
-<div th:replace="/fragments/header :: header"/>
+<div th:replace="fragments/header.html :: header"/>
 
 
 <!-- Page Content -->
@@ -17,6 +17,13 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-center">
+
+            <p th:text="${#authentication.authorities}"></p>
+
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }">
+                This will only be displayed if authenticated user has role ROLE_ADMIN.
+            </div>
+
 
             <table class="table table-bordered table-hover table-sm">
                 <thead class="thead-light">
@@ -71,7 +78,7 @@
 
 </main>
 <footer class="footer">
-    <div th:replace="/fragments/footer :: footer"/>
+    <div th:replace="fragments/footer.html :: footer"/>
 </footer>
 </body>
 

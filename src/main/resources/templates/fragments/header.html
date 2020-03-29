@@ -1,5 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <head>
     <div th:fragment="header-css">
 
@@ -10,20 +11,21 @@
 
         <style>
             .navbar {margin-bottom: 50px;}
-
+            body {
+                padding-bottom: 80px;
+            }
+            #footer {
+                background-color: #f5f5f5;
+            }
         </style>
-
         <title>Accenture Bootcamp</title>
-
         <!-- Bootstrap core CSS -->
         <link th:href="@{/bootstrap/css/bootstrap.min.css}" href="../static/bootstrap/css/bootstrap.min.css"
               rel="stylesheet">
-
     </div>
 </head>
+
 <body>
-
-
 <div th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div class="container">
@@ -32,17 +34,23 @@
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="collapse navbar-collapse" id="navbarResponsive" >
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active" sec:authorize="!isAuthenticated()">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active':''}" class="nav-item ">
                         <a class="nav-link" th:href="@{/home}">Home
                         </a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasRole('USER')">
-                        <a class="nav-link" th:href="@{/user}">Dashboard</a>
+                    <li th:if="${#authorization.expression('hasRole(''ROLE_STUDENT'')')}"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/user' ? 'active':''}" class="nav-item">
+                        <a  class="nav-link" th:href="@{/user}">Dashboard</a>
                         <span class="sr-only">(current)</span>
                     </li>
-                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin' ? 'active':''}" class="nav-item">
+                        <a   class="nav-link" th:href="@{/admin}">Dashboard</a>
+                        <span class="sr-only">(current)</span>
+                    </li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/contacts' ? 'active':''}" class="nav-item" >
                         <a class="nav-link" th:href="@{/contacts}">Contact</a>
                     </li>
                 </ul>
