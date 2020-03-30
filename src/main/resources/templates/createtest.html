@@ -19,25 +19,39 @@
 
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
-            <h3 th:text="'This is dto ' + ${dtoTest}"></h3><br>
+           <table>
+               <tr>
+                   <span>
+                       Add questions to the test:
+                   </span>
+                   <span>
+                       <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/test/' + ${dtoTest.getId()} +'/question/new' }" th:text="Add" role="button"></a>
+                   </span>
 
-            <div th:text="${dtoTest.getId()}"></div>
-            <div th:text="${dtoTest.name}"></div>
-            <div th:text="${dtoTest.score}"></div>
+               </tr>
+           </table>
 
-            <form th:action="@{'/admin/test/create'}" th:object="${dtoTest}" method="get">
-                <table>
-                    <tr >
-                        <ol>
 
-                            <p>Dto name : <input type="text" th:field="*{name}"
-                                                    placeholder="name"/></p>
-                            <hr>
-                        </ol>
-                    </tr>
-                </table>
-                <p><input type="submit" value="Submit" style="float: right;"/></p>
-            </form>
+
+<!--            <h3 th:text="'This is dto ' + ${dtoTest}"></h3><br>-->
+
+<!--            <div th:text="${dtoTest.getId()}"></div>-->
+<!--            <div th:text="${dtoTest.name}"></div>-->
+<!--            <div th:text="${dtoTest.score}"></div>-->
+
+<!--            <form th:action="@{'/admin/test/create'}" th:object="${dtoTest}" method="get">-->
+<!--                <table>-->
+<!--                    <tr >-->
+<!--                        <ol>-->
+
+<!--                            <p>Dto name : <input type="text" th:field="*{name}"-->
+<!--                                                    placeholder="name"/></p>-->
+<!--                            <hr>-->
+<!--                        </ol>-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--                <p><input type="submit" value="Submit" style="float: right;"/></p>-->
+<!--            </form>-->
 
 <!--                <h4 th:text="${testKC}"></h4><br>-->
 
