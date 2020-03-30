@@ -8,12 +8,23 @@
 <div th:fragment="footer">
     <div class="fixed-bottom" id="footer">
         <br/>
-        <div class="col-sm-12 text-center">
-            <span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
-                <!--                <a th:href="@{/logout}">Sign Out</a>-->
-            </span>
+        <div class="col-lg-12 text-center">
+            <div sec:authorize="isAuthenticated()">
+               <span>
+                   | Logged user: <span sec:authentication="name"></span> |
+               </span>
+                <span>
+                    Roles: <span sec:authentication="principal.authorities"></span> |
+                </span>
+
+<!--                                <a th:href="@{/logout}">Sign Out</a>-->
+                <span>
+                     <form action="/logout" method="post">
+                        <button type="submit" name="Log out!" value="" class="btn btn-link">Log out!</button>
+                    </form>
+                </span>
+
+            </div>
             <div>
                 <p class="text-center">&copy; 2020 Team2</p>
             </div>
