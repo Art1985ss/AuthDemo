@@ -42,14 +42,18 @@ public class AdminController {
     public ModelAndView testCreateForm() {
         ModelAndView modelAndView = new ModelAndView("new_test");
         TestKC testKC = new TestKC();
+        testKC.setQuestionList(testService.findAll().get(0).getQuestionList());
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
         modelAndView.addObject("dtoTest", dtoTestKC);
+        modelAndView.setViewName("createTest");
         return modelAndView;
     }
 
-    @GetMapping("/test/create")
-    public ModelAndView testCreate(@RequestBody DtoTestKC dtoTestKC) {
-        ModelAndView modelAndView = new ModelAndView("testmanage");
+    @PostMapping("/test/create")
+    public ModelAndView testCreate(DtoTestKC dtoTestKC) {
+
+        System.out.println(dtoTestKC);
+        ModelAndView modelAndView = new ModelAndView("experiment");
         TestKC testKC = DtoConverter.fromDto(dtoTestKC);
         testService.update(testKC);
         modelAndView.addObject("testKC", testKC);

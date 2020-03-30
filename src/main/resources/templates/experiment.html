@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <div th:replace="fragments/header.html :: header-css"/>
+
+</head>
+
+<body>
+
+
+
+
+<div class="container">
+
+
+
+
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 text-left">
+            <h3 th:text="'This is dto ' + ${testKC}"></h3><br>
+
+
+
+<!--                <h4 th:text="${testKC}"></h4><br>-->
+
+<!--            &lt;!&ndash;    <h5>Result</h5>&ndash;&gt;-->
+<!--                <div class="card mb-5">-->
+<!--                    <div class="text-center card-body" id="countdownExample">-->
+<!--                        <div class="values"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+            <!--    <div class="row">-->
+
+<!--            <form th:action="@{'/user/result/test' + ${testKC.getId()}}" th:object="${form}" method="post">-->
+<!--                <table>-->
+<!--                    <tr th:each="d: ${testKC.questionList}">-->
+<!--                        <ol>-->
+<!--                            <h5 class="font-weight-bold" th:text="${d.id + '. ' +  d.question}"></h5>-->
+<!--                            <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>-->
+<!--                            <p>Your answer : <input type="text" th:field="*{properties['__${d.id}__']}"-->
+<!--                                                    placeholder="answer"/></p>-->
+<!--&lt;!&ndash;                            <span th:text="${d.correctAnswer}"></span><br>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span th:text="${d.userAnswer}"></span><br>&ndash;&gt;-->
+<!--                            <hr>-->
+<!--                        </ol>-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--                <p><input type="submit" value="Submit" style="float: right;"/></p>-->
+<!--            </form>-->
+<!--        </div>-->
+    </div>
+</div>
+
+
+<div th:replace="fragments/footer.html :: footer"/>
+<script src="../static/dist/examples.min.js" th:src="@{/dist/examples.min.js}"> </script>
+
+<script>
+    var timer = new Timer();
+    timer.start({countdown: true, startValues: {seconds: 30}});
+    $('#countdownExample .values').html(timer.getTimeValues().toString());
+    timer.addEventListener('secondsUpdated', function (e) {
+        $('#countdownExample .values').html(timer.getTimeValues().toString());
+    });
+    timer.addEventListener('targetAchieved', function (e) {
+        $('#countdownExample .values') .html('KABOOM!!');
+    });
+</script>
+
+
+</body>
+</html>
