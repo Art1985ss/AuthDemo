@@ -24,6 +24,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("users", userService.findAll());
         mav.addObject("testsKC",testService.findAll());
+        System.out.println(userService.findAll().get(1).getUserTests());
         mav.setViewName("admin");
         return mav;
     }

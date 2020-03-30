@@ -3,13 +3,13 @@
 
 <head>
 
-    <div th:replace="/fragments/header :: header-css"/>
+    <div th:replace="fragments/header.html :: header-css"/>
 
 </head>
 
 <body>
 
-<div th:replace="/fragments/header :: header"/>
+<div th:replace="fragments/header.html :: header"/>
 
 <!-- Page Content -->
 <div class="container">
@@ -53,7 +53,7 @@
     </div>
 </div>
 
-<div th:replace="/fragments/footer :: footer"/>
+<div th:replace="fragments/footer.html :: footer"/>
 
 </body>
 

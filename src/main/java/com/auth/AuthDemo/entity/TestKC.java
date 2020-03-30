@@ -19,7 +19,7 @@ public class TestKC {
             joinColumns = @JoinColumn(name = "test_id"),
             inverseJoinColumns = @JoinColumn(name = "question_id"))
     private List<Question> questionList = new ArrayList<>();
-    @OneToMany(mappedBy = "testKC", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "testKC", cascade = CascadeType.ALL, fetch = FetchType.LAZY)//orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<UserTest> userTests = new HashSet<>();
 
     public Long getId() {

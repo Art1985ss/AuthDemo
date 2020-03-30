@@ -3,50 +3,115 @@
 
 <head>
 
-    <div th:replace="/fragments/header :: header-css"/>
+    <div th:replace="fragments/header.html :: header-css"/>
 
 </head>
 
 <body>
 
-<div th:replace="/fragments/header :: header"/>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/home}">ACCENTURE Java Bootcamp</a>
+
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+
+
+            <div class="collapse navbar-collapse" id="navbarResponsive" >
+
+                <ul class="navbar-nav mx-auto" id="countdownExample">
+                    <li class="nav-item ">
+                        <a class="nav-link text-light values" href="#">Home</a>
+<!--                        <h5 class="nav-link values" ></h5>-->
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ml-auto">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active':''}" class="nav-item ">
+                        <a class="nav-link" th:href="@{/home}">Home</a>
+                    </li>
+                    <li th:if="${#authorization.expression('hasRole(''ROLE_STUDENT'')')}"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/user' ? 'active':''}" class="nav-item">
+                        <a  class="nav-link" th:href="@{/user}">Dashboard</a>
+                        <span class="sr-only">(current)</span>
+                    </li>
+                    <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin' ? 'active':''}" class="nav-item">
+                        <a   class="nav-link" th:href="@{/admin}">Dashboard</a>
+                        <span class="sr-only">(current)</span>
+                    </li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/contacts' ? 'active':''}" class="nav-item" >
+                        <a class="nav-link" th:href="@{/contacts}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
 
 
 <div class="container">
-    <h1>This is a testKC!</h1>
-    <p>
-        <span th:text="${'Welcome user - ' + user + '!'}"></span><br>
-        <span th:text="${'This is test #' + testKC.name}"></span><br>
-    </p>
 
-    <h5>Result</h5>
-    <div class="card mb-5">
-        <div class="text-center card-body" id="countdownExample">
-            <div class="values"></div>
-        </div>
-    </div>
 
-    <div class="row">
 
-        <form th:action="@{'/user/result/test' + ${testKC.getId()}}" th:object="${form}" method="post">
-            <table>
-                <tr th:each="d: ${testKC.questionList}">
-                    <ol>
-                        <p th:text="${d.question}"></p>
+
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 text-left">
+
+                <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4><br>
+
+<!--            &lt;!&ndash;    <h5>Result</h5>&ndash;&gt;-->
+<!--                <div class="card mb-5">-->
+<!--                    <div class="text-center card-body" id="countdownExample">-->
+<!--                        <div class="values"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+            <!--    <div class="row">-->
+
+            <form th:action="@{'/user/result/test' + ${testKC.getId()}}" th:object="${form}" method="post">
+                <table>
+                    <tr th:each="d: ${testKC.questionList}">
+                        <ol>
+                            <h5 class="font-weight-bold" th:text="${d.id + '. ' +  d.question}"></h5>
                             <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>
-                            <p>Your answer : <input type="text" th:field="*{properties['__${d.id}__']}"placeholder="answer"/></p>
-                            <span th:text="${d.correctAnswer}"></span><br>
-                            <span th:text="${d.userAnswer}"></span><br>
-                        <hr>
-                    </ol>
-                </tr>
-            </table>
-            <p><input type="submit" value="Submit"/></p>
-        </form>
+                            <p>Your answer : <input type="text" th:field="*{properties['__${d.id}__']}"
+                                                    placeholder="answer"/></p>
+<!--                            <span th:text="${d.correctAnswer}"></span><br>-->
+<!--                            <span th:text="${d.userAnswer}"></span><br>-->
+                            <hr>
+                        </ol>
+                    </tr>
+                </table>
+                <p><input type="submit" value="Submit" style="float: right;"/></p>
+            </form>
+        </div>
     </div>
 </div>
 
-<div th:replace="/fragments/footer :: footer"/>
+
+<div th:replace="fragments/footer.html :: footer"/>
 <script src="../static/dist/examples.min.js" th:src="@{/dist/examples.min.js}"> </script>
+
+<script>
+    var timer = new Timer();
+    timer.start({countdown: true, startValues: {seconds: 30}});
+    $('#countdownExample .values').html(timer.getTimeValues().toString());
+    timer.addEventListener('secondsUpdated', function (e) {
+        $('#countdownExample .values').html(timer.getTimeValues().toString());
+    });
+    timer.addEventListener('targetAchieved', function (e) {
+        $('#countdownExample .values') .html('KABOOM!!');
+    });
+</script>
+
+
 </body>
 </html>

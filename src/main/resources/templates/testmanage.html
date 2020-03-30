@@ -3,21 +3,22 @@
 
 <head>
 
-    <div th:replace="/fragments/header :: header-css"/>
+    <div th:replace="fragments/header.html :: header-css"/>
 
 </head>
 
 <body>
 
-<div th:replace="/fragments/header :: header"/>
+<div th:replace="fragments/header.html :: header"/>
 
 
 <div class="container">
-
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 text-left">
         <table>
             <tr th:each="question: ${testKC.questionList}">
-                <p th:text="${question.question}"></p>
-
+                <span th:text="${question.question}"></span>
+                <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test'+${testKC.getId()} +'/quest' + ${question.getId()}}" th:text="Edit" role="button"></a>
                 <ol>
                     <li type="a" th:each="answer: ${question.answers}" th:text="${answer}"></li>
                     <span th:text="${question.correctAnswer}"></span><br>
@@ -27,9 +28,11 @@
 
             </tr>
         </table>
+        </div>
+    </div>
 </div>
 
-<div th:replace="/fragments/footer :: footer"/>
+<div th:replace="fragments/footer.html :: footer"/>
 <script src="../static/dist/examples.min.js" th:src="@{/dist/examples.min.js}"> </script>
 </body>
 </html>

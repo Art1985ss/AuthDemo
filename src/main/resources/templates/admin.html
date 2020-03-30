@@ -3,34 +3,53 @@
 
 <head>
 
-    <div th:replace="/fragments/header :: header-css"/>
+    <div th:replace="fragments/header.html :: header-css"/>
 
 </head>
 
 <body>
 
-<div th:replace="/fragments/header :: header"/>
+<div th:replace="fragments/header.html :: header"/>
 
 
 <!-- Page Content -->
-<main role="main" class="container">
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col-lg-6 text-center">
+        <div class="col-lg-12 text-center">
+
+            <p th:text="${#authentication.authorities}"></p>
+
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }">
+                This will only be displayed if authenticated user has role ROLE_ADMIN.
+            </div>
+
 
             <table class="table table-bordered table-hover table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="col">User Id</th>
-                    <th scope="col">User Name</th>
-                    <th scope="col">User Score</th>
+                    <th style="width: 5%" scope="col">Id</th>
+                    <th style="width: 15%" scope="col">User Name</th>
+                    <th th:each="test: ${testsKC}">
+                    <span th:text="${test.getId()}" scope="col"></span>
+                    </th>
+                    <th style="width: 8%" scope="col">Total</th>
+                    <th style="width: 8%" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody >
-                <tr th:each="user: ${users}">
-                    <th scope="row" th:unless="${user.name == 'admin'}" th:text="${user.id}"></th>
-                    <td th:unless="${user.name == 'admin'}"  th:text="${user.name}"></td>
-                    <td th:unless="${user.name == 'admin'}"  th:text="${user.score}"></td>
+                <tr th:unless="${user.name == 'admin'}"  th:each="user: ${users}">
+                    <th scope="row" th:text="${user.id}"></th>
+                    <td th:text="${user.name}"></td>
+                    <td th:each="test: ${testsKC}">
+<!--                        <span th:text="${user.getUserTests()}" ></span>-->
+                        <span th:each="utest: ${user.getUserTests()}" >
+<!--                            <span th:text="${utest.getScore()} + '  ' + ${utest.getId().getTestId()} + ' ' + ${test.name}"></span>-->
+                            <span th:if="${utest.getId().getTestId()} == ${test.getId()}" th:text="${utest.getScore()}"></span>
+
+                        </span>
+                    </td>
+                    <td th:text="${#numbers.formatDecimal(user.score * 100, 1, 'POINT', 2, 'COMMA')} +'%'"></td>
+                    <td><a class="btn btn-primary btn-sm custom" href="#" th:text="Remove" role="button"></a></td>
                 </tr>
                 </tbody>
             </table>
@@ -43,22 +62,31 @@
 
 <div class="container mt-5">
     <div class="row justify-content-md-center">
-        <div class="col-lg-6 text-center">
+        <div class="col-lg-12 text-center">
+            <div class="p-2 float-right">
+                <span class="pr-2">Add a new test:</span>
+                <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testnew/test' + ${testsKC.size()+1}}" th:text="'Add'" role="button"></a>
+            </div>
 
             <table class="table table-bordered table-hover table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="col">Test Id</th>
-                    <th scope="col">Test Name</th>
-                    <th scope="col">Test Duration</th>
+                    <th style="width: 5%" scope="col">Nr.</th>
+                    <th style="width: 60%" scope="col">Test Name</th>
+                    <th style="width: 9%" scope="col">Duration</th>
+                    <th style="width: 8%" scope="col"></th>
+                    <th style="width: 8%" scope="col"></th>
+                    <th style="width: 8%" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="testkc: ${testsKC}">
-                    <td th:text="${testkc.id}"></td>
-
-                    <td><a th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="${testkc.name}"></a></td>
-                    <td th:text="${testkc.durationMinutes}"></td>
+                    <th class="align-middle" th:text="${testkc.id}"></th>
+                    <td class="text-left align-middle" th:text="${testkc.name}"></td>
+                    <td class="align-middle" th:text="${testkc.durationMinutes}"></td>
+                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Edit" role="button"></a></td>
+                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Remove" role="button"></a></td>
+                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Enable" role="button"></a></td>
                 </tr>
                 </tbody>
             </table>
@@ -68,11 +96,8 @@
     </div>
 </div>
 
+    <div th:replace="fragments/footer.html :: footer"/>
 
-</main>
-<footer class="footer">
-    <div th:replace="/fragments/footer :: footer"/>
-</footer>
 </body>
 
 </html>
