@@ -1,6 +1,9 @@
 package com.auth.AuthDemo.controller;
 
-import com.auth.AuthDemo.dto.*;
+import com.auth.AuthDemo.dto.DtoConverter;
+import com.auth.AuthDemo.dto.DtoQuestion;
+import com.auth.AuthDemo.dto.DtoTestKC;
+import com.auth.AuthDemo.entity.Question;
 import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.service.TestService;
 import com.auth.AuthDemo.service.UserService;
@@ -8,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@SessionAttributes({ "myFancyList"})
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -27,7 +28,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("users", userService.findAll());
         mav.addObject("testsKC", testService.findAll());
-//        System.out.println(userService.findAll().get(1).getUserTests());
+        System.out.println(userService.findAll().get(1).getUserTests());
         mav.setViewName("admin");
         return mav;
     }
@@ -43,28 +44,44 @@ public class AdminController {
 
     @GetMapping("/test/new")
     public ModelAndView testCreateForm() {
-        ModelAndView modelAndView = new ModelAndView("createTest");
+        ModelAndView modelAndView = new ModelAndView("new_test");
         TestKC testKC = new TestKC();
-        testKC = testService.findById(1L);
-//        testKC.setQuestionList(testService.findAll().get(0).getQuestionList());
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
         modelAndView.addObject("dtoTest", dtoTestKC);
         return modelAndView;
     }
 
-
-
-
     @GetMapping("/test/create")
-    public ModelAndView testCreate(@ModelAttribute("myFancyList") List<String> strings ) {
-        ModelAndView modelAndView = new ModelAndView("experiment");
-//        dtoTestKC.setQuestionList(dtoQuestionsLists.getDtoQuestions());
-//        System.out.println(form.getProperties());
-        System.out.println();
+    public ModelAndView testCreate(@RequestBody DtoTestKC dtoTestKC) {
+        ModelAndView modelAndView = new ModelAndView("testmanage");
+        TestKC testKC = DtoConverter.fromDto(dtoTestKC);
+        testService.update(testKC);
+        modelAndView.addObject("testKC", testKC);
+        return modelAndView;
+    }
 
-//        TestKC testKC = DtoConverter.fromDto(dtoTestKC);
-//        testService.update(testKC);
-//        modelAndView.addObject("testKC", testKC);
+    @GetMapping("/test/{testID}/question/new")
+    public ModelAndView questionForm(@PathVariable("testID") Long testId) {
+        ModelAndView modelAndView = new ModelAndView("question");
+        TestKC testKC = testService.findById(testId);
+        DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
+        DtoQuestion dtoQuestion = new DtoQuestion();
+        modelAndView.addObject("test", dtoTestKC);
+        modelAndView.addObject("question", dtoQuestion);
+        return modelAndView;
+    }
+
+    @GetMapping("/test/{testID}/question/{questionID}/create")
+    public ModelAndView questionCreate(@PathVariable("testID") Long testId,
+                                       @PathVariable("questionID") Long questionId,
+                                       @RequestBody DtoQuestion dtoQuestion,
+                                       @ModelAttribute("questionAnswers") List<String> questionAnswers) {
+        ModelAndView modelAndView = new ModelAndView("testmanage");
+        TestKC testKC = testService.findById(testId);
+        DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
+        dtoQuestion.setAnswers(questionAnswers);
+        dtoTestKC.getQuestionList().add(dtoQuestion);
+        modelAndView.addObject("test", dtoTestKC);
         return modelAndView;
     }
 
