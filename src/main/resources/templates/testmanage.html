@@ -17,8 +17,8 @@
         <div class="col-lg-6 text-left">
         <table>
             <tr th:each="question: ${testKC.questionList}">
-                <p th:text="${question.question}"></p>
-
+                <span th:text="${question.question}"></span>
+                <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test'+${testKC.getId()} +'/quest' + ${question.getId()}}" th:text="Edit" role="button"></a>
                 <ol>
                     <li type="a" th:each="answer: ${question.answers}" th:text="${answer}"></li>
                     <span th:text="${question.correctAnswer}"></span><br>

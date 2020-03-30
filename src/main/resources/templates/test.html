@@ -9,7 +9,52 @@
 
 <body>
 
-<div th:replace="fragments/header.html :: header"/>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/home}">ACCENTURE Java Bootcamp</a>
+
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+
+
+            <div class="collapse navbar-collapse" id="navbarResponsive" >
+
+                <ul class="navbar-nav mx-auto" id="countdownExample">
+                    <li class="nav-item ">
+                        <a class="nav-link text-light values" href="#">Home</a>
+<!--                        <h5 class="nav-link values" ></h5>-->
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ml-auto">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active':''}" class="nav-item ">
+                        <a class="nav-link" th:href="@{/home}">Home</a>
+                    </li>
+                    <li th:if="${#authorization.expression('hasRole(''ROLE_STUDENT'')')}"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/user' ? 'active':''}" class="nav-item">
+                        <a  class="nav-link" th:href="@{/user}">Dashboard</a>
+                        <span class="sr-only">(current)</span>
+                    </li>
+                    <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin' ? 'active':''}" class="nav-item">
+                        <a   class="nav-link" th:href="@{/admin}">Dashboard</a>
+                        <span class="sr-only">(current)</span>
+                    </li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/contacts' ? 'active':''}" class="nav-item" >
+                        <a class="nav-link" th:href="@{/contacts}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
 
 
 <div class="container">
@@ -19,17 +64,15 @@
 
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
-            <h1>This is a testKC!</h1>
-            <p>
-                <span th:text="${'Welcome user - ' + user + '!'}"></span><br>
-                <span th:text="${'This is test #' + testKC.name}"></span><br>
-            </p>
-            <!--    <h5>Result</h5>-->
-                <div class="card mb-5">
-                    <div class="text-center card-body" id="countdownExample">
-                        <div class="values"></div>
-                    </div>
-                </div>
+
+                <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4><br>
+
+<!--            &lt;!&ndash;    <h5>Result</h5>&ndash;&gt;-->
+<!--                <div class="card mb-5">-->
+<!--                    <div class="text-center card-body" id="countdownExample">-->
+<!--                        <div class="values"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
             <!--    <div class="row">-->
 

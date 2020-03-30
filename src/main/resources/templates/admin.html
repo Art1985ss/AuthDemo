@@ -15,7 +15,7 @@
 <!-- Page Content -->
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col-lg-6 text-center">
+        <div class="col-lg-12 text-center">
 
             <p th:text="${#authentication.authorities}"></p>
 
@@ -27,22 +27,29 @@
             <table class="table table-bordered table-hover table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th style="width: 7%" scope="col">Id</th>
-                    <th style="width: 20%" scope="col">User Name</th>
+                    <th style="width: 5%" scope="col">Id</th>
+                    <th style="width: 15%" scope="col">User Name</th>
                     <th th:each="test: ${testsKC}">
                     <span th:text="${test.getId()}" scope="col"></span>
                     </th>
-                    <th style="width: 10%" scope="col">Total</th>
+                    <th style="width: 8%" scope="col">Total</th>
+                    <th style="width: 8%" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody >
-                <tr th:each="user: ${users}">
-                    <th class="text-left" scope="row" th:unless="${user.name == 'admin'}" th:text="${user.id}"></th>
-                    <td th:unless="${user.name == 'admin'}"  th:text="${user.name}"></td>
+                <tr th:unless="${user.name == 'admin'}"  th:each="user: ${users}">
+                    <th scope="row" th:text="${user.id}"></th>
+                    <td th:text="${user.name}"></td>
                     <td th:each="test: ${testsKC}">
-                        <span th:unless="${user.name == 'admin'}" th:if="${user.getUserTests().contains(test) !=null }" th:text="${test.name +' '+ user.name}" ></span>
+<!--                        <span th:text="${user.getUserTests()}" ></span>-->
+                        <span th:each="utest: ${user.getUserTests()}" >
+<!--                            <span th:text="${utest.getScore()} + '  ' + ${utest.getId().getTestId()} + ' ' + ${test.name}"></span>-->
+                            <span th:if="${utest.getId().getTestId()} == ${test.getId()}" th:text="${utest.getScore()}"></span>
+
+                        </span>
                     </td>
-                    <td th:unless="${user.name == 'admin'}"  th:text="${user.score}"></td>
+                    <td th:text="${#numbers.formatDecimal(user.score * 100, 1, 'POINT', 2, 'COMMA')} +'%'"></td>
+                    <td><a class="btn btn-primary btn-sm custom" href="#" th:text="Remove" role="button"></a></td>
                 </tr>
                 </tbody>
             </table>
@@ -55,25 +62,31 @@
 
 <div class="container mt-5">
     <div class="row justify-content-md-center">
-        <div class="col-lg-6 text-center">
+        <div class="col-lg-12 text-center">
+            <div class="p-2 float-right">
+                <span class="pr-2">Add a new test:</span>
+                <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testnew/test' + ${testsKC.size()+1}}" th:text="'Add'" role="button"></a>
+            </div>
 
             <table class="table table-bordered table-hover table-sm">
                 <thead class="thead-light">
                 <tr>
-                    <th style="width: 7%" scope="col">Nr.</th>
-                    <th style="width: 50%" scope="col">Test Name</th>
-                    <th style="width: 13%" scope="col">Duration</th>
-                    <th style="width: 15%" scope="col"></th>
-                    <th style="width: 15%" scope="col"></th>
+                    <th style="width: 5%" scope="col">Nr.</th>
+                    <th style="width: 60%" scope="col">Test Name</th>
+                    <th style="width: 9%" scope="col">Duration</th>
+                    <th style="width: 8%" scope="col"></th>
+                    <th style="width: 8%" scope="col"></th>
+                    <th style="width: 8%" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="testkc: ${testsKC}">
-                    <td class="align-middle" th:text="${testkc.id}"></td>
-                    <td class="text-left align-middle"><a th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="${testkc.name}"></a></td>
+                    <th class="align-middle" th:text="${testkc.id}"></th>
+                    <td class="text-left align-middle" th:text="${testkc.name}"></td>
                     <td class="align-middle" th:text="${testkc.durationMinutes}"></td>
                     <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Edit" role="button"></a></td>
                     <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Remove" role="button"></a></td>
+                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Enable" role="button"></a></td>
                 </tr>
                 </tbody>
             </table>
