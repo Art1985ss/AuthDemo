@@ -78,6 +78,15 @@ public class DtoConverter {
         return testKC;
     }
 
+    public static TestKC fromDto(DtoTestKC dtoTestKC) {
+        TestKC testKC = new TestKC();
+        testKC.setId(dtoTestKC.getId());
+        testKC.setName(dtoTestKC.getName());
+        testKC.setDurationMinutes(dtoTestKC.getDuration());
+        testKC.setQuestionList(dtoTestKC.getQuestionList().stream().map(DtoConverter::fromDto).collect(Collectors.toList()));
+        return testKC;
+    }
+
     public static User fromDto(DtoUser dtoUser) {
         User user = new User();
         user.setId(dtoUser.getId());
