@@ -20,17 +20,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-
+<!--            <div id="countDownTimer" class="values">0</div>-->
 
 
             <div class="collapse navbar-collapse" id="navbarResponsive" >
 
-                <ul class="navbar-nav mx-auto" id="countdownExample">
-                    <li class="nav-item ">
-                        <a class="nav-link text-light values" href="#">Home</a>
-<!--                        <h5 class="nav-link values" ></h5>-->
-                    </li>
-                </ul>
+
+                <div class="row mx-auto bg-light p-2 border rounded-pill values" id="countDownTimer" >0</div>
+
 
                 <ul class="navbar-nav ml-auto">
 <!--                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active':''}" class="nav-item ">-->
@@ -76,7 +73,7 @@
 
             <!--    <div class="row">-->
 
-            <form th:action="@{'/user/result/test' + ${testKC.getId()}}" th:object="${form}" method="post">
+            <form id="quiz" th:action="@{'/user/result/test' + ${testKC.getId()}}" th:object="${form}" method="post">
                 <table>
                     <tr th:each="d: ${testKC.questionList}">
                         <ol>
@@ -96,21 +93,35 @@
     </div>
 </div>
 
-
-<div th:replace="fragments/footer.html :: footer"/>
-<script src="../static/dist/examples.min.js" th:src="@{/dist/examples.min.js}"> </script>
+<script src="../static/easytimer.min.js"
+        th:src="@{/easytimer.min.js}"></script>
 
 <script>
-    var timer = new Timer();
-    timer.start({countdown: true, startValues: {seconds: 30}});
-    $('#countdownExample .values').html(timer.getTimeValues().toString());
+    const timer = new easytimer.Timer();
+
+    timer.start(
+        {
+            countdown: true,
+            startValues: { seconds: 15 }
+        });
+
+    document.getElementById("countDownTimer").innerHTML = timer.getTimeValues().toString();
+
     timer.addEventListener('secondsUpdated', function (e) {
-        $('#countdownExample .values').html(timer.getTimeValues().toString());
+        document.getElementById("countDownTimer").innerHTML = timer.getTimeValues().toString();
     });
+
     timer.addEventListener('targetAchieved', function (e) {
-        $('#countdownExample .values') .html('KABOOM!!');
+        document.getElementById("countDownTimer").innerHTML = "Time is out";
+        // alert("Form submitted");
+        document.getElementById("quiz").submit();// Form submission
     });
 </script>
+
+
+
+<div th:replace="fragments/footer.html :: footer"/>
+
 
 
 </body>

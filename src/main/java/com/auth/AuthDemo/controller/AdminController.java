@@ -1,6 +1,7 @@
 package com.auth.AuthDemo.controller;
 
 import com.auth.AuthDemo.dto.DtoConverter;
+import com.auth.AuthDemo.dto.DtoQuestion;
 import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.service.TestService;
@@ -8,6 +9,8 @@ import com.auth.AuthDemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -42,16 +45,20 @@ public class AdminController {
     public ModelAndView testCreateForm() {
         ModelAndView modelAndView = new ModelAndView("new_test");
         TestKC testKC = new TestKC();
-        testKC.setQuestionList(testService.findAll().get(0).getQuestionList());
+        testKC = testService.findById(1L);
+//        testKC.setQuestionList(testService.findAll().get(0).getQuestionList());
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
+        List<DtoQuestion> dtoQuestions = dtoTestKC.getQuestionList();
         modelAndView.addObject("dtoTest", dtoTestKC);
+        modelAndView.addObject("dtoQuestion", dtoQuestions);
         modelAndView.setViewName("createTest");
         return modelAndView;
     }
 
     @PostMapping("/test/create")
-    public ModelAndView testCreate(DtoTestKC dtoTestKC) {
+    public ModelAndView testCreate(DtoTestKC dtoTestKC, @ModelAttribute("dtoQuestions") List<DtoQuestion> dtoQuestions) {
 
+        dtoTestKC.setQuestionList(dtoQuestions);
         System.out.println(dtoTestKC);
         ModelAndView modelAndView = new ModelAndView("experiment");
         TestKC testKC = DtoConverter.fromDto(dtoTestKC);
