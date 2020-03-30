@@ -21,7 +21,11 @@
         <div class="col-lg-6 text-left">
             <h3 th:text="'This is dto ' + ${dtoTest}"></h3><br>
 
-            <form th:action="@{'/admin/test/create'}" th:object="${dtoTest}" method="post">
+            <div th:text="${dtoTest.getId()}"></div>
+            <div th:text="${dtoTest.name}"></div>
+            <div th:text="${dtoTest.score}"></div>
+
+            <form th:action="@{'/admin/test/create'}" th:object="${dtoTest}" method="get">
                 <table>
                     <tr >
                         <ol>
