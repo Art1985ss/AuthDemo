@@ -77,12 +77,10 @@ public class AdminController {
     public ModelAndView questionForm(@PathVariable("testID") Long testId) {
         ModelAndView modelAndView = new ModelAndView("question");
         TestKC testKC = testService.findById(testId);
-
         Question question = new Question();
         question.setQuestion("");
         Long questionId = questionService.create(question);
         question.setId(questionId);
-
         ListCreationDto lcDto = new ListCreationDto();
         for (int i=0; i < 4; i++){
             lcDto.addToList("");

@@ -20,7 +20,6 @@
             .custom {
                 width: 70px !important;
             }
-
         </style>
         <title>Accenture Bootcamp</title>
         <!-- Bootstrap core CSS -->
@@ -33,30 +32,38 @@
 <div th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" th:href="@{/home}">ACCENTURE Java Bootcamp</a>
+            <p class="navbar-brand align-text-bottom pb-2 mb-0" >ACCENTURE Java Bootcamp</p>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarResponsive" >
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+
                 <ul class="navbar-nav ml-auto">
-<!--                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active':''}" class="nav-item ">-->
-<!--                        <a class="nav-link" th:href="@{/home}">Home-->
-<!--                        </a>-->
-<!--                    </li>-->
                     <li th:if="${#authorization.expression('hasRole(''ROLE_STUDENT'')')}"
-                        th:classappend="${#httpServletRequest.getRequestURI() == '/user' ? 'active':''}" class="nav-item">
-                        <a  class="nav-link" th:href="@{/user}">Dashboard</a>
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/user' ? 'active':''}"
+                        class="nav-item">
+                        <a class="nav-link" th:href="@{/user}">Dashboard</a>
                         <span class="sr-only">(current)</span>
                     </li>
                     <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin' ? 'active':''}" class="nav-item">
-                        <a   class="nav-link" th:href="@{/admin}">Dashboard</a>
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin' ? 'active':''}"
+                        class="nav-item">
+                        <a class="nav-link" th:href="@{/admin}">Dashboard</a>
                         <span class="sr-only">(current)</span>
                     </li>
-                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/contacts' ? 'active':''}" class="nav-item" >
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/contacts' ? 'active':''}"
+                        class="nav-item">
                         <a class="nav-link" th:href="@{/contacts}">Contact</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active':''}"
+                        class="nav-item">
+                        <a class="nav-link" href="javascript: document.logoutForm.submit()" role="menuitem">Logout</a>
+                        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                            <input hidden type="submit" value="Sign Out"/>
+                        </form>
                     </li>
                 </ul>
             </div>

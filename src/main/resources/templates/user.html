@@ -15,25 +15,30 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-center">
-            <h2 class="mt-5" th:text="${'Welcome student ' + user.name + '!'}"/>
-            <p class="lead" th:text="${'Your current test grade is: ' + #numbers.formatDecimal(user.score * 100, 1, 'POINT', 2, 'COMMA')} +'%'"/>
-
-            <table class="table table-bordered table-hover table-sm">
+            <div class="text-center mb-4">
+                <h3 th:text="${'Welcome student ' + user.name + '!'}"/>
+                <p class="lead"
+                   th:text="${'Your current test grade is: ' + #numbers.formatDecimal(user.score * 100, 1, 'POINT', 2, 'COMMA')} +'%'"/>
+            </div>
+            <table class=" table table-bordered table-hover table-sm">
+                <thead class="thead-light">
                 <tr>
                     <th>Nr.</th>
                     <th>Test Name</th>
                     <th>Score</th>
                     <th>Duration</th>
                 </tr>
+                </thead>
+                <tbody>
                 <tr th:each="testkc: ${user.userTests}">
                     <td style="width: 10%" th:text="${testkc.testKC.id}"></td>
-                    <td style="width: 60%" ><a th:href="@{'/user/test' + ${testkc.testKC.id}}" th:text="${testkc.testKC.name}"></a></td>
+                    <td style="width: 60%"><a th:href="@{'/user/test' + ${testkc.testKC.id}}"
+                                              th:text="${testkc.testKC.name}"></a></td>
                     <td style="width: 15%" th:text="${testkc.testKC.durationMinutes}"></td>
                     <td style="width: 15%" th:text="${testkc.getScore()}"></td>
                 </tr>
+                </tbody>
             </table>
-
-
         </div>
     </div>
 </div>
