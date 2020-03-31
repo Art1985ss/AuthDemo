@@ -13,23 +13,49 @@
 
 
 <div class="container">
+
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
-        <table>
-            <tr th:each="question: ${testKC.questionList}">
-                <span th:text="${question.question}"></span>
-                <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test'+${testKC.getId()} +'/quest' + ${question.getId()}}" th:text="Edit" role="button"></a>
-                <ol>
-                    <li type="a" th:each="answer: ${question.answers}" th:text="${answer}"></li>
-                    <span th:text="${question.correctAnswer}"></span><br>
+            <div class="text-left pb-2">
+                <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4>
+                <hr>
+                <h5>Add questions to the test </h5>
+                <form th:action="@{'/admin/test/' + ${testKC.id} +'/question/new' }" method="get">
 
-                    <hr>
-                </ol>
+                    <span> Before adding test set count of possible answers</span>
+                    <span>
+                        <input type="text" name="url" id="url" class="form-control" placeholder="answerCount">
+                    </span>
 
-            </tr>
-        </table>
+                    <p><input type="submit" value="Add" style="float: right;"/></p>
+                </form>
+            </div>
+
+            <table class="table table-borderless table-sm" th:each="quest: ${testKC.questionList}">
+                <thead>
+                <tr >
+                    <th style="width: 80%" scope="col" th:text="${quest.id + '. ' +  quest.question}"></th>
+                    <th style="width: 20%" scope="col">     <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test'+${testKC.getId()} +'/quest' + ${quest.getId()}}" th:text="Edit" role="button"></a></th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <ol >
+                            <li type="a" th:each="ans: ${quest.answers}" th:text="${ans}"></li>
+                        </ol>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:text="${'Correct answer is: ' + quest.correctAnswer}"></td>
+                </tr>
+                </tbody>
+                <hr>
+            </table>
         </div>
     </div>
+
 </div>
 
 <div th:replace="fragments/footer.html :: footer"/>

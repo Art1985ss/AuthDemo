@@ -21,41 +21,42 @@
 
 
 
-            <form id="quiz" th:action="@{'/admin/test/' + ${dtoTest.getId()} + '/question/' + ${dtoQuestion.getId()} + '/create'}" method="post">
+            <form th:action="@{'/admin/test/' + ${dtoTest.id} + '/question/' + ${dtoQuestion.id} + '/create'}" method="post">
                 <table>
 
                     <tr >
-                        <span> Enter question for #:</span>
-                        <span th:text="${dtoQuestion.getId()}"></span>
-                        <td><input type="text" th:field="*{dtoQuestion.question}" /></td>
+                        <td >
+                            <span th:text="${'Enter question for #' + dtoQuestion.id} + ': '"></span>
+                            <span><input type="text" th:field="*{dtoQuestion.question}" /></span>
+                        </td>
+
                     </tr>
 
 
-
-                    <tr th:each="answ, itemStat : *{questionAnswers.answers}">
+                    <tr >
                         <td>
-                            <span> Enter answer provided: </span>
-                            <input th:field="*{questionAnswers.answers[__${itemStat.index}__]}" />
+                            <ol >
+                                <li type="a" th:each="answ, itemStat : *{questionAnswers.answers}">
+                                    <span> Enter answer: </span>
+                                    <span>
+                                        <input th:field="*{questionAnswers.answers[__${itemStat.index}__]}" />
+                                    </span>
+
+                                </li>
+                            </ol>
+
                         </td>
-<!--                        <td th:text="${ 'this is ' + answ + '   '+ iter.index}"></td>-->
-<!--                        <td th:text="${'another output ' + questionAnswers[__${iter.index}__]}">-->
-<!--                        <td>-->
-<!--&lt;!&ndash;                            Enter answer: <input type="text" th:field="*{questionAnswers[__${iter.index}__]}" placeholder="answer"/>&ndash;&gt;-->
-<!--                            <p> Enter answer: <input type="text" th:field="*{questionAnswers[__${iter.index}__]}" placeholder="answer"/> </p>-->
-<!--                        </td>-->
-<!--                        <ol>-->
 
-<!--                            <li>-->
-<!--                                Enter question: <input type="text" th:field="*{dtoQuestion.question}" placeholder="Question"/>-->
-<!--                                <hr>-->
-<!--                            </li>-->
-<!--                            <li th:each="answ, iter : ${dtoQuestion.getAnswers()}">-->
-<!--                            <li>-->
-<!--                                <p th:text="${'This is ' + answ + '    ' + iter.current}"></p>-->
-<!--                                &lt;!&ndash;                                Enter answer: <input type="text" th:field="*{questionAnswers.}" placeholder="answer"/>&ndash;&gt;-->
-<!--                            </li>-->
+                    </tr>
+                    <tr>
+                        <td>
+                            <span> Enter correct answer (a,b,c ... or?)):</span>
+                            <span>
+                                <input th:field="*{dtoQuestion.correctAnswer}" />
+                            </span>
 
-<!--                        </ol>-->
+                        </td>
+
                     </tr>
                 </table>
                 <p><input type="submit" value="Submit" style="float: right;"/></p>

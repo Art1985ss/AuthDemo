@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 
 @SessionAttributes({ "questionAnswers"})
 @Controller
@@ -62,19 +64,20 @@ public class AdminController {
         return modelAndView;
     }
 
-//    @GetMapping("/test/create")
-//    public ModelAndView testCreate(@RequestBody DtoTestKC dtoTestKC) {
-//        ModelAndView modelAndView = new ModelAndView("testmanage");
-//        TestKC testKC = DtoConverter.fromDto(dtoTestKC);
-//        testService.update(testKC);
-//        modelAndView.addObject("testKC", testKC);
-//        return modelAndView;
-//    }
+    @PostMapping("/test/create")
+    public ModelAndView testCreate(DtoTestKC dtoTestKC) {
+        ModelAndView modelAndView = new ModelAndView("testmanage");
+        dtoTestKC.setQuestionList(new ArrayList<>());
+        TestKC testKC = DtoConverter.fromDto(dtoTestKC);
+        testService.update(testKC);
+        modelAndView.addObject("testKC", testKC);
+        return modelAndView;
+    }
 
 
 
     @GetMapping("/test/{testID}/question/new")
-    public ModelAndView questionForm(@PathVariable("testID") Long testId) {
+    public ModelAndView questionForm(@PathVariable("testID") Long testId, @RequestParam("url") Integer ansCount) {
         ModelAndView modelAndView = new ModelAndView("question");
         TestKC testKC = testService.findById(testId);
         Question question = new Question();
@@ -82,7 +85,7 @@ public class AdminController {
         Long questionId = questionService.create(question);
         question.setId(questionId);
         ListCreationDto lcDto = new ListCreationDto();
-        for (int i=0; i < 4; i++){
+        for (int i=0; i < ansCount; i++){
             lcDto.addToList("");
         }
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
@@ -106,8 +109,13 @@ public class AdminController {
 
         TestKC testKC = testService.findById(testId);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
+
         dtoQuestion.setAnswers(listCreationDto.getAnswers());
+        dtoQuestion.setId(questionId);
+
         dtoTestKC.getQuestionList().add(dtoQuestion);
+        testKC = DtoConverter.fromDto(dtoTestKC);
+        testService.update(testKC);
         modelAndView.addObject("testKC", dtoTestKC);
         return modelAndView;
     }

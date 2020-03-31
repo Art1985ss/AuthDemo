@@ -18,7 +18,7 @@
                 <h4 th:text="${'Results for test #' + dtoTestKC.name }"></h4>
                 <p><span th:text="${'Congrats you scored:'  + dtoTestKC.score + ' points!'}"></span><br></p>
             </div>
-            <table th:each="d: ${dtoTestKC.questionList}">
+            <table class="table table-borderless table-sm" th:each="d: ${dtoTestKC.questionList}">
                 <tr>
                     <th th:text="${ d.id + '. ' + d.question}"></th>
                 </tr>

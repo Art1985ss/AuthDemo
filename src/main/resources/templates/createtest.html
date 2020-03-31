@@ -16,17 +16,29 @@
 
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
-           <table>
-               <tr>
-                   <span>
-                       Add questions to the test:
-                   </span>
-                   <span>
-                       <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/test/' + ${dtoTest.getId()} +'/question/new' }" th:text="Add" role="button"></a>
-                   </span>
+            <form id="quiz" th:action="@{'/admin/test/create'}" method="post">
+                <table>
+                    <tr >
+                        <td >
+                            Enter test name:
+                        </td>
+                        <td>
+                            <input type="text" th:field="*{dtoTest.name}" />
+                        </td>
+                    </tr>
 
-               </tr>
-           </table>
+                    <tr >
+                        <td >
+                            Enter test duration:
+                        </td>
+                        <td>
+                            <input type="text" th:field="*{dtoTest.duration}" />
+                        </td>
+                    </tr>
+
+                </table>
+                <hr>
+                <p><input type="submit" value="Submit" style="float: right;"/></p>
         </div>
     </div>
 </div>
