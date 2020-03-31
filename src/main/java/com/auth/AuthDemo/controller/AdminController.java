@@ -54,29 +54,25 @@ public class AdminController {
     }
 
     @GetMapping("/test/new")
-    public ModelAndView testCreateForm() {
+    public ModelAndView testNew() {
         ModelAndView modelAndView = new ModelAndView("createtest");
         TestKC testKC = new TestKC();
-        Long testId = testService.create(testKC);
+        testKC.setName("");
+        testKC.setDurationMinutes(0);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
-        modelAndView.addObject("dtoTest", dtoTestKC);
-        modelAndView.addObject("testId",testId);
+        modelAndView.addObject("dtoTestKC", dtoTestKC);
         return modelAndView;
     }
 
-    @PostMapping("/test/{testId}/create")
-    public ModelAndView testCreate(DtoTestKC dtoTestKC,
-                                   @PathVariable("testId") Long testId) {
+    @PostMapping("/test/create")
+    public ModelAndView testCreate(DtoTestKC dtoTestKC) {
         ModelAndView modelAndView = new ModelAndView("testmanage");
         dtoTestKC.setQuestionList(new ArrayList<>());
         TestKC testKC = DtoConverter.fromDto(dtoTestKC);
-        testKC.setId(testId);
         testService.update(testKC);
         modelAndView.addObject("testKC", testKC);
         return modelAndView;
     }
-
-
 
     @GetMapping("/test/{testID}/question/new")
     public ModelAndView questionForm(@PathVariable("testID") Long testId, @RequestParam("url") Integer ansCount) {

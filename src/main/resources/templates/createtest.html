@@ -16,14 +16,14 @@
 
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
-            <form id="quiz" th:action="@{'/admin/test/' + ${testId} + '/create'}" method="post">
+            <form id="quiz" th:action="@{'/admin/test/create'}" method="post">
 
                 <div class="form-inline d-flex">
                     <div class="p-2">
                         <label for="Name">Enter test name:</label>
                     </div>
                     <div class="ml-auto p-2">
-                        <input class="form-control pull-right" id="Name" type="text" th:field="*{dtoTest.name}" />
+                        <input class="form-control pull-right" id="Name" type="text" th:field="*{dtoTestKC.name}" />
                     </div>
                 </div>
                 <div class="form-inline d-flex">
@@ -31,7 +31,7 @@
                         <label for="Duration">Enter test duration (in minutes):</label>
                     </div>
                     <div class="ml-auto p-2">
-                        <input class="form-control pull-right" id="Duration" type="text" th:field="*{dtoTest.duration}" />
+                        <input class="form-control pull-right" id="Duration" type="text" th:field="*{dtoTestKC.duration}" />
                     </div>
                 </div>
 
