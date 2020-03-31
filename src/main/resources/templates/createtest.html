@@ -16,9 +16,29 @@
 
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
-           <table>
+            <form id="quiz" th:action="@{'/admin/test/create'}" method="post">
+                <table>
+                    <tr >
+                        <td >
+                            Enter test name:
+                        </td>
+                        <td>
+                            <input type="text" th:field="*{dtoTest.name}" />
+                        </td>
+                    </tr>
 
-           </table>
+                    <tr >
+                        <td >
+                            Enter test duration:
+                        </td>
+                        <td>
+                            <input type="text" th:field="*{dtoTest.duration}" />
+                        </td>
+                    </tr>
+
+                </table>
+                <hr>
+                <p><input type="submit" value="Submit" style="float: right;"/></p>
         </div>
     </div>
 </div>

@@ -14,7 +14,7 @@ public class TestKC {
     private String name;
     @Column(name = "duration")
     private int durationMinutes;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL )
     @JoinTable(name = "test_questions",
             joinColumns = @JoinColumn(name = "test_id"),
             inverseJoinColumns = @JoinColumn(name = "question_id"))

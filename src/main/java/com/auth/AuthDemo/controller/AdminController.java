@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 
 @SessionAttributes({ "questionAnswers"})
 @Controller
@@ -62,14 +64,15 @@ public class AdminController {
         return modelAndView;
     }
 
-//    @GetMapping("/test/create")
-//    public ModelAndView testCreate(@RequestBody DtoTestKC dtoTestKC) {
-//        ModelAndView modelAndView = new ModelAndView("testmanage");
-//        TestKC testKC = DtoConverter.fromDto(dtoTestKC);
-//        testService.update(testKC);
-//        modelAndView.addObject("testKC", testKC);
-//        return modelAndView;
-//    }
+    @PostMapping("/test/create")
+    public ModelAndView testCreate(DtoTestKC dtoTestKC) {
+        ModelAndView modelAndView = new ModelAndView("testmanage");
+        dtoTestKC.setQuestionList(new ArrayList<>());
+        TestKC testKC = DtoConverter.fromDto(dtoTestKC);
+        testService.update(testKC);
+        modelAndView.addObject("testKC", testKC);
+        return modelAndView;
+    }
 
 
 
@@ -106,7 +109,10 @@ public class AdminController {
 
         TestKC testKC = testService.findById(testId);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
+
         dtoQuestion.setAnswers(listCreationDto.getAnswers());
+        dtoQuestion.setId(questionId);
+
         dtoTestKC.getQuestionList().add(dtoQuestion);
         testKC = DtoConverter.fromDto(dtoTestKC);
         testService.update(testKC);
