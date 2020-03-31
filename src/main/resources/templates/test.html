@@ -68,7 +68,7 @@
                 <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4>
             </div>
             <form id="quiz" th:action="@{'/user/result/test' + ${testKC.getId()}}" th:object="${form}" method="post">
-                <table th:each="quest: ${testKC.questionList}">
+                <table class="table table-borderless table-sm" th:each="quest: ${testKC.questionList}">
                     <thead>
                     <tr>
                         <th th:text="${quest.id + '. ' +  quest.question}"></th>
@@ -77,7 +77,7 @@
                     <tbody>
                     <tr>
                         <td>
-                            <ol compact="">
+                            <ol >
                                 <li type="a" th:each="ans: ${quest.answers}" th:text="${ans}"></li>
                             </ol>
                         </td>
