@@ -108,6 +108,8 @@ public class AdminController {
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
         dtoQuestion.setAnswers(listCreationDto.getAnswers());
         dtoTestKC.getQuestionList().add(dtoQuestion);
+        testKC = DtoConverter.fromDto(dtoTestKC);
+        testService.update(testKC);
         modelAndView.addObject("testKC", dtoTestKC);
         return modelAndView;
     }
