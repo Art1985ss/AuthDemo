@@ -2,6 +2,7 @@ package com.auth.AuthDemo.service;
 
 import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.repository.UserRepository;
+import com.auth.AuthDemo.service.validation.user.UserValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +12,17 @@ import java.util.NoSuchElementException;
 @Service
 public class UserService implements Service_<User> {
     private UserRepository userRepository;
+    private UserValidationService userValidationService;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserValidationService userValidationService) {
         this.userRepository = userRepository;
+        this.userValidationService = userValidationService;
     }
 
     @Override
     public Long create(User user) {
+        userValidationService.validate(user);
         return userRepository.save(user).getId();
     }
 

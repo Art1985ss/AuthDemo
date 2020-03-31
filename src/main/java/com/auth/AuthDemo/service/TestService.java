@@ -2,6 +2,7 @@ package com.auth.AuthDemo.service;
 
 import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.repository.TestRepository;
+import com.auth.AuthDemo.service.validation.test.TestValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +13,17 @@ import java.util.NoSuchElementException;
 @Service
 public class TestService implements Service_<TestKC> {
     private TestRepository testRepository;
+    private TestValidationService testValidationService;
 
     @Autowired
-    public TestService(TestRepository testRepository) {
+    public TestService(TestRepository testRepository, TestValidationService testValidationService) {
         this.testRepository = testRepository;
+        this.testValidationService = testValidationService;
     }
 
     @Override
     public Long create(TestKC testKC) {
+        testValidationService.validate(testKC);
         return testRepository.save(testKC).getId();
     }
 
