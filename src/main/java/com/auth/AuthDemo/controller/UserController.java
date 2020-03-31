@@ -3,6 +3,7 @@ package com.auth.AuthDemo.controller;
 import com.auth.AuthDemo.dto.DtoConverter;
 import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.dto.DtoUser;
+import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.service.UserService;
 import com.auth.AuthDemo.service.TestService;
@@ -31,12 +32,16 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.findByName(principal.getName());
         user.updateScore();
+
+        List<DtoTestKC> allDtoTests = testService.findAll().stream().map(t -> DtoConverter.toDto(t)).collect(Collectors.toList());
+
         System.out.println("user controller");
         System.out.println(user);
         DtoUser dtoUser = DtoConverter.toDto(user);
         List<DtoTestKC> dtoTestKCList =  user.getUserTests().stream().map(u-> DtoConverter.toDto(user, u.getTestKC())).collect(Collectors.toList());//testService.findAll().stream().map(DtoConverter::toDto).collect(Collectors.toList());
         modelAndView.addObject("user", dtoUser);
         modelAndView.addObject("test", dtoTestKCList);
+        modelAndView.addObject("allDtoTests", allDtoTests);
         modelAndView.setViewName("user");
         return modelAndView;
     }

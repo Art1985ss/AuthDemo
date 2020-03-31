@@ -20,6 +20,11 @@
                 <p class="lead"
                    th:text="${'Your current test grade is: ' + #numbers.formatDecimal(user.score * 100, 1, 'POINT', 2, 'COMMA')} +'%'"/>
             </div>
+            <div class="text-left" th:each="tst: ${allDtoTests}" >
+
+                <a th:href="@{'/user/test' + ${tst.id}}"  th:text="${tst.name}"> </a>
+
+            </div>
             <table class=" table table-bordered table-hover table-sm">
                 <thead class="thead-light">
                 <tr>
@@ -32,8 +37,7 @@
                 <tbody>
                 <tr th:each="testkc: ${user.userTests}">
                     <td style="width: 10%" th:text="${testkc.testKC.id}"></td>
-                    <td style="width: 60%"><a th:href="@{'/user/test' + ${testkc.testKC.id}}"
-                                              th:text="${testkc.testKC.name}"></a></td>
+                    <td style="width: 60%" th:text="${testkc.testKC.name}"></td>
                     <td style="width: 15%" th:text="${testkc.testKC.durationMinutes}"></td>
                     <td style="width: 15%" th:text="${testkc.getScore()}"></td>
                 </tr>
