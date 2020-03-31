@@ -20,30 +20,26 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-<!--            <div id="countDownTimer" class="values">0</div>-->
+            <div class="collapse navbar-collapse" id="navbarResponsive">
 
-
-            <div class="collapse navbar-collapse" id="navbarResponsive" >
-
-
-                <div class="row mx-auto bg-light p-1 border  pr-2 pl-2 align-bottom rounded-pill values" id="countDownTimer" >0</div>
-
-
+                <div class="row mx-auto bg-light p-1 border  pr-2 pl-2 align-bottom rounded-pill values"
+                     id="countDownTimer">0
+                </div>
                 <ul class="navbar-nav ml-auto">
-<!--                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active':''}" class="nav-item ">-->
-<!--                        <a class="nav-link" th:href="@{/home}">Home</a>-->
-<!--                    </li>-->
                     <li th:if="${#authorization.expression('hasRole(''ROLE_STUDENT'')')}"
-                        th:classappend="${#httpServletRequest.getRequestURI() == '/user' ? 'active':''}" class="nav-item">
-                        <a  class="nav-link" th:href="@{/user}">Dashboard</a>
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/user' ? 'active':''}"
+                        class="nav-item">
+                        <a class="nav-link" th:href="@{/user}">Dashboard</a>
                         <span class="sr-only">(current)</span>
                     </li>
                     <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin' ? 'active':''}" class="nav-item">
-                        <a   class="nav-link" th:href="@{/admin}">Dashboard</a>
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin' ? 'active':''}"
+                        class="nav-item">
+                        <a class="nav-link" th:href="@{/admin}">Dashboard</a>
                         <span class="sr-only">(current)</span>
                     </li>
-                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/contacts' ? 'active':''}" class="nav-item" >
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/contacts' ? 'active':''}"
+                        class="nav-item">
                         <a class="nav-link" th:href="@{/contacts}">Contact</a>
                     </li>
                 </ul>
@@ -53,40 +49,38 @@
 </div>
 
 
-
 <div class="container">
-
-
-
 
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
-
-                <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4><br>
-
-<!--            &lt;!&ndash;    <h5>Result</h5>&ndash;&gt;-->
-<!--                <div class="card mb-5">-->
-<!--                    <div class="text-center card-body" id="countdownExample">-->
-<!--                        <div class="values"></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-            <!--    <div class="row">-->
-
+            <div class="text-left">
+                <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4>
+            </div>
             <form id="quiz" th:action="@{'/user/result/test' + ${testKC.getId()}}" th:object="${form}" method="post">
-                <table>
-                    <tr th:each="d: ${testKC.questionList}">
-                        <ol>
-                            <h5 class="font-weight-bold" th:text="${d.id + '. ' +  d.question}"></h5>
-                            <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>
-                            <p>Your answer : <input type="text" th:field="*{properties['__${d.id}__']}"
-                                                    placeholder="answer"/></p>
-<!--                            <span th:text="${d.correctAnswer}"></span><br>-->
-<!--                            <span th:text="${d.userAnswer}"></span><br>-->
-                            <hr>
-                        </ol>
+                <table th:each="quest: ${testKC.questionList}">
+                    <thead>
+                    <tr>
+                        <th th:text="${quest.id + '. ' +  quest.question}"></th>
                     </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <ol compact="">
+                                <li type="a" th:each="ans: ${quest.answers}" th:text="${ans}"></li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Your answer : <input type="text" th:field="*{properties['__${quest.id}__']}"
+                                                 placeholder="answer"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <hr>
                 </table>
+                <hr>
                 <p><input type="submit" value="Submit" style="float: right;"/></p>
             </form>
         </div>
@@ -102,7 +96,7 @@
     timer.start(
         {
             countdown: true,
-            startValues: { seconds: 15 }
+            startValues: {seconds: 15}
         });
 
     document.getElementById("countDownTimer").innerHTML = timer.getTimeValues().toString();
@@ -118,11 +112,7 @@
     });
 </script>
 
-
-
 <div th:replace="fragments/footer.html :: footer"/>
-
-
 
 </body>
 </html>
