@@ -130,8 +130,8 @@ insert into question_answers (question_id, answer) values
 (2, "Right answer is next answer"),
 (2, "Choose me!");
 
-insert into test (name, duration) values
-("First test", 10);
+insert into test (name, duration, enabled) values
+("First test", 10, true);
 
 insert into test_questions (test_id, question_id) values
 (1, 1), (1, 2);
