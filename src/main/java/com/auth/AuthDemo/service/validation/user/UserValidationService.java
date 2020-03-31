@@ -2,9 +2,11 @@ package com.auth.AuthDemo.service.validation.user;
 
 import com.auth.AuthDemo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class UserValidationService {
     private Set<UserValidation> validations;
 
@@ -13,7 +15,7 @@ public class UserValidationService {
         this.validations = validations;
     }
 
-    public void validate(User user){
-        validations.forEach(v-> v.validate(user));
+    public void validate(User user) {
+        validations.forEach(v -> v.validate(user));
     }
 }

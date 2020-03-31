@@ -4,7 +4,9 @@ import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.repository.TestRepository;
 import com.auth.AuthDemo.service.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TestNameValidation implements TestValidation {
     private static final int MIN__LENGTH = 4;
     private static final int MAX__LENGTH = 32;

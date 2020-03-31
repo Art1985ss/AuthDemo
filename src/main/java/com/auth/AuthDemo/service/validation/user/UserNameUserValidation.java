@@ -4,7 +4,9 @@ import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.repository.UserRepository;
 import com.auth.AuthDemo.service.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserNameUserValidation implements UserValidation {
     private static final int MIN__LENGTH = 4;
     private static final int MAX__LENGTH = 32;

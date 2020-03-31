@@ -2,7 +2,9 @@ package com.auth.AuthDemo.service.validation.user;
 
 import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.service.validation.ValidationException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserPasswordUserValidation implements UserValidation {
     private static final int MIN__LENGTH = 4;
     private static final int MAX__LENGTH = 32;

@@ -1,9 +1,11 @@
 package com.auth.AuthDemo.service.validation.test;
 
 import com.auth.AuthDemo.entity.TestKC;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class TestValidationService {
     private Set<TestValidation> validations;
 
