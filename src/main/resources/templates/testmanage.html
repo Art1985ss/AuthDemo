@@ -16,8 +16,14 @@
 
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
-            <div class="text-left">
+            <div class="text-left pb-2">
                 <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4>
+                <span>Add questions to the test: </span>
+                <form th:action="@{'/admin/test/' + ${testKC.id} +'/question/new' }" method="get">
+                    <span> Before adding test set count of possible answers</span>
+                    <input type="text" name="url" id="url" class="form-control" placeholder="answerCount">
+                    <p><input type="submit" value="Add" style="float: right;"/></p>
+                </form>
             </div>
 
             <table class="table table-borderless table-sm" th:each="quest: ${testKC.questionList}">
@@ -26,6 +32,7 @@
                     <th style="width: 80%" scope="col" th:text="${quest.id + '. ' +  quest.question}"></th>
                     <th style="width: 20%" scope="col">     <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test'+${testKC.getId()} +'/quest' + ${quest.getId()}}" th:text="Edit" role="button"></a></th>
                 </tr>
+
                 </thead>
                 <tbody>
                 <tr>

@@ -74,7 +74,7 @@ public class AdminController {
 
 
     @GetMapping("/test/{testID}/question/new")
-    public ModelAndView questionForm(@PathVariable("testID") Long testId) {
+    public ModelAndView questionForm(@PathVariable("testID") Long testId, @RequestParam("url") Integer ansCount) {
         ModelAndView modelAndView = new ModelAndView("question");
         TestKC testKC = testService.findById(testId);
         Question question = new Question();
@@ -82,7 +82,7 @@ public class AdminController {
         Long questionId = questionService.create(question);
         question.setId(questionId);
         ListCreationDto lcDto = new ListCreationDto();
-        for (int i=0; i < 4; i++){
+        for (int i=0; i < ansCount; i++){
             lcDto.addToList("");
         }
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
