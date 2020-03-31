@@ -40,7 +40,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("users", userService.findAll());
         mav.addObject("testsKC", testService.findAll());
-        System.out.println(userService.findAll().get(1).getUserTests());
+//        System.out.println(userService.findAll().get(1).getUserTests());
         mav.setViewName("admin");
         return mav;
     }
@@ -86,25 +86,36 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("question");
         TestKC testKC = testService.findById(testId);
         Question question = new Question();
-        question.setQuestion("");
-        Long questionId = questionService.create(question);
-        question.setId(questionId);
+//        question.setQuestion("");
+//        question.set
+
+//        question.setQuestion("");
+//        Long questionId = questionService.create(question);
+//        question.setId(questionId);
+
+
+
         ListCreationDto lcDto = new ListCreationDto(ansCount);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
-        DtoQuestion dtoQuestion = new DtoQuestion();
-        dtoQuestion = DtoConverter.toDto(question);
+        DtoQuestion dtoQuestion = DtoConverter.toDto(question);
+
+        System.out.println(dtoQuestion);
+
         modelAndView.addObject("questionAnswers", lcDto);
         modelAndView.addObject("dtoTest", dtoTestKC);
         modelAndView.addObject("dtoQuestion", dtoQuestion);
         return modelAndView;
     }
 
-    @PostMapping("/test/{testID}/question/{questionID}/create")
+    @PostMapping("/test/{testID}/question/create")
     public ModelAndView questionCreate(DtoQuestion dtoQuestion,
                                        @PathVariable("testID") Long testId,
-                                       @ModelAttribute("quesitonsList") ListCreationDto listCreationDto,
-                                       @PathVariable("questionID") Long questionId){
+                                       @ModelAttribute("quesitonsList") ListCreationDto listCreationDto){
+//                                       @PathVariable("questionID") Long questionId){
         ModelAndView modelAndView = new ModelAndView("testmanage");
+
+        System.out.println(dtoQuestion);
+
         Question question = DtoConverter.fromDto(dtoQuestion);
         question.setAnswers(listCreationDto.getAnswers());
         questionService.update(question);
@@ -122,11 +133,12 @@ public class AdminController {
         return modelAndView;
     }
 
-    @DeleteMapping("test/{testId}/question/{questionId}/delete")
+//    @DeleteMapping("test/{testId}/question/{questionId}/delete")
+    @GetMapping("test/{testId}/question/{questionId}/delete")
     public ModelAndView deleteQuestion(@PathVariable("testId") Long testId,
                                        @PathVariable("questionId") Long questionId){
         questionService.deleteById(questionId);
-        return new ModelAndView("/testmanage/test" + testId);
+        return new ModelAndView("redirect:/admin/testmanage/test" + testId);
     }
 
 

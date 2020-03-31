@@ -43,7 +43,14 @@
                 <thead>
                 <tr >
                     <th style="width: 80%" scope="col" th:text="${quest.id + '. ' +  quest.question}"></th>
-                    <th style="width: 20%" scope="col">     <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test'+${testKC.getId()} +'/quest' + ${quest.getId()}}" th:text="Edit" role="button"></a></th>
+                    <th style="width: 20%" scope="col">
+
+<!--                        <form th:action="@{'/admin/test/' + ${testKC.id} + '/question/' + ${testKC.id} + '/delete'}" method="delete">-->
+<!--                            <input class="btn btn-primary" type="submit" value="Delete" style="float: right;"/>-->
+<!--                        </form>-->
+                        <a class="btn btn-primary btn-sm custom" th:href="'/admin/test/' + ${testKC.id} + '/question/' + ${quest.id} + '/delete'"
+                           th:text="Delete" role="button"></a>
+                    </th>
                 </tr>
 
                 </thead>
