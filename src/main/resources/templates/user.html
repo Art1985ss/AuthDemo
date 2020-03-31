@@ -22,7 +22,7 @@
             </div>
             <div class="text-left" th:each="tst: ${allDtoTests}" >
 
-                <a th:href="@{'/user/test' + ${tst.id}}"  th:text="${tst.name}"> </a>
+                <a th:href="@{'/user/test' + ${tst.id} + '?duration='+ ${tst.duration}  }"  th:text="${tst.name}"> </a>
 
             </div>
             <table class=" table table-bordered table-hover table-sm">

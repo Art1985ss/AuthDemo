@@ -104,10 +104,12 @@
 <script>
     const timer = new easytimer.Timer();
 
+    var urlParams = new URLSearchParams(window.location.search);
+
     timer.start(
         {
             countdown: true,
-            startValues: {seconds: 15}
+            startValues: {seconds: urlParams.get('duration')*60 }
         });
 
     document.getElementById("countDownTimer").innerHTML = timer.getTimeValues().toString();
