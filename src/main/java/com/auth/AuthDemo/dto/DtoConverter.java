@@ -22,6 +22,7 @@ public class DtoConverter {
         dtoTestKC.setId(testKC.getId());
         dtoTestKC.setName(testKC.getName());
         dtoTestKC.setDuration(testKC.getDurationMinutes());
+        dtoTestKC.setEnabled(testKC.isEnabled());
         dtoTestKC.setQuestionList(testKC.getQuestionList().stream().map(DtoConverter::toDto).collect(Collectors.toList()));
         dtoTestKC.setCompleted(false);
         dtoTestKC.setScore(BigDecimal.ZERO);
@@ -34,6 +35,7 @@ public class DtoConverter {
         dtoTestKC.setId(testKC.getId());
         dtoTestKC.setName(testKC.getName());
         dtoTestKC.setDuration(testKC.getDurationMinutes());
+        dtoTestKC.setEnabled(testKC.isEnabled());
         dtoTestKC.setQuestionList(testKC.getQuestionList().stream().map(DtoConverter::toDto).collect(Collectors.toList()));
         UserTest userTest = user.findUserTest(testKC);
         dtoTestKC.setCompleted(userTest.isCompleted());
@@ -66,6 +68,7 @@ public class DtoConverter {
         testKC.setId(dtoTestKC.getId());
         testKC.setName(dtoTestKC.getName());
         testKC.setDurationMinutes(dtoTestKC.getDuration());
+        testKC.setEnabled(dtoTestKC.isEnabled());
         testKC.setQuestionList(dtoTestKC.getQuestionList().stream().map(DtoConverter::fromDto).collect(Collectors.toList()));
         UserTest userTest = new UserTest();
         userTest.setId(new UserTestKey(user.getId(), testKC.getId()));
@@ -83,6 +86,7 @@ public class DtoConverter {
         testKC.setId(dtoTestKC.getId());
         testKC.setName(dtoTestKC.getName());
         testKC.setDurationMinutes(dtoTestKC.getDuration());
+        testKC.setEnabled(dtoTestKC.isEnabled());
         testKC.setQuestionList(dtoTestKC.getQuestionList().stream().map(DtoConverter::fromDto).collect(Collectors.toList()));
         return testKC;
     }
