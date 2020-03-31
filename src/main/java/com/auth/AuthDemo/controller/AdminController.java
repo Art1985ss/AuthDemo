@@ -11,6 +11,7 @@ import com.auth.AuthDemo.service.TestService;
 import com.auth.AuthDemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -116,23 +117,20 @@ public class AdminController {
     }
 
 
-
     @GetMapping("test/{id}/enable")
-    public ModelAndView enableTest(Long id){
-        ModelAndView modelAndView = new ModelAndView("");
+    public ModelAndView enableTest(@PathVariable("id") Long id){
         TestKC testKC = testService.findById(id);
         testKC.setEnabled(true);
         testService.update(testKC);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/admin");
     }
 
     @GetMapping("test/{id}/disable")
-    public ModelAndView disableTest(Long id){
-        ModelAndView modelAndView = new ModelAndView("");
+    public ModelAndView disableTest(@PathVariable("id") Long id){
         TestKC testKC = testService.findById(id);
         testKC.setEnabled(false);
         testService.update(testKC);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/admin");
     }
 
 

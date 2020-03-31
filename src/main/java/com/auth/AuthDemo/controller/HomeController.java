@@ -33,14 +33,18 @@ public class HomeController {
     @Autowired
     ScoreCalculationService scoreCalculationService;
 
+//    @GetMapping("")
+//    public ResponseEntity<String> getData(Principal principal){
+//        principal.getName();
+//        return ResponseEntity.ok("This is just test " + principal.getName());
+//    }
     @GetMapping("")
-    public ResponseEntity<String> getData(Principal principal){
-        principal.getName();
-        return ResponseEntity.ok("This is just test " + principal.getName());
+    public ModelAndView redirectToHome() {
+        return new ModelAndView("redirect:/home");
     }
 
     @GetMapping("/home")
-    public ModelAndView getLoginData(){
+    public ModelAndView getLoginData() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("home");
         return mav;

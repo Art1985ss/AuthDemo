@@ -20,12 +20,14 @@
                 <p class="lead"
                    th:text="${'Your current test grade is: ' + #numbers.formatDecimal(user.score * 100, 1, 'POINT', 2, 'COMMA')} +'%'"/>
             </div>
-            <div class="text-left" th:each="tst: ${allDtoTests}" >
-
-                <a th:href="@{'/user/test' + ${tst.id} + '?duration='+ ${tst.duration}  }"  th:text="${tst.name}"> </a>
-
+            <div class="row bg-info text-white pt-2 pr-3 pl-3">
+                <h4 class="pr-3"> Your currently active test: </h4>
+                <div class="text-left h4 text-white" th:each="tst: ${allDtoTests}">
+                    <a th:if="${tst.enabled}" th:href="@{'/user/test' + ${tst.id} + '?duration='+ ${tst.duration}  }"
+                       th:text="${tst.name}" class="text-white"> </a>
+                </div>
             </div>
-            <table class=" table table-bordered table-hover table-sm">
+            <table class=" table table-bordered table-hover table-sm mt-3">
                 <thead class="thead-light">
                 <tr>
                     <th>Id</th>
