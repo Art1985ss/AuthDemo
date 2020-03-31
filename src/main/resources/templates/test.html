@@ -84,8 +84,14 @@
                     </tr>
                     <tr>
                         <td>
-                            Your answer : <input class="form-control" type="text" th:field="*{properties['__${quest.id}__']}"
-                                                 placeholder="answer"/>
+                            <div class="form-inline d-flex">
+                                <div class="p-2">
+                                    <label>Your answer (write a,b,c or ...?):</label>
+                                </div>
+                                <div class="ml-auto p-2">
+                                    <input id="Answer" class="form-control" type="text" th:field="*{properties['__${quest.id}__']}" placeholder="answer"/>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     </tbody>

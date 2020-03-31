@@ -58,17 +58,19 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("createtest");
         TestKC testKC = new TestKC();
         Long testId = testService.create(testKC);
-        testKC.setId(testId);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
         modelAndView.addObject("dtoTest", dtoTestKC);
+        modelAndView.addObject("testId",testId);
         return modelAndView;
     }
 
-    @PostMapping("/test/create")
-    public ModelAndView testCreate(DtoTestKC dtoTestKC) {
+    @PostMapping("/test/{testId}/create")
+    public ModelAndView testCreate(DtoTestKC dtoTestKC,
+                                   @PathVariable("testId") Long testId) {
         ModelAndView modelAndView = new ModelAndView("testmanage");
         dtoTestKC.setQuestionList(new ArrayList<>());
         TestKC testKC = DtoConverter.fromDto(dtoTestKC);
+        testKC.setId(testId);
         testService.update(testKC);
         modelAndView.addObject("testKC", testKC);
         return modelAndView;

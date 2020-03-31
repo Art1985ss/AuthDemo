@@ -21,23 +21,21 @@
                 <hr>
                 <form th:action="@{'/admin/test/' + ${testKC.id} +'/question/new' }" method="get">
 
-                    <table>
-                        <tr>
-                            <td class="text-right" style="width: 50%">
-                                <span class="pr-2" > Set answer count first:</span>
-
-                            </td>
-                            <td class="text-center" style="width: 40%">
-                                <input class="form-control" type="text" name="url" id="url" placeholder="answer count">
-
-                            </td>
-                            <td style="width: 10%">
-                                <p><input class="btn btn-primary" type="submit" value="Add Question" style="float: right;"/></p>
-                            </td >
-                        </tr>
-                    </table>
-
-
+                    <div class="form-inline d-flex">
+                        <div class="pl-3 row">
+                            <div class="pt-3 font-weight-bold">
+                                <label for="url">Set answer count:</label>
+                            </div>
+                            <div class="p-2">
+                                <input class="form-control input-sm" type="text" name="url" id="url"
+                                       placeholder="answer count">
+                            </div>
+                            <div class="ml-auto p-2">
+                                <input class="btn btn-primary" type="submit" value="Add Question"
+                                       style="float: right;"/>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
 

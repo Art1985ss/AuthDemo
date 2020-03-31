@@ -21,22 +21,37 @@
 
             <form th:action="@{'/admin/test/' + ${dtoTest.id} + '/question/' + ${dtoQuestion.id} + '/create'}" method="post">
 
-                <div class="form-group">
-                    <label for="Question" th:text="${'Enter question for #' + dtoQuestion.id} + ': '"></label>
-                    <input id="Question" type="text" th:field="*{dtoQuestion.question}" />
+                <div class="form-inline d-flex">
+                    <div class="p-2">
+                        <label for="Question" th:text="${'Enter question for #' + dtoQuestion.id} + ': '"></label>
+                    </div>
+                    <div class="ml-auto p-2">
+                        <input class="form-control pull-right" id="Question" type="text" th:field="*{dtoQuestion.question}" />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <ol>
+
+                    <ol class="mb-0">
                         <li type="a" th:each="answ, itemStat : *{questionAnswers.answers}">
-                            <label for="Answer">Enter correct answer: </label>
-                            <input id="Answer" th:field="*{questionAnswers.answers[__${itemStat.index}__]}"/>
+                            <div class="form-inline d-flex">
+                                <div class="p-2">
+                                    <label for="Answer">Enter an answer: </label>
+                                </div>
+                                <div class="ml-auto p-2">
+                                    <input class="form-control" id="Answer" th:field="*{questionAnswers.answers[__${itemStat.index}__]}"/>
+                                </div>
+                            </div>
                         </li>
                     </ol>
+
+                <div class="form-inline d-flex ">
+                    <div class="p-2">
+                        <label for="RightAnswer">Enter correct answer (a,b,c ... or?)):</label>
+                    </div>
+                    <div class="ml-auto p-2">
+                        <input id="RightAnswer" class="form-control pull-right" th:field="*{dtoQuestion.correctAnswer}"/>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="RightAnswer" >Enter correct answer (a,b,c ... or?)):</label>
-                    <input id="RightAnswer"  th:field="*{dtoQuestion.correctAnswer}" />
-                </div>
+
                 <p><input class="btn btn-primary" type="submit" value="Submit" style="float: right;"/></p>
             </form>
         </div>
