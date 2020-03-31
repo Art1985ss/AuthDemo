@@ -74,6 +74,12 @@ public class AdminController {
         return modelAndView;
     }
 
+    @DeleteMapping("test/{testId}/delete")
+    public ModelAndView deleteTest(Long id){
+        testService.deleteById(id);
+        return new ModelAndView("redirect:/");
+    }
+
     @GetMapping("/test/{testID}/question/new")
     public ModelAndView questionForm(@PathVariable("testID") Long testId, @RequestParam("url") Integer ansCount) {
         ModelAndView modelAndView = new ModelAndView("question");
@@ -113,6 +119,13 @@ public class AdminController {
         testService.update(testKC);
         modelAndView.addObject("testKC", dtoTestKC);
         return modelAndView;
+    }
+
+    @DeleteMapping("test/{testId}/question/{questionId}/delete")
+    public ModelAndView deleteQuestion(@PathVariable("testId") Long testId,
+                                       @PathVariable("questionId") Long questionId){
+        questionService.deleteById(questionId);
+        return new ModelAndView("/testmanage/test" + testId);
     }
 
 
