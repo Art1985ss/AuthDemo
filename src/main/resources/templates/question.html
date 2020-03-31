@@ -19,11 +19,12 @@
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
 
-            <form th:action="@{'/admin/test/' + ${dtoTest.id} + '/question/' + ${dtoQuestion.id} + '/create'}" method="post">
+            <form th:action="@{'/admin/test/' + ${dtoTest.id} + '/question/create'}" method="post">
 
                 <div class="form-inline d-flex">
                     <div class="p-2">
-                        <label for="Question" th:text="${'Enter question for #' + dtoQuestion.id} + ': '"></label>
+                        <label for="Question" th:text="${'Enter question text: '}"></label>
+<!--                        <label for="Question" th:text="${'Enter question for #' + dtoQuestion.id} + ': '"></label>-->
                     </div>
                     <div class="ml-auto p-2">
                         <input class="form-control pull-right" id="Question" type="text" th:field="*{dtoQuestion.question}" />

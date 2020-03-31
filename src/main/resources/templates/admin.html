@@ -85,7 +85,7 @@
                     <td class="text-left align-middle" th:text="${testkc.name}"></td>
                     <td class="align-middle" th:text="${testkc.durationMinutes}"></td>
                     <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Edit" role="button"></a></td>
-                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Remove" role="button"></a></td>
+                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/test/' + ${testkc.getId()} + '/delete'}" th:text="Delete" role="button"></a></td>
                     <td >
                         <a th:unless="${testkc.enabled}" class="btn btn-primary btn-sm custom" th:href="@{'/admin/test/' + ${testkc.id} + '/enable' }" th:text="Enable" role="button"></a>
                         <a th:if="${testkc.enabled}" class="btn btn-danger btn-sm custom" th:href="@{'/admin/test/' + ${testkc.id} + '/disable' }" th:text="Disable" role="button"></a>

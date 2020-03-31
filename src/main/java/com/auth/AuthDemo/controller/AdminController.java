@@ -75,32 +75,23 @@ public class AdminController {
         return modelAndView;
     }
 
-    @DeleteMapping("test/{testId}/delete")
-    public ModelAndView deleteTest(Long id){
+//    @DeleteMapping("test/{testId}/delete")
+    @GetMapping("test/{testId}/delete")
+    public ModelAndView deleteTest(@PathVariable("testId") Long id){
         testService.deleteById(id);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/admin/");
     }
+
+
 
     @GetMapping("/test/{testID}/question/new")
     public ModelAndView questionForm(@PathVariable("testID") Long testId, @RequestParam("url") Integer ansCount) {
         ModelAndView modelAndView = new ModelAndView("question");
         TestKC testKC = testService.findById(testId);
         Question question = new Question();
-//        question.setQuestion("");
-//        question.set
-
-//        question.setQuestion("");
-//        Long questionId = questionService.create(question);
-//        question.setId(questionId);
-
-
-
         ListCreationDto lcDto = new ListCreationDto(ansCount);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
         DtoQuestion dtoQuestion = DtoConverter.toDto(question);
-
-        System.out.println(dtoQuestion);
-
         modelAndView.addObject("questionAnswers", lcDto);
         modelAndView.addObject("dtoTest", dtoTestKC);
         modelAndView.addObject("dtoQuestion", dtoQuestion);
@@ -113,19 +104,13 @@ public class AdminController {
                                        @ModelAttribute("quesitonsList") ListCreationDto listCreationDto){
 //                                       @PathVariable("questionID") Long questionId){
         ModelAndView modelAndView = new ModelAndView("testmanage");
-
-        System.out.println(dtoQuestion);
-
         Question question = DtoConverter.fromDto(dtoQuestion);
         question.setAnswers(listCreationDto.getAnswers());
+        question.setCategory("default");
         questionService.update(question);
-
+        dtoQuestion = DtoConverter.toDto(question);
         TestKC testKC = testService.findById(testId);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
-
-        dtoQuestion.setAnswers(listCreationDto.getAnswers());
-        dtoQuestion.setId(questionId);
-
         dtoTestKC.getQuestionList().add(dtoQuestion);
         testKC = DtoConverter.fromDto(dtoTestKC);
         testService.update(testKC);
