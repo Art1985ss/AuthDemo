@@ -19,47 +19,25 @@
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
 
-
-
             <form th:action="@{'/admin/test/' + ${dtoTest.id} + '/question/' + ${dtoQuestion.id} + '/create'}" method="post">
-                <table>
 
-                    <tr >
-                        <td >
-                            <span th:text="${'Enter question for #' + dtoQuestion.id} + ': '"></span>
-                            <span><input type="text" th:field="*{dtoQuestion.question}" /></span>
-                        </td>
-
-                    </tr>
-
-
-                    <tr >
-                        <td>
-                            <ol >
-                                <li type="a" th:each="answ, itemStat : *{questionAnswers.answers}">
-                                    <span> Enter answer: </span>
-                                    <span>
-                                        <input th:field="*{questionAnswers.answers[__${itemStat.index}__]}" />
-                                    </span>
-
-                                </li>
-                            </ol>
-
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <span> Enter correct answer (a,b,c ... or?)):</span>
-                            <span>
-                                <input th:field="*{dtoQuestion.correctAnswer}" />
-                            </span>
-
-                        </td>
-
-                    </tr>
-                </table>
-                <p><input type="submit" value="Submit" style="float: right;"/></p>
+                <div class="form-group">
+                    <label for="Question" th:text="${'Enter question for #' + dtoQuestion.id} + ': '"></label>
+                    <input id="Question" type="text" th:field="*{dtoQuestion.question}" />
+                </div>
+                <div class="form-group">
+                    <ol>
+                        <li type="a" th:each="answ, itemStat : *{questionAnswers.answers}">
+                            <label for="Answer">Enter correct answer: </label>
+                            <input id="Answer" th:field="*{questionAnswers.answers[__${itemStat.index}__]}"/>
+                        </li>
+                    </ol>
+                </div>
+                <div class="form-group">
+                    <label for="RightAnswer" >Enter correct answer (a,b,c ... or?)):</label>
+                    <input id="RightAnswer"  th:field="*{dtoQuestion.correctAnswer}" />
+                </div>
+                <p><input class="btn btn-primary" type="submit" value="Submit" style="float: right;"/></p>
             </form>
         </div>
     </div>

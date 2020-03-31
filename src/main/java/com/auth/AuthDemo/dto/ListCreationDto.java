@@ -11,6 +11,15 @@ public class ListCreationDto implements Serializable {
     private List<String> answers = new ArrayList<>();
 
     // default and parameterized constructor
+    public ListCreationDto(){
+
+    }
+
+    public ListCreationDto(Integer ansCount){
+        for (int i=0; i < ansCount; i++){
+            this.addToList("");
+        }
+    }
 
     public void addToList(String answer) {
         this.answers.add(answer);

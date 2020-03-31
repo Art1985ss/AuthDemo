@@ -84,10 +84,7 @@ public class AdminController {
         question.setQuestion("");
         Long questionId = questionService.create(question);
         question.setId(questionId);
-        ListCreationDto lcDto = new ListCreationDto();
-        for (int i=0; i < ansCount; i++){
-            lcDto.addToList("");
-        }
+        ListCreationDto lcDto = new ListCreationDto(ansCount);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
         DtoQuestion dtoQuestion = new DtoQuestion();
         dtoQuestion = DtoConverter.toDto(question);
