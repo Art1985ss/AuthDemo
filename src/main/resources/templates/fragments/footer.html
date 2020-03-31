@@ -8,12 +8,16 @@
 <div th:fragment="footer">
     <div class="fixed-bottom" id="footer">
         <br/>
-        <div class="col-sm-12 text-center">
-            <span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
-                <!--                <a th:href="@{/logout}">Sign Out</a>-->
-            </span>
+        <div class="col-lg-12 text-center">
+            <div sec:authorize="isAuthenticated()">
+               <span>
+                   | Logged user: <span sec:authentication="name"></span> |
+               </span>
+                <span>
+                    Roles: <span sec:authentication="principal.authorities"></span> |
+                </span>
+
+            </div>
             <div>
                 <p class="text-center">&copy; 2020 Team2</p>
             </div>
@@ -26,7 +30,36 @@
     <script src="../static/bootstrap/js/bootstrap.bundle.min.js"
             th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
+
 </div>
+
+
+<script src="../static/easytimer.min.js"
+        th:src="@{/easytimer.min.js}"></script>
+
+<script>
+    const timer = new easytimer.Timer();
+
+    timer.start(
+        {
+            countdown: true,
+            startValues: {seconds: 15}
+        });
+
+    document.getElementById("countDownTimer").innerHTML = timer.getTimeValues().toString();
+
+    timer.addEventListener('secondsUpdated', function (e) {
+        document.getElementById("countDownTimer").innerHTML = timer.getTimeValues().toString();
+    });
+
+    timer.addEventListener('targetAchieved', function (e) {
+        document.getElementById("countDownTimer").innerHTML = "Time is out";
+        // alert("Form submitted");
+        document.getElementById("quiz").submit();// Form submission
+    });
+</script>
+
+
 
 </body>
 </html>

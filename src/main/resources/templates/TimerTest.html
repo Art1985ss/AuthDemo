@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test Timer</title>
+</head>
+
+<body>
+
+    <div id="countDownTimer" class="values">0</div>
+
+    <form>
+        <input type="text" />
+        <input id="quiz" type="submit" value="Submit" />
+    </form>
+
+    <script src="../static/easytimer.min.js"></script>
+
+    <script>
+        const timer = new easytimer.Timer();
+
+        timer.start(
+            {
+                countdown: true,
+                startValues: { seconds: 15 }
+            });
+
+        document.getElementById("countDownTimer").innerHTML = timer.getTimeValues().toString();
+
+        timer.addEventListener('secondsUpdated', function (e) {
+            document.getElementById("countDownTimer").innerHTML = timer.getTimeValues().toString();
+        });
+
+        timer.addEventListener('targetAchieved', function (e) {
+            document.getElementById("countDownTimer").innerHTML = "Time is out";
+            alert("Form submitted");
+            document.getElementById("quiz").submit();// Form submission
+        });
+    </script>
+
+</body>
+
+</html>

@@ -11,29 +11,30 @@
 
 <div th:replace="fragments/header.html :: header"/>
 
-
-<h1>These are results</h1>
-<div>
-    <p>
-        <span th:text="${'These are results for test #' + dtoTestKC.name }"></span><br>
-        <span th:text="${'Congrats you scored:'  + dtoTestKC.score + ' points!'}"></span><br>
-    </p>
-
-    <div>
-        <table>
-            <tr th:each="d: ${dtoTestKC.questionList}">
-                <ol>
-                    <p th:text="${ d.id + '. ' + d.question}"></p>
-                    <li type="a" th:each="a: ${d.answers}" th:text="${a}"></li>
-                    <hr>
-                    <span th:text="${'The correct answer to question #' + d.id + ' is - ' + d.correctAnswer}"></span><br>
-                    <span th:text="${'Your answer is - ' + d.userAnswer}"></span><br>
-                    <hr>
-                </ol>
-            </tr>
-        </table>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 text-left">
+            <div class="text-left">
+                <h4 th:text="${'Results for test #' + dtoTestKC.name }"></h4>
+                <p><span th:text="${'Congrats you scored:'  + dtoTestKC.score + ' points!'}"></span><br></p>
+            </div>
+            <table th:each="d: ${dtoTestKC.questionList}">
+                <tr>
+                    <th th:text="${ d.id + '. ' + d.question}"></th>
+                </tr>
+                <tr>
+                    <td th:text="${'The correct answer to question #' + d.id + ' is - ' + d.correctAnswer}"></td>
+                </tr>
+                <tr>
+                    <td th:text="${'Your answer is - ' + d.userAnswer}"></td>
+                </tr>
+                <hr>
+            </table>
+            <hr>
+        </div>
     </div>
 </div>
+
 
 <div th:replace="fragments/footer.html :: footer"/>
 

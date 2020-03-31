@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <div th:replace="fragments/header.html :: header-css"/>
+
+</head>
+
+<body>
+
+<div th:replace="fragments/header.html :: header"/>
+
+
+<div class="container">
+
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 text-left">
+           <table>
+               <tr>
+                   <span>
+                       Add questions to the test:
+                   </span>
+                   <span>
+                       <a class="btn btn-primary btn-sm custom" th:href="@{'/admin/test/' + ${dtoTest.getId()} +'/question/new' }" th:text="Add" role="button"></a>
+                   </span>
+
+               </tr>
+           </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer.html :: footer"/>
+
+</body>
+</html>
