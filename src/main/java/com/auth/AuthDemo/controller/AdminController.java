@@ -115,5 +115,23 @@ public class AdminController {
         return modelAndView;
     }
 
+    @GetMapping("test/{id}/enable")
+    public ModelAndView enableTest(Long id){
+        ModelAndView modelAndView = new ModelAndView("");
+        TestKC testKC = testService.findById(id);
+        testKC.setEnabled(true);
+        testService.update(testKC);
+        return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping("test/{id}/disable")
+    public ModelAndView disableTest(Long id){
+        ModelAndView modelAndView = new ModelAndView("");
+        TestKC testKC = testService.findById(id);
+        testKC.setEnabled(false);
+        testService.update(testKC);
+        return new ModelAndView("redirect:/");
+    }
+
 
 }

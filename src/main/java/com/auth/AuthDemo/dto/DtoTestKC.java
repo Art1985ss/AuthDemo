@@ -1,6 +1,7 @@
 package com.auth.AuthDemo.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DtoTestKC {
@@ -8,8 +9,14 @@ public class DtoTestKC {
     private String name;
     private List<DtoQuestion> questionList;
     private int duration;
+    private boolean enabled;
     private BigDecimal score;
     private boolean completed;
+
+    public DtoTestKC() {
+        questionList = new ArrayList<>();
+        enabled = false;
+    }
 
     public Long getId() {
         return id;
@@ -41,6 +48,14 @@ public class DtoTestKC {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public BigDecimal getScore() {

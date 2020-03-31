@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS user (
 CREATE TABLE IF NOT EXISTS test (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100),
-    duration INT
+    duration INT,
+    enabled BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS user_tests (

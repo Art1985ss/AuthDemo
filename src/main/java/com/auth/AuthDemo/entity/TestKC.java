@@ -14,6 +14,8 @@ public class TestKC {
     private String name;
     @Column(name = "duration")
     private int durationMinutes;
+    @Column(name = "enabled")
+    private boolean enabled;
     @ManyToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL )
     @JoinTable(name = "test_questions",
             joinColumns = @JoinColumn(name = "test_id"),
@@ -44,6 +46,14 @@ public class TestKC {
 
     public void setDurationMinutes(int durationMinutes) {
         this.durationMinutes = durationMinutes;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<Question> getQuestionList() {
