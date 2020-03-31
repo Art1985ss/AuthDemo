@@ -18,12 +18,12 @@
                 <h4 th:text="${'Results for test #' + dtoTestKC.name }"></h4>
                 <p><span th:text="${'Congrats you scored:'  + dtoTestKC.score + ' points!'}"></span><br></p>
             </div>
-            <table class="table table-borderless table-sm" th:each="d: ${dtoTestKC.questionList}">
+            <table class="table table-borderless table-sm" th:each="d, itemStatus: ${dtoTestKC.questionList}">
                 <tr>
-                    <th th:text="${ d.id + '. ' + d.question}"></th>
+                    <th th:text="${ itemStatus.index + 1 + '. ' + d.question}"></th>
                 </tr>
                 <tr>
-                    <td th:text="${'The correct answer to question #' + d.id + ' is - ' + d.correctAnswer}"></td>
+                    <td th:text="${'The correct answer to question is - ' + d.correctAnswer}"></td>
                 </tr>
                 <tr>
                     <td th:text="${'Your answer is - ' + d.userAnswer}"></td>

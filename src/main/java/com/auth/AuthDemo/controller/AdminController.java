@@ -54,13 +54,13 @@ public class AdminController {
     }
 
     @GetMapping("/test/new")
-    public ModelAndView testCreateForm() {
+    public ModelAndView testNew() {
         ModelAndView modelAndView = new ModelAndView("createtest");
         TestKC testKC = new TestKC();
-        Long testId = testService.create(testKC);
-        testKC.setId(testId);
+        testKC.setName("");
+        testKC.setDurationMinutes(0);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
-        modelAndView.addObject("dtoTest", dtoTestKC);
+        modelAndView.addObject("dtoTestKC", dtoTestKC);
         return modelAndView;
     }
 
@@ -74,8 +74,6 @@ public class AdminController {
         return modelAndView;
     }
 
-
-
     @GetMapping("/test/{testID}/question/new")
     public ModelAndView questionForm(@PathVariable("testID") Long testId, @RequestParam("url") Integer ansCount) {
         ModelAndView modelAndView = new ModelAndView("question");
@@ -84,10 +82,7 @@ public class AdminController {
         question.setQuestion("");
         Long questionId = questionService.create(question);
         question.setId(questionId);
-        ListCreationDto lcDto = new ListCreationDto();
-        for (int i=0; i < ansCount; i++){
-            lcDto.addToList("");
-        }
+        ListCreationDto lcDto = new ListCreationDto(ansCount);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
         DtoQuestion dtoQuestion = new DtoQuestion();
         dtoQuestion = DtoConverter.toDto(question);

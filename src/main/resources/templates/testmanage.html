@@ -19,15 +19,23 @@
             <div class="text-left pb-2">
                 <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4>
                 <hr>
-                <h5>Add questions to the test </h5>
                 <form th:action="@{'/admin/test/' + ${testKC.id} +'/question/new' }" method="get">
 
-                    <span> Before adding test set count of possible answers</span>
-                    <span>
-                        <input type="text" name="url" id="url" class="form-control" placeholder="answerCount">
-                    </span>
-
-                    <p><input type="submit" value="Add" style="float: right;"/></p>
+                    <div class="form-inline d-flex">
+                        <div class="pl-3 row">
+                            <div class="pt-3 font-weight-bold">
+                                <label for="url">Set answer count:</label>
+                            </div>
+                            <div class="p-2">
+                                <input class="form-control input-sm" type="text" name="url" id="url"
+                                       placeholder="answer count">
+                            </div>
+                            <div class="ml-auto p-2">
+                                <input class="btn btn-primary" type="submit" value="Add Question"
+                                       style="float: right;"/>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
 

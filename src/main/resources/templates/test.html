@@ -68,10 +68,10 @@
                 <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4>
             </div>
             <form id="quiz" th:action="@{'/user/result/test' + ${testKC.getId()}}" th:object="${form}" method="post">
-                <table class="table table-borderless table-sm" th:each="quest: ${testKC.questionList}">
+                <table class="table table-borderless table-sm" th:each="quest, itemStatus: ${testKC.questionList}">
                     <thead>
                     <tr>
-                        <th th:text="${quest.id + '. ' +  quest.question}"></th>
+                        <th th:text="${itemStatus.index + 1 + '. ' +  quest.question}"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -84,15 +84,21 @@
                     </tr>
                     <tr>
                         <td>
-                            Your answer : <input type="text" th:field="*{properties['__${quest.id}__']}"
-                                                 placeholder="answer"/>
+                            <div class="form-inline d-flex">
+                                <div class="p-2">
+                                    <label>Your answer (write a,b,c or ...?):</label>
+                                </div>
+                                <div class="ml-auto p-2">
+                                    <input id="Answer" class="form-control" type="text" th:field="*{properties['__${quest.id}__']}" placeholder="answer"/>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
                     <hr>
                 </table>
                 <hr>
-                <p><input type="submit" value="Submit" style="float: right;"/></p>
+                <p><input class="btn btn-primary" type="submit" value="Submit" style="float: right;"/></p>
             </form>
         </div>
     </div>
@@ -104,10 +110,12 @@
 <script>
     const timer = new easytimer.Timer();
 
+    var urlParams = new URLSearchParams(window.location.search);
+
     timer.start(
         {
             countdown: true,
-            startValues: {seconds: 15}
+            startValues: {seconds: urlParams.get('duration')*60 }
         });
 
     document.getElementById("countDownTimer").innerHTML = timer.getTimeValues().toString();
