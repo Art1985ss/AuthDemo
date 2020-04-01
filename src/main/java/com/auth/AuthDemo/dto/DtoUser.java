@@ -12,6 +12,7 @@ public class DtoUser {
     private String name;
     private String password;
     private BigDecimal score;
+    private String role = "ROLE_STUDENT";
     private Set<UserTest> userTests;
 
     public Long getId() {
@@ -44,6 +45,14 @@ public class DtoUser {
 
     public void setScore(BigDecimal score) {
         this.score = score;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Set<UserTest> getUserTests() {

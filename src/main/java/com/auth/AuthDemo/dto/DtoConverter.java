@@ -49,6 +49,7 @@ public class DtoConverter {
         dtoUser.setName(user.getName());
         dtoUser.setPassword(user.getPassword());
         dtoUser.setScore(user.getScore());
+        dtoUser.setRole(user.getRole());
         dtoUser.setUserTests(user.getUserTests());
         return dtoUser;
     }
@@ -97,6 +98,7 @@ public class DtoConverter {
         user.setName(dtoUser.getName());
         user.setPassword(dtoUser.getPassword());
         user.setScore(dtoUser.getScore());
+        user.setRole(dtoUser.getRole());
         user.setUserTests(dtoUser.getUserTests());
         return user;
     }
