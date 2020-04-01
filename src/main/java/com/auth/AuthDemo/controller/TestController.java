@@ -35,6 +35,10 @@ public class TestController {
         ModelAndView mav = new ModelAndView();
         User user = userService.findByName(principal.getName());
         TestKC testKC = testService.findById(testId);
+        boolean completed = user.getUserTests().stream().anyMatch(ut-> ut.getTestKC().equals(testKC));
+        if(completed){
+            return new ModelAndView("redirect:/home");
+        }
         UserTest userTest = new UserTest();
         userTest.setId(new UserTestKey(user.getId(), testKC.getId()));
         userTest.setUser(user);
