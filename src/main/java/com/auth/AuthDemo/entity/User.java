@@ -86,11 +86,11 @@ public class User {
     public BigDecimal updateScore(){
         if (userTests.isEmpty()){
             score = BigDecimal.ZERO;
-            System.out.println("Empty user tests list");
+//            System.out.println("Empty user tests list");
             return score;
         }
         score =  userTests.stream().map(UserTest::getScore).reduce(BigDecimal.ZERO, BigDecimal::add).divide(new BigDecimal(userTests.size()), new MathContext(2));
-        System.out.println("Calculated user score");
+//        System.out.println("Calculated user score");
         return score;
     }
 

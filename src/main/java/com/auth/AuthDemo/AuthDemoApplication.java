@@ -9,6 +9,12 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * This is entry point for spring boot application.
+ * Additional configuration for *war deployment is made with
+ * SpringApplicationBuilder configuration method
+ **/
+
 
 @SpringBootApplication
 public class AuthDemoApplication extends SpringBootServletInitializer {

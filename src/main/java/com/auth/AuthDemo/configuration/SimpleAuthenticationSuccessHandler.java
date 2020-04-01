@@ -29,14 +29,12 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
                 try {
                     redirectStrategy.sendRedirect(arg0, arg1, "/user");
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             } else if(authority.getAuthority().equals("ROLE_ADMIN")) {
                 try {
                     redirectStrategy.sendRedirect(arg0, arg1, "/admin");
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             } else {

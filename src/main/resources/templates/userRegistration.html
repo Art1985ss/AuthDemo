@@ -41,16 +41,28 @@
 
                     <div class="form-group">
                         <input name="_csrf" type="hidden" value="df6c9e4f-a80a-4a05-9854-6ff79a645207"/>
-                        <button class="btn btn-lg btn-dark btn-block" type="submit">Register</button>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
                     </div>
                 </form>
+
             </div>
 
         </div>
+
+    </div>
+    <div class="col-lg-12 text-center">
+        <button class="btn btn-link mt-4" onclick="goBack()">Go Back</button>
     </div>
 </div>
 
 <div th:replace="fragments/footer.html :: footer"/>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
 
 </body>
 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/header.html :: header-css"/>
+    <style>
+        table td{
+            vertical-align:top;
+            border:solid 1px #888;
+            padding:10px;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div th:replace="fragments/header.html :: header"/>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 text-center">
+<h1>Error Page</h1>
+<table class="table table-bordered table-sm mt-4">
+    <tr>
+        <td>Date</td>
+        <td th:text="${timestamp}"/>
+    </tr>
+    <tr>
+        <td>Path</td>
+        <td th:text="${path}"/>
+    </tr>
+    <tr>
+        <td>Error</td>
+        <td th:text="${error}"/>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td th:text="${status}"/>
+    </tr>
+    <tr>
+        <td>Error message</td>
+        <td th:text="${message}"/>
+    </tr>
+<!--    <tr>-->
+<!--        <td>Exception</td>-->
+<!--        <td th:text="${exception}"/>-->
+<!--    </tr>-->
+
+</table>
+            <button class="btn btn-link mt-4" onclick="goBack()">Go Back</button>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer.html :: footer"/>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+</html>
