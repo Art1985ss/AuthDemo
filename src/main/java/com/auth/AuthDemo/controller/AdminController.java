@@ -38,8 +38,6 @@ public class AdminController {
     private QuestionService questionService;
 
 
-
-
     @GetMapping("")
     public ModelAndView getAdminData() {
         ModelAndView mav = new ModelAndView();
