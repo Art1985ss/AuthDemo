@@ -46,10 +46,10 @@ public class TestController {
         userTest.setScore(BigDecimal.ZERO);
         userTest.setCompleted(false);
         user.addUserTest(userTest);
-        System.out.println(user);
-        System.out.println("Updating user : ");
+//        System.out.println(user);
+//        System.out.println("Updating user : ");
         userService.update(user);
-        System.out.println(user);
+//        System.out.println(user);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
 
         mav.addObject("question", questionService.findAll());
