@@ -6,6 +6,7 @@ import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.dto.ListCreationDto;
 import com.auth.AuthDemo.entity.Question;
 import com.auth.AuthDemo.entity.TestKC;
+import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.service.QuestionService;
 import com.auth.AuthDemo.service.TestService;
 import com.auth.AuthDemo.service.UserService;
@@ -15,7 +16,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @SessionAttributes({ "questionAnswers"})
@@ -38,17 +43,31 @@ public class AdminController {
     @GetMapping("")
     public ModelAndView getAdminData() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userService.findAll());
-        mav.addObject("testsKC", testService.findAll());
-//        System.out.println(userService.findAll().get(1).getUserTests());
+        List<User> users = userService.findAll();
+        List<TestKC> testsKC = testService.findAll();
+
+        List<BigDecimal> userScores = users.stream().map(u -> u.getScore()
+                .multiply(BigDecimal.valueOf(u.getUserTests().size()), MathContext.DECIMAL128)
+                .divide(BigDecimal.valueOf(testsKC.size()), new MathContext(2)))
+                .collect(Collectors.toList());
+        mav.addObject("users", users);
+        mav.addObject("testsKC", testsKC);
+        mav.addObject("userScores", userScores);
         mav.setViewName("admin");
         return mav;
     }
 
+    @GetMapping("user/{userId}/delete")
+    public ModelAndView deleteUser(@PathVariable("userId") Long id){
+        userService.deleteById(id);
+        return new ModelAndView("redirect:/admin/");
+    }
+
+
+
     @GetMapping("/testmanage/test{testId}")
     public ModelAndView getAdminData(@PathVariable("testId") Long testId) {
         ModelAndView mav = new ModelAndView();
-
         mav.addObject("testKC", testService.findById(testId));
         mav.setViewName("testmanage");
         return mav;

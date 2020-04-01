@@ -2,25 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <div th:replace="fragments/header.html :: header-css"/>
-
 </head>
+
 
 <body>
 
 <div th:replace="fragments/header.html :: header"/>
 
-
 <div class="container">
-
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
+
             <div class="text-left pb-2">
                 <h4 th:text="${'This is test #' + testKC.id + ' - ' + testKC.name}"></h4>
                 <hr>
                 <form th:action="@{'/admin/test/' + ${testKC.id} +'/question/new' }" method="get">
-
                     <div class="form-inline d-flex">
                         <div class="pl-3 row">
                             <div class="pt-3 font-weight-bold">
@@ -41,23 +38,19 @@
 
             <table class="table table-borderless table-sm" th:each="quest, itemStat: ${testKC.questionList}">
                 <thead>
-                <tr >
+                <tr>
                     <th style="width: 80%" scope="col" th:text="${itemStat.index + 1 + '. ' +  quest.question}"></th>
                     <th style="width: 20%" scope="col">
-
-<!--                        <form th:action="@{'/admin/test/' + ${testKC.id} + '/question/' + ${testKC.id} + '/delete'}" method="delete">-->
-<!--                            <input class="btn btn-primary" type="submit" value="Delete" style="float: right;"/>-->
-<!--                        </form>-->
-                        <a class="btn btn-primary btn-sm custom" th:href="'/admin/test/' + ${testKC.id} + '/question/' + ${quest.id} + '/delete'"
+                        <a class="btn btn-primary btn-sm custom"
+                           th:href="'/admin/test/' + ${testKC.id} + '/question/' + ${quest.id} + '/delete'"
                            th:text="Delete" role="button"></a>
                     </th>
                 </tr>
-
                 </thead>
                 <tbody>
                 <tr>
                     <td>
-                        <ol >
+                        <ol>
                             <li type="a" th:each="ans: ${quest.answers}" th:text="${ans}"></li>
                         </ol>
                     </td>

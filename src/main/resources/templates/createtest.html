@@ -2,15 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <div th:replace="fragments/header.html :: header-css"/>
-
 </head>
+
 
 <body>
 
 <div th:replace="fragments/header.html :: header"/>
-
 
 <div class="container">
 
@@ -26,6 +24,7 @@
                         <input class="form-control pull-right" id="Name" type="text" th:field="*{dtoTestKC.name}" />
                     </div>
                 </div>
+
                 <div class="form-inline d-flex">
                     <div class="p-2">
                         <label for="Duration">Enter test duration (in minutes):</label>
@@ -34,9 +33,9 @@
                         <input class="form-control pull-right" id="Duration" type="text" th:field="*{dtoTestKC.duration}" />
                     </div>
                 </div>
-
                 <hr>
                 <p><input class="btn btn-primary" type="submit" value="Submit" style="float: right;"/></p>
+            </form>
         </div>
     </div>
 </div>

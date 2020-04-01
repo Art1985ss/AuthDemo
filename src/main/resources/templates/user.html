@@ -2,10 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <div th:replace="fragments/header.html :: header-css"/>
-
 </head>
+
 
 <body>
 
@@ -15,11 +14,13 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-center">
+
             <div class="text-center mb-4">
                 <h3 th:text="${'Welcome student ' + user.name + '!'}"/>
                 <p class="lead"
-                   th:text="${'Your current test grade is: ' + #numbers.formatDecimal(user.score * 100, 1, 'POINT', 2, 'COMMA')} +'%'"/>
+                   th:text="${'Your current test grade is: ' + #numbers.formatDecimal(user.score * 100, 1, 'POINT', 2, 'POINT')} +'%'"/>
             </div>
+
             <div class="row bg-info text-white pt-2 pr-3 pl-3">
                 <h4 class="pr-3"> Your currently active test: </h4>
                 <div class="text-left h4 text-white" th:each="tst: ${allDtoTests}">
@@ -27,6 +28,7 @@
                        th:text="${tst.name}" class="text-white"> </a>
                 </div>
             </div>
+
             <table class=" table table-bordered table-hover table-sm mt-3">
                 <thead class="thead-light">
                 <tr>
@@ -45,6 +47,7 @@
                 </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
 </div>
