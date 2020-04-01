@@ -2,10 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <div th:replace="fragments/header.html :: header-css"/>
-
 </head>
+
 
 <body>
 
@@ -15,34 +14,30 @@
 <div class="container">
     <div class="d-flex justify-content-center h-100">
         <div class="card">
+
             <div class="card-header">
-                <h1>Registration Form</h1>
+                <h1>Registration</h1>
             </div>
+
             <div class="card-body">
-                <form id="userRegistrationForm" action="" method="post">
+                <form th:action="@{'/create'}" th:object="${dtoUser}" id="userRegistrationForm" method="post">
                     <div class="input-group form-group">
                         <label>
-                            <input type="text" class="form-control" placeholder="username" required maxlength="50">
+                            <input th:field="*{name}" type="text" class="form-control" placeholder="username" required maxlength="50">
+                        </label>
+                    </div>
+
+                    <div class="input-group form-group">
+                        <label>
+                            <input th:field="*{password}"  type="password" class="form-control" placeholder="password" required maxlength="50">
                         </label>
                     </div>
 
 <!--                    <div class="input-group form-group">-->
 <!--                        <label>-->
-<!--                            <input type="text" class="form-control" placeholder="e-mail" required maxlength="50">-->
+<!--                            <input type="password" class="form-control" placeholder="repeat password" required maxlength="50">-->
 <!--                        </label>-->
 <!--                    </div>-->
-
-                    <div class="input-group form-group">
-                        <label>
-                            <input type="password" class="form-control" placeholder="password" required maxlength="50">
-                        </label>
-                    </div>
-
-                    <div class="input-group form-group">
-                        <label>
-                            <input type="password" class="form-control" placeholder="repeat password" required maxlength="50">
-                        </label>
-                    </div>
 
                     <div class="form-group">
                         <input name="_csrf" type="hidden" value="df6c9e4f-a80a-4a05-9854-6ff79a645207"/>
@@ -50,6 +45,7 @@
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 </div>

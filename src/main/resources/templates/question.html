@@ -2,46 +2,42 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <div th:replace="fragments/header.html :: header-css"/>
-
 </head>
+
 
 <body>
 
-
 <div class="container">
 
-
     <div th:replace="fragments/header.html :: header"/>
-
 
     <div class="row justify-content-md-center">
         <div class="col-lg-6 text-left">
 
-            <form th:action="@{'/admin/test/' + ${dtoTest.id} + '/question/' + ${dtoQuestion.id} + '/create'}" method="post">
+            <form th:action="@{'/admin/test/' + ${dtoTest.id} + '/question/create'}" method="post">
 
                 <div class="form-inline d-flex">
                     <div class="p-2">
-                        <label for="Question" th:text="${'Enter question for #' + dtoQuestion.id} + ': '"></label>
+                        <label for="Question" th:text="${'Enter question text: '}"></label>
                     </div>
                     <div class="ml-auto p-2">
-                        <input class="form-control pull-right" id="Question" type="text" th:field="*{dtoQuestion.question}" />
+                        <input class="form-control pull-right" id="Question" type="text" th:field="*{dtoQuestion.question}"/>
                     </div>
                 </div>
 
-                    <ol class="mb-0">
-                        <li type="a" th:each="answ, itemStat : *{questionAnswers.answers}">
-                            <div class="form-inline d-flex">
-                                <div class="p-2">
-                                    <label for="Answer">Enter an answer: </label>
-                                </div>
-                                <div class="ml-auto p-2">
-                                    <input class="form-control" id="Answer" th:field="*{questionAnswers.answers[__${itemStat.index}__]}"/>
-                                </div>
+                <ol class="mb-0">
+                    <li type="a" th:each="answ, itemStat : *{questionAnswers.answers}">
+                        <div class="form-inline d-flex">
+                            <div class="p-2">
+                                <label for="Answer">Enter an answer: </label>
                             </div>
-                        </li>
-                    </ol>
+                            <div class="ml-auto p-2">
+                                <input class="form-control" id="Answer" th:field="*{questionAnswers.answers[__${itemStat.index}__]}"/>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
 
                 <div class="form-inline d-flex ">
                     <div class="p-2">
@@ -51,7 +47,6 @@
                         <input id="RightAnswer" class="form-control pull-right" th:field="*{dtoQuestion.correctAnswer}"/>
                     </div>
                 </div>
-
                 <p><input class="btn btn-primary" type="submit" value="Submit" style="float: right;"/></p>
             </form>
         </div>

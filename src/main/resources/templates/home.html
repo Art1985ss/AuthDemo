@@ -2,10 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <div th:replace="fragments/header.html :: header-css"/>
-
 </head>
+
 
 <body>
 
@@ -15,23 +14,23 @@
 <div class="container">
     <div class="d-flex justify-content-center h-100">
         <div class="card">
+
             <div class="card-header">
                 <h1>Sign In</h1>
             </div>
+
             <div class="card-body">
                 <form class="form-signin" method="post" action="/home">
+
                     <div class="input-group form-group">
                         <label>
-                            <input type="text" id="username" name="username" class="form-control" placeholder="Username"
-                                   required autofocus>
+                            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
                         </label>
                     </div>
 
                     <div class="input-group form-group">
                         <label>
-                            <input type="password" id="password" name="password" class="form-control"
-                                   placeholder="Password"
-                                   required>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
                         </label>
                     </div>
 
@@ -45,7 +44,7 @@
             <div class="card-footer">
                 <div class="d-flex justify-content-center links">
                     <span class="text-right pr-2"> No account? </span>
-                    <span class="text-right"> <a th:href="@{'/register'}" th:text="'Sign Up'"></a> </span>
+                    <span class="text-right"> <a th:href="@{'/registration'}" th:text="'Sign Up'"></a> </span>
                 </div>
             </div>
         </div>

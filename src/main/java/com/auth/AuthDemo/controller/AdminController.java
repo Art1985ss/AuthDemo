@@ -6,6 +6,7 @@ import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.dto.ListCreationDto;
 import com.auth.AuthDemo.entity.Question;
 import com.auth.AuthDemo.entity.TestKC;
+import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.service.QuestionService;
 import com.auth.AuthDemo.service.TestService;
 import com.auth.AuthDemo.service.UserService;
@@ -15,7 +16,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @SessionAttributes({ "questionAnswers"})
@@ -38,17 +43,31 @@ public class AdminController {
     @GetMapping("")
     public ModelAndView getAdminData() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userService.findAll());
-        mav.addObject("testsKC", testService.findAll());
-        System.out.println(userService.findAll().get(1).getUserTests());
+        List<User> users = userService.findAll();
+        List<TestKC> testsKC = testService.findAll();
+
+        List<BigDecimal> userScores = users.stream().map(u -> u.getScore()
+                .multiply(BigDecimal.valueOf(u.getUserTests().size()), MathContext.DECIMAL128)
+                .divide(BigDecimal.valueOf(testsKC.size()), new MathContext(2)))
+                .collect(Collectors.toList());
+        mav.addObject("users", users);
+        mav.addObject("testsKC", testsKC);
+        mav.addObject("userScores", userScores);
         mav.setViewName("admin");
         return mav;
     }
 
+    @GetMapping("user/{userId}/delete")
+    public ModelAndView deleteUser(@PathVariable("userId") Long id){
+        userService.deleteById(id);
+        return new ModelAndView("redirect:/admin/");
+    }
+
+
+
     @GetMapping("/testmanage/test{testId}")
     public ModelAndView getAdminData(@PathVariable("testId") Long testId) {
         ModelAndView mav = new ModelAndView();
-
         mav.addObject("testKC", testService.findById(testId));
         mav.setViewName("testmanage");
         return mav;
@@ -75,46 +94,42 @@ public class AdminController {
         return modelAndView;
     }
 
-    @DeleteMapping("test/{testId}/delete")
-    public ModelAndView deleteTest(Long id){
+//    @DeleteMapping("test/{testId}/delete")
+    @GetMapping("test/{testId}/delete")
+    public ModelAndView deleteTest(@PathVariable("testId") Long id){
         testService.deleteById(id);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/admin/");
     }
+
+
 
     @GetMapping("/test/{testID}/question/new")
     public ModelAndView questionForm(@PathVariable("testID") Long testId, @RequestParam("url") Integer ansCount) {
         ModelAndView modelAndView = new ModelAndView("question");
         TestKC testKC = testService.findById(testId);
         Question question = new Question();
-        question.setQuestion("");
-        Long questionId = questionService.create(question);
-        question.setId(questionId);
         ListCreationDto lcDto = new ListCreationDto(ansCount);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
-        DtoQuestion dtoQuestion = new DtoQuestion();
-        dtoQuestion = DtoConverter.toDto(question);
+        DtoQuestion dtoQuestion = DtoConverter.toDto(question);
         modelAndView.addObject("questionAnswers", lcDto);
         modelAndView.addObject("dtoTest", dtoTestKC);
         modelAndView.addObject("dtoQuestion", dtoQuestion);
         return modelAndView;
     }
 
-    @PostMapping("/test/{testID}/question/{questionID}/create")
+    @PostMapping("/test/{testID}/question/create")
     public ModelAndView questionCreate(DtoQuestion dtoQuestion,
                                        @PathVariable("testID") Long testId,
-                                       @ModelAttribute("quesitonsList") ListCreationDto listCreationDto,
-                                       @PathVariable("questionID") Long questionId){
+                                       @ModelAttribute("quesitonsList") ListCreationDto listCreationDto){
+//                                       @PathVariable("questionID") Long questionId){
         ModelAndView modelAndView = new ModelAndView("testmanage");
         Question question = DtoConverter.fromDto(dtoQuestion);
         question.setAnswers(listCreationDto.getAnswers());
+        question.setCategory("default");
         questionService.update(question);
-
+        dtoQuestion = DtoConverter.toDto(question);
         TestKC testKC = testService.findById(testId);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
-
-        dtoQuestion.setAnswers(listCreationDto.getAnswers());
-        dtoQuestion.setId(questionId);
-
         dtoTestKC.getQuestionList().add(dtoQuestion);
         testKC = DtoConverter.fromDto(dtoTestKC);
         testService.update(testKC);
@@ -122,11 +137,12 @@ public class AdminController {
         return modelAndView;
     }
 
-    @DeleteMapping("test/{testId}/question/{questionId}/delete")
+//    @DeleteMapping("test/{testId}/question/{questionId}/delete")
+    @GetMapping("test/{testId}/question/{questionId}/delete")
     public ModelAndView deleteQuestion(@PathVariable("testId") Long testId,
                                        @PathVariable("questionId") Long questionId){
         questionService.deleteById(questionId);
-        return new ModelAndView("/testmanage/test" + testId);
+        return new ModelAndView("redirect:/admin/testmanage/test" + testId);
     }
 
 

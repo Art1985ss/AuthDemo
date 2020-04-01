@@ -2,27 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <div th:replace="fragments/header.html :: header-css"/>
-
 </head>
+
 
 <body>
 
 <div th:replace="fragments/header.html :: header"/>
-
 
 <!-- Page Content -->
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-lg-12 text-center">
 
-            <p th:text="${#authentication.authorities}"></p>
+<!--            <p th:text="${#authentication.authorities}"></p>-->
 
-            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }">
-                This will only be displayed if authenticated user has role ROLE_ADMIN.
-            </div>
-
+<!--            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }">-->
+<!--                This will only be displayed if authenticated user has role ROLE_ADMIN.-->
+<!--            </div>-->
 
             <table class="table table-bordered table-hover table-sm">
                 <thead class="thead-light">
@@ -37,25 +34,21 @@
                 </tr>
                 </thead>
                 <tbody >
-                <tr th:unless="${user.name == 'admin'}"  th:each="user: ${users}">
+                <tr th:unless="${user.name == 'admin'}"  th:each="user, itemStat: ${users}">
                     <th scope="row" th:text="${user.id}"></th>
                     <td th:text="${user.name}"></td>
                     <td th:each="test: ${testsKC}">
-<!--                        <span th:text="${user.getUserTests()}" ></span>-->
                         <span th:each="utest: ${user.getUserTests()}" >
-<!--                            <span th:text="${utest.getScore()} + '  ' + ${utest.getId().getTestId()} + ' ' + ${test.name}"></span>-->
                             <span th:if="${utest.getId().getTestId()} == ${test.getId()}" th:text="${utest.getScore()}"></span>
-
                         </span>
                     </td>
-                    <td th:text="${#numbers.formatDecimal(user.score * 100, 1, 'POINT', 2, 'COMMA')} +'%'"></td>
-                    <td><a class="btn btn-primary btn-sm custom" href="#" th:text="Remove" role="button"></a></td>
+<!--                    <td th:text="${userScores[__${itemStat.index}__]}"></td>-->
+                    <td th:text="${#numbers.formatDecimal(userScores[__${itemStat.index}__] * 100, 1, 'POINT', 0, 'POINT')} +'%'"></td>
+                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/user/' + ${user.id}  + '/delete'}" th:text="Delete" role="button"></a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </div>
 
@@ -85,7 +78,7 @@
                     <td class="text-left align-middle" th:text="${testkc.name}"></td>
                     <td class="align-middle" th:text="${testkc.durationMinutes}"></td>
                     <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Edit" role="button"></a></td>
-                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/testmanage/test' + ${testkc.getId()}}" th:text="Remove" role="button"></a></td>
+                    <td><a class="btn btn-primary btn-sm custom" th:href="@{'/admin/test/' + ${testkc.getId()} + '/delete'}" th:text="Delete" role="button"></a></td>
                     <td >
                         <a th:unless="${testkc.enabled}" class="btn btn-primary btn-sm custom" th:href="@{'/admin/test/' + ${testkc.id} + '/enable' }" th:text="Enable" role="button"></a>
                         <a th:if="${testkc.enabled}" class="btn btn-danger btn-sm custom" th:href="@{'/admin/test/' + ${testkc.id} + '/disable' }" th:text="Disable" role="button"></a>
