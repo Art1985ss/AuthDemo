@@ -1,6 +1,5 @@
 package com.auth.AuthDemo.entity;
 
-
 import org.hibernate.annotations.SelectBeforeUpdate;
 
 import javax.persistence.*;
@@ -9,6 +8,7 @@ import java.math.MathContext;
 import java.util.*;
 
 @Entity(name = "user")
+@SecondaryTable(name = "authorities", pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id"))
 @SelectBeforeUpdate(false)
 public class User {
     @Id
@@ -20,6 +20,8 @@ public class User {
     private String password;
     @Column(name = "score")
     private BigDecimal score;
+    @Column(name = "authority", table = "authorities")
+    private String role = "ROLE_STUDENT";
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL ,orphanRemoval = true)
     private Set<UserTest> userTests = new HashSet<>();
 
@@ -54,6 +56,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Set<UserTest> getUserTests() {
@@ -100,7 +110,7 @@ public class User {
                 "id=" + id +
                 "name='" + name + '\'' +
                 ", userTests=" + userTests +
-//                ", answers=" + answers +
+                ", role=" + role +
                 '}';
     }
 

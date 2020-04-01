@@ -19,6 +19,8 @@ public class ScoreCalculationService {
     }
 
     public BigDecimal getTestScore(DtoTestKC dtoTestKC){
+        if(dtoTestKC.isCompleted())
+            return dtoTestKC.getScore();
         BigDecimal score = dtoTestKC.getQuestionList().stream().map(dtoQuestion -> {
             if (dtoQuestion.getUserAnswer().equalsIgnoreCase(dtoQuestion.getCorrectAnswer()))
                 return BigDecimal.ONE;
