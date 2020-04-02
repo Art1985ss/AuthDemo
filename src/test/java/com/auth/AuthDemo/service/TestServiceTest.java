@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -80,9 +82,17 @@ class TestServiceTest {
 
     @Test
     void findAll() {
+        final List<TestKC> expected = new ArrayList<TestKC>() {{add(testKC);}};
+        when(testRepository.findAll()).thenReturn(expected);
+
+        final List<TestKC> actual = testService.findAll();
+
+        verify(testRepository).findAll();
+        assertEquals(expected, actual);
     }
 
     @Test
     void findByName() {
+
     }
 }
