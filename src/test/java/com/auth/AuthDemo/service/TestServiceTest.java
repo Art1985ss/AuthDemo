@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,23 +19,21 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class TestServiceTest {
+    private final Long expectedId = 12l;
     @InjectMocks
     private TestService testService;
-
     @Mock
     private TestRepository testRepository;
     @Mock
     private TestValidationService testValidationService;
-
-    private TestKC testKC;
-    private final Long testId = 12l;
+    private TestKC expectedTest;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
 
-        testKC = new TestKC();
-        testKC.setId(testId);
+        expectedTest = new TestKC();
+        expectedTest.setId(expectedId);
     }
 
     @AfterEach
@@ -45,44 +42,46 @@ class TestServiceTest {
 
     @Test
     void create() {
-        when(testRepository.save(testKC)).thenReturn(testKC);
+        when(testRepository.save(expectedTest)).thenReturn(expectedTest);
 
-        final Long actualId = testService.create(testKC);
+        final Long actualId = testService.create(expectedTest);
 
-        verify(testRepository).save(testKC);
-        verify(testValidationService).validate(testKC);
-        assertEquals(testId, actualId);
+        verify(testRepository).save(expectedTest);
+        verify(testValidationService).validate(expectedTest);
+        assertEquals(expectedId, actualId);
     }
 
     @Test
     void update() {
-        when(testRepository.save(testKC)).thenReturn(testKC);
+        when(testRepository.save(expectedTest)).thenReturn(expectedTest);
 
-        final Long actualId = testService.update(testKC);
+        final Long actualId = testService.update(expectedTest);
 
-        verify(testRepository).save(testKC);
-        assertEquals(testId, actualId);
+        verify(testRepository).save(expectedTest);
+        assertEquals(expectedId, actualId);
     }
 
     @Test
     void findById() {
-        when(testRepository.findById(testId)).thenReturn(Optional.of(testKC));
+        when(testRepository.findById(expectedId)).thenReturn(Optional.of(expectedTest));
 
-        final TestKC actual = testService.findById(testId);
+        final TestKC actual = testService.findById(expectedId);
 
-        verify(testRepository).findById(testId);
-        assertEquals(testKC, actual);
+        verify(testRepository).findById(expectedId);
+        assertEquals(expectedTest, actual);
     }
 
     @Test
     void deleteById() {
-        testService.deleteById(testId);
-        verify(testRepository).deleteById(testId);
+        testService.deleteById(expectedId);
+        verify(testRepository).deleteById(expectedId);
     }
 
     @Test
     void findAll() {
-        final List<TestKC> expected = new ArrayList<TestKC>() {{add(testKC);}};
+        final List<TestKC> expected = new ArrayList<TestKC>() {{
+            add(expectedTest);
+        }};
         when(testRepository.findAll()).thenReturn(expected);
 
         final List<TestKC> actual = testService.findAll();
@@ -93,6 +92,12 @@ class TestServiceTest {
 
     @Test
     void findByName() {
+        final String testName = "Java";
+        when(testRepository.findByName(testName)).thenReturn(Optional.of(expectedTest));
 
+        final TestKC actual = testService.findByName(testName);
+
+        verify(testRepository).findByName(testName);
+        assertEquals(expectedTest, actual);
     }
 }
