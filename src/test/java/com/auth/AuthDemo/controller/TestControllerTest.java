@@ -1,5 +1,8 @@
 package com.auth.AuthDemo.controller;
 
+import com.auth.AuthDemo.dto.DtoConverter;
+import com.auth.AuthDemo.dto.DtoPropertiesForm;
+import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.entity.UserTest;
@@ -77,5 +80,15 @@ class TestControllerTest {
 
     @Test
     void getResults() {
+        DtoPropertiesForm form = new DtoPropertiesForm();
+
+        when(testService.findById(testId)).thenReturn(testKC);
+        when(principal.getName()).thenReturn(userName);
+        when(userService.findByName(userName)).thenReturn(user);
+
+        final ModelAndView actual = testController.getResults(form, testId, principal);
+
+        ModelAndViewAssert.assertViewName(actual,"resulttest");
+        ModelAndViewAssert.assertModelAttributeAvailable(actual, "dtoTestKC");
     }
 }
