@@ -23,7 +23,9 @@ public class AuthDemoApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(AuthDemoApplication.class, args);
 	}
-
+	/**
+	 * This method is used for war file build
+	 */
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
 		return application.sources(AuthDemoApplication.class);
