@@ -10,7 +10,10 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class TestNameValidationTest {
@@ -35,7 +38,8 @@ class TestNameValidationTest {
     void validate(final long id, final String name, final String expectedException) {
         final TestKC test = new TestKC();
         test.setId(id);
-        test.setName(name);
+        test.setName("null".equals(name) ? null : name);
+        when(testRepository.findByName("Not Unique")).thenReturn(Optional.of(test));
 
         try {
             testNameValidation.validate(test);
