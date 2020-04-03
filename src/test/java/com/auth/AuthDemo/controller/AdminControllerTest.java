@@ -20,6 +20,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -59,6 +60,7 @@ class AdminControllerTest {
 
     private List<String> answers = new ArrayList<>();
     private DtoQuestion dtoQuestion;
+    private List<User> users = new ArrayList<>();
 
     private TestKC testKC;
     private User user;
@@ -91,12 +93,33 @@ class AdminControllerTest {
         listCreationDto = new ListCreationDto(2);
         listCreationDto.setAnswers(answers);
 
-
-
     }
 
     @Test
     void getAdminData() {
+
+        UserTest userTest = new UserTest();
+        Set<UserTest> userTestList = new HashSet<>();
+        userTestList.add(userTest);
+
+        User user = new User();
+        user.setId(10L);
+        user.setScore(BigDecimal.ONE);
+        user.setName("John");
+        user.setPassword("123");
+        user.setUserTests(userTestList);
+
+        List<User> userList = new ArrayList<>();
+        userList.add(user);
+
+        List<TestKC> testsList = new ArrayList<>();
+        testsList.add(testKC);
+
+        when(userService.findAll()).thenReturn(userList);
+        when(testService.findAll()).thenReturn(testsList);
+
+        final ModelAndView actual = adminController.getAdminData();
+        assertViewName(actual, "admin");
     }
 
     @Test
