@@ -36,10 +36,6 @@ class TestServiceTest {
         expectedTest.setId(expectedId);
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void create() {
         when(testRepository.save(expectedTest)).thenReturn(expectedTest);
