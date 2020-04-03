@@ -6,6 +6,10 @@ import com.auth.AuthDemo.entity.UserTest;
 import java.math.BigDecimal;
 import java.util.Set;
 
+/**
+ * Class for converting User objects to and from DTO. DTO objects ar used for transactions to and from html
+ * pages, providing better encapsulation.
+ */
 public class DtoUser {
 
     private Long id;

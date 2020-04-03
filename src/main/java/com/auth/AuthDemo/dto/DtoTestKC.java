@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for converting TestKC objects to and from DTO. DTO objects ar used for transactions to and from html
+ * pages, providing better encapsulation.
+ */
 public class DtoTestKC {
     private Long id;
     private String name;
