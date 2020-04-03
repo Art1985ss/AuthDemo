@@ -12,19 +12,18 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class StudentServiceTest {
 
+    private final long expectedId = 12L;
     @Mock
     private UserRepository userRepository;
-
     private User user;
     private UserService studentService;
     private UserValidationService userValidationService;
-    private final long expectedId = 12L;
 
     @BeforeEach
     void setUp() {
@@ -32,7 +31,7 @@ class StudentServiceTest {
         userValidationService = Mockito.mock(UserValidationService.class);
         user = new User();
         user.setId(expectedId);
-        studentService = new UserService(userRepository, userValidationService );
+        studentService = new UserService(userRepository, userValidationService);
     }
 
     @AfterEach
