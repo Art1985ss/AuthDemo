@@ -1,7 +1,6 @@
 package com.auth.AuthDemo.service;
 
 import com.auth.AuthDemo.entity.Question;
-import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.repository.QuestionRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -85,5 +84,15 @@ class QuestionServiceTest {
 
     @Test
     void findByCategory() {
+        final List<Question> expected = new ArrayList<Question>() {{
+            add(question);
+        }};
+        final String category = "Unit Testing";
+        when(questionRepository.findByCategory(category)).thenReturn(expected);
+
+        final List<Question> actual = questionService.findByCategory(category);
+
+        verify(questionRepository).findByCategory(category);
+        assertEquals(expected, actual);
     }
 }
