@@ -46,7 +46,7 @@ class UserServiceTest {
     @Test
     void update() {
         when(userRepository.save(user)).thenReturn(user);
-        assertEquals(expectedId, userService.create(user));
+        assertEquals(expectedId, userService.update(user));
     }
 
     @Test
