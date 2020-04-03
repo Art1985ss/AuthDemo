@@ -17,6 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 
+
+/**
+ * Controller class related to general functionality of the webpage (login and registration)
+ * and publicly accessible pages.
+ */
 @RestController
 @RequestMapping("/")
 public class HomeController {
@@ -33,16 +38,21 @@ public class HomeController {
     @Autowired
     ScoreCalculationService scoreCalculationService;
 
-//    @GetMapping("")
-//    public ResponseEntity<String> getData(Principal principal){
-//        principal.getName();
-//        return ResponseEntity.ok("This is just test " + principal.getName());
-//    }
+
+    /**
+     * This method maps default web page address (<IP_address>/) so that user
+     * is redirected to home URL (login page).
+     * @return ModelAndView bound to home.html
+     */
     @GetMapping("")
     public ModelAndView redirectToHome() {
         return new ModelAndView("redirect:/home");
     }
 
+    /**
+     * Mapping for default entry point into website.
+     * @return ModelAndView bound to home.html
+     */
     @GetMapping("/home")
     public ModelAndView getLoginData() {
         ModelAndView mav = new ModelAndView();
@@ -50,12 +60,22 @@ public class HomeController {
         return mav;
     }
 
+    /**
+     * Mapping for user registration form. When user clicks on Sign Up link from
+     * home page he is redirected to userRegistration.html
+     * @return ModelAndView bound to userRegistration.html
+     */
     @GetMapping("/register")
     public ModelAndView getRegisterData(){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("userRegistration");
         return mav;
     }
+
+    /**
+     * Mapping for contacts page. When user in navbar clicks Contacts, this method is called.
+     * @return ModelAndView bound to contacts.html
+     */
 
     @GetMapping("/contacts")
     public ModelAndView getContactData(){

@@ -19,26 +19,44 @@ import org.springframework.web.servlet.ModelAndView;
 import java.math.BigDecimal;
 import java.security.Principal;
 
+
+/**
+ * Controller class related to Test functionality - when users are taking tests,
+ * and viewing results after.
+ */
 @RestController
 public class TestController {
+
     @Autowired
     private TestService testService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private QuestionService questionService;
+
     @Autowired
     ScoreCalculationService scoreCalculationService;
 
+    /**
+     * Method provides mapping for users test form, when test is set to enable.
+     * Test ID is passed by URL and active User in the Session is retrieved using
+     * Spring security Principal object. Tests are retrieved from database and are converted to DTO object
+     * for processing on HTML side. DtoTestKc is passed to html document as testKC. Also
+     * UserTest object is created - for test result storing in database. UserTest object binds
+     * together User and TestKC object.
+     * @param testId Test ID passed by URL.
+     * @param principal Current user of the session.
+     * @return ModelAndView bound to test.html
+     */
     @GetMapping("/user/test{testId}")
     public ModelAndView getUserData(@PathVariable("testId") Long testId, Principal principal){
         ModelAndView mav = new ModelAndView();
         User user = userService.findByName(principal.getName());
         TestKC testKC = testService.findById(testId);
         boolean completed = user.getUserTests().stream().anyMatch(ut-> ut.getTestKC().equals(testKC));
-        if(completed){
-            return new ModelAndView("redirect:/home");
-        }
+        if(completed){return new ModelAndView("redirect:/home"); }
         UserTest userTest = new UserTest();
         userTest.setId(new UserTestKey(user.getId(), testKC.getId()));
         userTest.setUser(user);
@@ -46,10 +64,7 @@ public class TestController {
         userTest.setScore(BigDecimal.ZERO);
         userTest.setCompleted(false);
         user.addUserTest(userTest);
-//        System.out.println(user);
-//        System.out.println("Updating user : ");
         userService.update(user);
-//        System.out.println(user);
         DtoTestKC dtoTestKC = DtoConverter.toDto(testKC);
 
         mav.addObject("question", questionService.findAll());
@@ -62,9 +77,19 @@ public class TestController {
         form.setProperties(dtoTestKC.getQuestionList());
         mav.addObject("form", form);
         mav.setViewName("test");
-        //TODO button on this test view should send whole dtoTestKC to the /result view
         return mav;
     }
+
+    /**
+     * Mapping for POST method of test submit form. Matching User and TestKC objects are retrieved
+     * from database (using appropriate services). Submited answers (form parameter) are passed to
+     * DTO object. ScoreCalculation service is used for calculating scores. Dto object is converted
+     * back to TestKC object and is stored to database.
+     * @param form Dto object containing answers submitted by User.
+     * @param testId Test ID for test which has been submitted.
+     * @param principal User in the session.
+     * @return ModelAndView bound to resulttest.html
+     */
 
     @PostMapping("/user/result/test{testId}")
     @ResponseBody
