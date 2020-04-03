@@ -53,6 +53,6 @@ public class TestNameValidation implements TestValidation {
 
     public void checkMaxLength(String name){
         if (name.length() > MAX__LENGTH)
-            throw new ValidationException("Test name should not be longer than " + MAX__LENGTH + "characters long.");
+            throw new ValidationException("Test name should not be longer than " + MAX__LENGTH + " characters long.");
     }
 }
