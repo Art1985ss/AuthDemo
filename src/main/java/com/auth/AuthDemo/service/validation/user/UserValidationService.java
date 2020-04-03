@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+/**
+ * Service class for providing User object validations based on UserNameUserValidation and UsePasswordUser validation class.
+ */
 @Service
 public class UserValidationService {
     private Set<UserValidation> validations;

@@ -3,6 +3,11 @@ package com.auth.AuthDemo.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Class for converting Question objects to and from DTO. DTO objects ar used for transactions to and from html
+ * pages, providing better encapsulation.
+ */
 public class DtoQuestion {
     private Long id;
     private String category;

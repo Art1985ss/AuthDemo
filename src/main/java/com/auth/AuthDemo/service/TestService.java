@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-
+/**
+ * TestService class provides interactions with TestRepository. When some CRUD operations needs
+ * to be performed on TestKC object, this class needs to be implemented first and appropriate methods are called.
+ * TestValidation service is added - for basic validation of test field inputs from user.
+ */
 @Service
 public class TestService implements Service_<TestKC> {
     private TestRepository testRepository;

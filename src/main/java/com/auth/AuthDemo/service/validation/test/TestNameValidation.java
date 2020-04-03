@@ -6,6 +6,15 @@ import com.auth.AuthDemo.service.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class for basic validation of TestKC objects on given input. Test name is checked against following criteria:
+ *      - if it is not null
+ *      - if it is unique
+ *      - if it corresponds to minimum length (4 characters)
+ *      - if it does not exceed maximum length (32 characters)
+ * In case if validation fails Validation exception is thrown, user is redirected to error.html and appropriate
+ * message is shown.
+ */
 @Component
 public class TestNameValidation implements TestValidation {
     private static final int MIN__LENGTH = 4;
