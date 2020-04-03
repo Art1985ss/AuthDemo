@@ -8,22 +8,34 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Class for basic structure of Question object to be stored in database. All necessary fields are marked with
+ * corresponding JPA annotations and appropriate getters and setters are generated.
+ * Question object is bound to question_answers entity using many-to-many relationship and
+ * to TestKC object using one-to-many relationship.
+ */
 @Entity(name = "question")
 public class Question {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "category")
     private String category;
+
     @Column(name = "question")
     private String question;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "question_answers",
             joinColumns = @JoinColumn(name = "question_id"))
     @Column(name = "answer")
     private List<String> answers = new ArrayList<>();
+
     @Column(name = "correct_answer")
     private String correctAnswer;
+
     @ManyToMany(mappedBy = "questionList", fetch = FetchType.LAZY)
     private List<TestKC> testKCList = new ArrayList<>();
 

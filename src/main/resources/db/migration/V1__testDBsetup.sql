@@ -117,7 +117,7 @@ insert into authorities (user_id, authority) values (2, "ROLE_STUDENT");
 insert into user (name, password, enabled) values ("admin", "admin", true);
 insert into authorities (user_id, authority) values (3, "ROLE_ADMIN");
 
-insert into question(category, question, correct_answer) 
+insert into question(category, question, correct_answer)
 values ("slq", "Just choose answer c", "c"),
 ("data", "Here you need to chose answer d", "d");
 
@@ -136,7 +136,7 @@ insert into test (name, duration, enabled) values
 insert into test_questions (test_id, question_id) values
 (1, 1), (1, 2);
 
-insert into user_tests (user_id, test_id, score, completed) values 
+insert into user_tests (user_id, test_id, score, completed) values
 (2, 1, 0, false);
 
 insert into user_answers (user_id, question_id, answer) values

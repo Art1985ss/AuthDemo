@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+/**
+ * Service class for providing TestKC object validations based on TestNameValidation class.
+ */
 @Service
 public class TestValidationService {
     private Set<TestValidation> validations;

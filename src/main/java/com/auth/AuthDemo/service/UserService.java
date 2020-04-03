@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * UserService class provides interactions with UserRepository. When some CRUD operations needs
+ * to be performed on User object, this class needs to be implemented first and appropriate methods are called.
+ * UserValidation service is added - for basic validation of test field inputs from user.
+ */
 @Service
 public class UserService implements Service_<User> {
     private UserRepository userRepository;

@@ -15,10 +15,21 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+/**
+ * Authentication successhandler provides basic mechanism for redirecting users to corresponding URLs on
+ * successful login.
+ */
+
 @Component
 public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+    /**
+     * This method provides redirection strategy based on user role. In this case users with role Student are
+     * redirected to user.html and users with role Admin is redirected to admin.html
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest arg0, HttpServletResponse arg1, Authentication authentication)
             throws IOException, ServletException {
@@ -29,14 +40,12 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
                 try {
                     redirectStrategy.sendRedirect(arg0, arg1, "/user");
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             } else if(authority.getAuthority().equals("ROLE_ADMIN")) {
                 try {
                     redirectStrategy.sendRedirect(arg0, arg1, "/admin");
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             } else {

@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * QuestionService class provides interactions with QuestionRepository. When some CRUD operations needs
+ * to be performed on Question object, this class needs to be implemented first and appropriate methods are called.
+ */
 @Service
 public class QuestionService implements Service_<Question> {
     private QuestionRepository questionRepository;
