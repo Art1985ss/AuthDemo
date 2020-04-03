@@ -6,8 +6,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -15,23 +15,26 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 @ExtendWith(MockitoExtension.class)
 class QuestionServiceTest {
 
     private final long expectedId = 12L;
+    @InjectMocks
+    private QuestionService questionService;
+
     @Mock
     private QuestionRepository questionRepository;
-    private QuestionService questionService;
+
     private Question question;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        initMocks(this);
 
         question = new Question();
         question.setId(expectedId);
-        questionService = new QuestionService(questionRepository);
     }
 
     @AfterEach
