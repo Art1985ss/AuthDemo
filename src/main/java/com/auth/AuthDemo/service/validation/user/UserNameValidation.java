@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserNameValidation implements UserValidation {
-    private static final int MIN_NAME_LENGTH = 4;
-    private static final int MAX_NAME_LENGTH = 32;
+    private static final int MIN__LENGTH = 4;
+    private static final int MAX__LENGTH = 32;
     private UserRepository userRepository;
 
     @Autowired
@@ -47,12 +47,12 @@ public class UserNameValidation implements UserValidation {
     }
 
     private void checkNameMinLength(String name){
-        if(name.length() < MIN_NAME_LENGTH)
-            throw  new ValidationException("User name should be at least " + MIN_NAME_LENGTH + " characters long.");
+        if(name.length() < MIN__LENGTH)
+            throw  new ValidationException("User name should be at least " + MIN__LENGTH + " characters long.");
     }
 
     public void checkMaxLength(String name){
-        if (name.length() > MAX_NAME_LENGTH)
-            throw new ValidationException("User name should not be longer than " + MAX_NAME_LENGTH + "characters long.");
+        if (name.length() > MAX__LENGTH)
+            throw new ValidationException("User name should not be longer than " + MAX__LENGTH + "characters long.");
     }
 }
