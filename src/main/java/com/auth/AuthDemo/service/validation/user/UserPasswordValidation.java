@@ -4,6 +4,7 @@ import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.service.validation.ValidationException;
 import org.springframework.stereotype.Component;
 
+
 /**
  * Class for basic validation of User password on given input. User password is checked against following criteria:
  *      - if it is not null
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
  * In case if validation fails Validation exception is thrown, user is redirected to error.html and appropriate
  * message is shown.
  */
+
 
 @Component
 public class UserPasswordValidation implements UserValidation {

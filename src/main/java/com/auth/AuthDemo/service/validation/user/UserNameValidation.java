@@ -6,6 +6,7 @@ import com.auth.AuthDemo.service.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 /**
  * Class for basic validation of User name on given input. User name is checked against following criteria:
  *      - if it is not null
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
  * In case if validation fails Validation exception is thrown, user is redirected to error.html and appropriate
  * message is shown.
  */
+
 @Service
 public class UserNameValidation implements UserValidation {
     private static final int MIN__LENGTH = 4;
