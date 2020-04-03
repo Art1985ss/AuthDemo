@@ -1,8 +1,6 @@
 package com.auth.AuthDemo.controller;
 
-import com.auth.AuthDemo.dto.DtoConverter;
 import com.auth.AuthDemo.dto.DtoPropertiesForm;
-import com.auth.AuthDemo.dto.DtoTestKC;
 import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.entity.UserTest;
@@ -18,15 +16,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.HashSet;
-import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.ModelAndViewAssert.assertModelAttributeAvailable;
+import static org.springframework.test.web.ModelAndViewAssert.assertViewName;
 
 @ExtendWith(MockitoExtension.class)
 class TestControllerTest {
@@ -36,6 +33,8 @@ class TestControllerTest {
 
     @InjectMocks
     TestController testController;
+    TestKC testKC;
+    User user;
     @Mock
     private TestService testService;
     @Mock
@@ -46,10 +45,6 @@ class TestControllerTest {
     private ScoreCalculationService scoreCalculationService;
     @Mock
     private Principal principal;
-
-
-    TestKC testKC;
-    User user;
 
     @BeforeEach
     void setUp() {
@@ -66,8 +61,10 @@ class TestControllerTest {
     @Test
     void getUserData() {
 
-        user.setUserTests(new HashSet<UserTest>(){{
-            add(new UserTest() {{ setTestKC(testKC); }});
+        user.setUserTests(new HashSet<UserTest>() {{
+            add(new UserTest() {{
+                setTestKC(testKC);
+            }});
         }});
 
         when(testService.findById(testId)).thenReturn(testKC);
@@ -75,7 +72,7 @@ class TestControllerTest {
         when(userService.findByName(userName)).thenReturn(user);
 
         final ModelAndView actual = testController.getUserData(testId, principal);
-        ModelAndViewAssert.assertViewName(actual,"redirect:/home");
+        assertViewName(actual, "redirect:/home");
     }
 
     @Test
@@ -88,7 +85,7 @@ class TestControllerTest {
 
         final ModelAndView actual = testController.getResults(form, testId, principal);
 
-        ModelAndViewAssert.assertViewName(actual,"resulttest");
-        ModelAndViewAssert.assertModelAttributeAvailable(actual, "dtoTestKC");
+        assertViewName(actual, "resulttest");
+        assertModelAttributeAvailable(actual, "dtoTestKC");
     }
 }
