@@ -1,6 +1,7 @@
 package com.auth.AuthDemo.service;
 
 import com.auth.AuthDemo.entity.Question;
+import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.repository.QuestionRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -69,7 +72,15 @@ class QuestionServiceTest {
 
     @Test
     void findAll() {
+        final List<Question> expected = new ArrayList<Question>() {{
+            add(question);
+        }};
+        when(questionRepository.findAll()).thenReturn(expected);
 
+        final List<Question> actual = questionService.findAll();
+
+        verify(questionRepository).findAll();
+        assertEquals(expected, actual);
     }
 
     @Test
