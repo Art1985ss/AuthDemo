@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class UserPasswordUserValidation implements UserValidation {
-    private static final int MIN__LENGTH = 4;
-    private static final int MAX__LENGTH = 32;
+public class UserPasswordValidation implements UserValidation {
+    private static final int MIN_PASS_LENGTH = 4;
+    private static final int MAX_PASS_LENGTH = 32;
 
     @Override
     public void validate(User user) {
@@ -33,12 +33,12 @@ public class UserPasswordUserValidation implements UserValidation {
     }
 
     private void checkPasswordMinLength(String password) {
-        if (password.length() < MIN__LENGTH)
-            throw new ValidationException("User password should be at least " + MIN__LENGTH + " characters long.");
+        if (password.length() < MIN_PASS_LENGTH)
+            throw new ValidationException("User password should be at least " + MIN_PASS_LENGTH + " characters long.");
     }
 
     private void checkPasswordMaxLength(String password) {
-        if (password.length() > MAX__LENGTH)
-            throw new ValidationException("User password should not be longer than " + MAX__LENGTH + "characters long.");
+        if (password.length() > MAX_PASS_LENGTH)
+            throw new ValidationException("User password should not be longer than " + MAX_PASS_LENGTH + "characters long.");
     }
 }
