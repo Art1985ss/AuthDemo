@@ -36,10 +36,6 @@ class StudentServiceTest {
         studentService = new UserService(userRepository, userValidationService);
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void create() {
         when(userRepository.save(user)).thenReturn(user);
