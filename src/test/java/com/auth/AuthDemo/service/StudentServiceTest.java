@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
@@ -28,7 +29,7 @@ class StudentServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-
+        userValidationService = Mockito.mock(UserValidationService.class);
         user = new User();
         user.setId(expectedId);
         studentService = new UserService(userRepository, userValidationService );
@@ -38,22 +39,21 @@ class StudentServiceTest {
     void tearDown() {
     }
 
-//    @Test
-//    void create() {
-//        when(userRepository.save(user)).thenReturn(user);
-//        assertEquals(expectedId, studentService.create(user));
-//    }
-//
-//    @Test
-//    void update() {
-//        when(userRepository.save(user)).thenReturn(user);
-//        assertEquals(expectedId, studentService.create(user));
-//    }
+    @Test
+    void create() {
+        when(userRepository.save(user)).thenReturn(user);
+        assertEquals(expectedId, studentService.create(user));
+    }
+
+    @Test
+    void update() {
+        when(userRepository.save(user)).thenReturn(user);
+        assertEquals(expectedId, studentService.create(user));
+    }
 
     @Test
     void findById() {
         final Optional<User> result = Optional.of(user);
-
         when(userRepository.findById(expectedId)).thenReturn(result);
         assertEquals(user, studentService.findById(expectedId));
     }
