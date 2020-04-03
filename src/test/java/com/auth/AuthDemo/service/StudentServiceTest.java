@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,6 +67,15 @@ class StudentServiceTest {
 
     @Test
     void findAll() {
+        final List<User> expected = new ArrayList<User>() {{
+            add(user);
+        }};
+        when(userRepository.findAll()).thenReturn(expected);
+
+        final List<User> actual = studentService.findAll();
+
+        verify(userRepository).findAll();
+        assertEquals(expected, actual);
     }
 
     @Test
