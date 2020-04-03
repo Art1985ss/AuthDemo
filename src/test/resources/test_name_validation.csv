@@ -1,2 +1,4 @@
 0, name, exception
 1, "Jav", "Test name should be at least 4 characters long."
+2, "Java", ""
+3, "Java is the beautiful language. It is the best!", "Test name should not be longer than 32characters long."
