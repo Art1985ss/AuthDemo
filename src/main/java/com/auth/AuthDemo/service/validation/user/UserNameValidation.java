@@ -16,13 +16,13 @@ import org.springframework.stereotype.Service;
  * message is shown.
  */
 @Service
-public class UserNameUserValidation implements UserValidation {
+public class UserNameValidation implements UserValidation {
     private static final int MIN__LENGTH = 4;
     private static final int MAX__LENGTH = 32;
     private UserRepository userRepository;
 
     @Autowired
-    public UserNameUserValidation(UserRepository userRepository) {
+    public UserNameValidation(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

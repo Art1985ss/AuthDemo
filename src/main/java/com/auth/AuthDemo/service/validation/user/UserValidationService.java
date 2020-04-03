@@ -18,6 +18,8 @@ public class UserValidationService {
         this.validations = validations;
     }
 
+
+
     public void validate(User user) {
         validations.forEach(v -> v.validate(user));
     }

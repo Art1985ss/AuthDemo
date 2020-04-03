@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class UserPasswordUserValidation implements UserValidation {
+public class UserPasswordValidation implements UserValidation {
     private static final int MIN__LENGTH = 4;
     private static final int MAX__LENGTH = 32;
 
