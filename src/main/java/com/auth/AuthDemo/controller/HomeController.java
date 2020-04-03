@@ -60,18 +60,6 @@ public class HomeController {
         return mav;
     }
 
-//    /**
-//     * Mapping for user registration form. When user clicks on Sign Up link from
-//     * home page he is redirected to userRegistration.html
-//     * @return ModelAndView bound to userRegistration.html
-//     */
-//    @GetMapping("/register")
-//    public ModelAndView getRegisterData(){
-//        ModelAndView mav = new ModelAndView();
-//        mav.setViewName("userRegistration");
-//        return mav;
-//    }
-
     /**
      * Mapping for contacts page. When user in navbar clicks Contacts, this method is called.
      * @return ModelAndView bound to contacts.html
