@@ -7,22 +7,32 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * Class for basic structure of UserTest object to be stored in database. All necessary fields are marked with
+ * corresponding JPA annotations and appropriate getters and setters are generated.
+ * User object is bound to User and TestKC entity using one-to-many relationship. Score is added to entity and
+ * status field for test completion.
+ */
 @Entity
 @Table(name = "user_tests")
 @SelectBeforeUpdate(false)
 public class UserTest implements Serializable {
+
     @EmbeddedId
     private UserTestKey id;
     @ManyToOne
     @MapsId("user_id")
     @JoinColumn(name = "user_id")
     private User user;
+
     @ManyToOne
     @MapsId("test_id")
     @JoinColumn(name = "test_id")
     private TestKC testKC;
+
     @Column(name = "score")
     private BigDecimal score;
+
     @Column(name = "completed")
     private boolean completed;
 

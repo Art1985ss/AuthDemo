@@ -4,10 +4,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Helper class for User and TestKC object binding in databases.
+ */
 @Embeddable
 public class UserTestKey implements Serializable {
+
     @Column(name = "user_id")
     private Long studentId;
+
     @Column(name = "test_id")
     private Long testId;
 

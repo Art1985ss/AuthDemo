@@ -4,6 +4,9 @@ import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.service.validation.ValidationException;
 import org.springframework.stereotype.Component;
 
+/**
+ * Interface for test name validations
+ */
 @Component
 public interface TestValidation {
     void validate(TestKC testKC);

@@ -5,22 +5,34 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.*;
 
+/**
+ * Class for basic structure of TestKC object to be stored in database. All necessary fields are marked with
+ * corresponding JPA annotations and appropriate getters and setters are generated.
+ * TestKC object is bound to question entity using many-to-many relationship and
+ * to Question object using one-to-many relationship.
+ */
 @Entity(name = "test")
 public class TestKC {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "duration")
     private int durationMinutes;
+
     @Column(name = "enabled")
     private boolean enabled;
+
     @ManyToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL )
     @JoinTable(name = "test_questions",
             joinColumns = @JoinColumn(name = "test_id"),
             inverseJoinColumns = @JoinColumn(name = "question_id"))
     private List<Question> questionList = new ArrayList<>();
+
     @OneToMany(mappedBy = "testKC", cascade = CascadeType.ALL, fetch = FetchType.LAZY)//orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<UserTest> userTests = new HashSet<>();
 
@@ -80,6 +92,11 @@ public class TestKC {
         this.userTests = userTests;
     }
 
+    /**
+     * Method for adding test to each particular user.
+     * @param userTest Test to be added to user.
+     * @return
+     */
     public boolean addUserTest(UserTest userTest){
         this.userTests.remove(userTest);
         return this.userTests.add(userTest);

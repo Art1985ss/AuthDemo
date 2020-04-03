@@ -16,8 +16,11 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class related to User functionality - new user registration, and
+ * default page for regular users.
+ */
 @RestController
-//@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -26,6 +29,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Mapping for default entry point for users after login. User for current session is
+     * retrieved using Spring Security object Principal. All tests provided by admin are retrieved and passed
+     * to user.html as allDtoTests. On HTML page only enabled tests are displayed for user (check is processed by
+     * Thymeleaf). Also all user tests are retrieved and total User score.
+     * @param principal User of the current session.
+     * @return ModelAndView bound to user.html
+     */
     @GetMapping("/user")
     public ModelAndView getTestDate (Principal principal){
         ModelAndView modelAndView = new ModelAndView();
@@ -41,6 +52,11 @@ public class UserController {
         return modelAndView;
     }
 
+    /**
+     * Mapping for user registration. When users click Sign Up on login page, this method is called. Empty DtoUser
+     * object is created. Object's fields are mapped to corresponding form inputs in registration form.
+     * @return ModelAndView bound to userRegistration.html
+     */
     @GetMapping("/registration")
     public ModelAndView newUserForm(){
         ModelAndView modelAndView = new ModelAndView("userRegistration");
@@ -51,6 +67,12 @@ public class UserController {
         return modelAndView;
     }
 
+    /**
+     * Mapping for POST method of the user registration form. This method retrieves previously created object
+     * and stores it to database. After storing user is redirected to home.html
+     * @param dtoUser Object passed from user registration form.
+     * @return ModelAndView bound to home.html
+     */
     @PostMapping("/create")
     public ModelAndView create(DtoUser dtoUser){
         ModelAndView modelAndView = new ModelAndView("redirect:/home");
