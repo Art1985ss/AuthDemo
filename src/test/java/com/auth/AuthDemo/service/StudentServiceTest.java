@@ -1,5 +1,6 @@
 package com.auth.AuthDemo.service;
 
+import com.auth.AuthDemo.entity.TestKC;
 import com.auth.AuthDemo.entity.User;
 import com.auth.AuthDemo.repository.UserRepository;
 import com.auth.AuthDemo.service.validation.user.UserValidationService;
@@ -76,5 +77,12 @@ class StudentServiceTest {
 
     @Test
     void findByName() {
+        final String userName = "Java";
+        when(userRepository.findByName(userName)).thenReturn(Optional.of(user));
+
+        final User actual = studentService.findByName(userName);
+
+        verify(userRepository).findByName(userName);
+        assertEquals(user, actual);
     }
 }
